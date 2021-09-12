@@ -3,7 +3,7 @@
 # Contributor: Xu Fasheng <fasheng.xu[AT]gmail.com>
 
 pkgname=deepin-desktop-schemas
-pkgver=5.9.8
+pkgver=5.9.18
 pkgrel=1
 pkgdesc='GSettings deepin desktop-wide schemas'
 arch=('any')
@@ -15,7 +15,7 @@ conflicts=('deepin-artwork-themes')
 replaces=('deepin-artwork-themes')
 groups=('deepin')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/linuxdeepin/deepin-desktop-schemas/archive/$pkgver.tar.gz")
-sha512sums=('07ecb42182731fb7964af6e12e822d5fe98e8f356d4f3c66b12929bca6b44c993faa48fef8fa6771918b91c431bf7bfea2ec947c0c1e9d2a266500f04ff375a0')
+sha512sums=('3e8360a95210847ee4c5643107c8175b4630408218bd5d15e62135f5b3562a2fec046393ba6b63c96ce0e7882d7c64d80896130382f60123a97a785fdbece50b')
 
 prepare() {
   export GOPATH="$srcdir/build:/usr/share/gocode"

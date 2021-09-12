@@ -2,7 +2,7 @@
 # Contributor: speps <speps at aur dot archlinux dot org>
 
 pkgname=vmpk
-pkgver=0.8.2
+pkgver=0.8.4
 pkgrel=1
 pkgdesc="Virtual MIDI Piano Keyboard"
 arch=('x86_64')
@@ -12,8 +12,8 @@ groups=('pro-audio')
 depends=('gcc-libs' 'glibc' 'libxcb' 'qt5-base' 'qt5-x11extras')
 makedepends=('cmake' 'docbook-xsl' 'drumstick' 'qt5-tools')
 source=("https://downloads.sourceforge.net/project/${pkgname}/${pkgname}/${pkgver/a/}/${pkgname}-${pkgver}.tar.bz2")
-sha512sums=('a2357b41f6dda1187795c28174ff8377fffa3a69153b2d39302b515ba433362de25f8cee07dc82bc0e584685096e7fddad6dbe8f81ce336211bae81c7eb1085e')
-b2sums=('bf99ad54eeb90b66d0f6dc24f8c5967da91623d582e258a0a3214f9d883b3e97f3252c89dafa5054e11af73e4a59fa47b247c2a58218e7b6d8bf504178f3be97')
+sha512sums=('1704d8d39a2750549b524202e46e51507e25aeed00fe5c36202148661af2fc98613d937b2ea36f958706f371608d50ce82a6633b56e344e9cdcfed223892cb9d')
+b2sums=('12deda1ce752db4a0723e0b54e96a734cfcc11cbd2974a5957d315f1080d7d8b8ab3adf9203c8a25514f708ff6cadec69ab560239cb0f7d1b6859032ff6b976d')
 
 build() {
   cd "${pkgname}-${pkgver}"
@@ -29,6 +29,6 @@ package() {
   depends+=('libdrumstick-rt.so' 'libdrumstick-widgets.so')
   cd "${pkgname}-${pkgver}"
   make DESTDIR="$pkgdir/" install -C build
-  install -vDm 644 {AUTHORS,ChangeLog,NEWS,README,TODO} \
+  install -vDm 644 {AUTHORS,ChangeLog,NEWS,README.md,TODO} \
     -t "${pkgdir}/usr/share/doc/${pkgname}"
 }

@@ -1,7 +1,7 @@
 # Maintainer: BlackEagle <ike.devolder@gmail.com>>
 
 pkgname=kodi-addon-game-libretro-beetle-psx
-pkgver=0.9.44.23
+pkgver=0.9.44.27
 _codename=Matrix
 pkgrel=1
 pkgdesc="Libretro wrapper for Kodi's Game API"
@@ -11,7 +11,7 @@ license=('GPL')
 groups=('kodi-addons' 'kodi-addons-game')
 makedepends=('cmake' 'kodi-dev' 'kodi-addon-game-libretro' 'libretro-beetle-psx')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/kodi-game/game.libretro.beetle-psx/archive/$pkgver-$_codename.tar.gz")
-sha512sums=('53cbefafe39ca0a4ca9d777c64422b1074d15802d099cbd13c6abb834725c90f9c2e0122725e9e20c2520085c5712aa559c4b09a7725ad29eab2c0e05a8e995d')
+sha512sums=('dc040e91917470b8b211de326b250cc15920416bf8f961f9897f8137ea8740a214f5cbb5953a4792c5ae9f53a45c8675607d9bc7a209fab794fb736714cbe871')
 
 build() {
     cd "game.libretro.beetle-psx-$pkgver-$_codename"

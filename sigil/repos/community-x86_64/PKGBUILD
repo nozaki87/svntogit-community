@@ -4,7 +4,7 @@
 # Contributor: Larry Hajali <larryhaja [at] gmail [dot] com>
 
 pkgname=sigil
-pkgver=1.5.1
+pkgver=1.7.0
 pkgrel=1
 pkgdesc="multi-platform EPUB2/EPUB3 ebook editor"
 arch=('x86_64')
@@ -22,12 +22,13 @@ optdepends=('hunspell-en_US: for English dictionary support'
             'python-pillow: recommended for plugins'
             'python-regex: recommended for plugins'
             'python-pyqt5: recommended for plugins'
+            'python-pyqt5-webengine: recommended for plugins'
             'tk: recommended for plugins')
 source=("Sigil-${pkgver}.tar.gz::https://github.com/Sigil-Ebook/Sigil/archive/${pkgver}.tar.gz"
         "https://github.com/Sigil-Ebook/Sigil/releases/download/${pkgver}/Sigil-${pkgver}.tar.gz.sig")
-sha256sums=('ecdb20c90ca4ca9bd9ebee03734ee8c88ac101b0d32cc7ef25ff70960f4e982c'
+sha256sums=('f8ea3c11a33bb54de3de1b401fb7ec8d440a5a63277c4d7ed32a29ba629eac66'
             'SKIP')
-b2sums=('ac70c117d69c4062d66151372fc8cbede48be6f38ceae7d1dd1bd49fd8a0a4a352c885a120e00ba729e64ebfa928103d07f7bb85d69cbb3385f640f4fcf42985'
+b2sums=('29f7c682925d1e1bbff082e96b747ce32df82d78406ccd984b4f8de1f01944c35aa86587ce47a18687d5fe281b8cb656085b52d3a1e72ed17862501121d9d134'
         'SKIP')
 validpgpkeys=('B5A56206AB0FBC1A24EFAB8AA166D29A8FCDAC63') # Doug Massay <douglaslmassay@gmail.com>
 
@@ -40,6 +41,7 @@ build() {
         -DSYSTEM_LIBS_REQUIRED=1 \
         -DINSTALL_BUNDLED_DICTS=0 \
         -DINSTALL_HICOLOR_ICONS=1 \
+        -DDISABLE_UPDATE_CHECK=1 \
         -DMATHJAX_DIR=/usr/share/mathjax2 \
         -DCMAKE_INSTALL_PREFIX=/usr \
         -DCMAKE_INSTALL_LIBDIR=lib \

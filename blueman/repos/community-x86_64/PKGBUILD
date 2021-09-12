@@ -3,7 +3,7 @@
 # Contributor: Martin Wimpress <code@flexion.org>
 
 pkgname=blueman
-pkgver=2.1.4
+pkgver=2.2.2
 pkgrel=1
 pkgdesc="GTK+ Bluetooth Manager"
 arch=('x86_64')
@@ -16,13 +16,10 @@ optdepends=('dnsmasq: Network Access Point (NAP) support'
             'networkmanager: Dial Up Networking (DUN) and Personal Area Networking (PAN) support'
             'pulseaudio-bluetooth: audio devices support')
 source=(https://github.com/blueman-project/$pkgname/releases/download/$pkgver/$pkgname-$pkgver.tar.xz)
-sha256sums=('1d9c3d39a564d88851aa8de509f16bfa586b0b50f4307dc6c6347ba4833664da')
+sha256sums=('19ed59b1a134f584fc005f47295fef640a9709fd9b9b2307388e112a32ecd0f6')
 
 prepare() {
   cd $pkgname-$pkgver
-
-  # Fix path for bluetoothd
-  sed -i 's|/usr/sbin/bluetoothd|/usr/lib/bluetooth/bluetoothd|' apps/blueman-report.in
 
   # Use correct D-Bus config location
   sed -i '/^dbusdir =/ s/sysconfdir/datadir/' data/configs/Makefile.{am,in}

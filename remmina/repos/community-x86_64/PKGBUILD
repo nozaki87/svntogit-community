@@ -2,7 +2,7 @@
 
 pkgname=remmina
 epoch=1
-pkgver=1.4.13
+pkgver=1.4.20
 pkgrel=1
 pkgdesc="remote desktop client written in GTK+"
 arch=(x86_64)
@@ -10,7 +10,7 @@ url="https://www.remmina.org/"
 license=('GPL')
 depends=('avahi' 'libgcrypt' 'libssh' 'vte3' 'libsodium' 'libappindicator-gtk3')
 makedepends=('cmake' 'freerdp' 'libvncserver' 'spice-gtk' 'spice-protocol' 'telepathy-glib'
-             'harfbuzz' 'xorgproto' 'gobject-introspection')
+             'harfbuzz' 'xorgproto' 'gobject-introspection' 'kwallet')
 optdepends=('freerdp: RDP plugin'
             'libsecret: Secret plugin'
             'libvncserver: VNC plugin'
@@ -23,14 +23,15 @@ optdepends=('freerdp: RDP plugin'
 replaces=('remmina-plugins')
 provides=('remmina-plugins')
 source=("$pkgname-$pkgver.tar.bz2::https://gitlab.com/Remmina/Remmina/-/archive/v${pkgver/rc/-rc}/Remmina-v${pkgver/rc/-rc}.tar.bz2")
-sha512sums=('06ae05d39fb60c04b0734f1c11a4f3ce3724420a2aa6945eb4c38c053e6045698939250436ffe7745e329e2405d307493084aca07c603c2e5d908e3ad8f143b2')
+sha512sums=('14c5f5312bc97b3d12c95a84ab57fb0cdfdb237ad9e0b8853f514013901205457bf9a621d68edb8d8688758384184fb2c730126b89efaecc29bddf049e4cfb78')
 
 build() {
   cmake -S Remmina-v${pkgver/rc/-rc} -B build \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_INSTALL_LIBDIR=/usr/lib \
     -DWITH_APPINDICATOR=ON \
-    -DWITH_NEWS=OFF
+    -DWITH_NEWS=OFF \
+    -DWITH_KF5WALLET=ON
   cmake --build build
 }
 

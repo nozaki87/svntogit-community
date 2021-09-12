@@ -1,7 +1,7 @@
 # Maintainer: BlackEagle <ike.devolder@gmail.com>>
 
 pkgname=kodi-addon-game-libretro-yabause
-pkgver=0.9.15.14
+pkgver=0.9.15.23
 _codename=Matrix
 pkgrel=1
 pkgdesc="Libretro wrapper for Kodi's Game API"
@@ -11,7 +11,7 @@ license=('GPL')
 groups=('kodi-addons' 'kodi-addons-game')
 makedepends=('cmake' 'kodi-dev' 'kodi-addon-game-libretro' 'libretro-yabause')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/kodi-game/game.libretro.yabause/archive/$pkgver-$_codename.tar.gz")
-sha512sums=('de3f164f84419ad6859e76087327e56b36e1e57bf06491ead9c7adac64783a2bbba5bb555fc5fa567ec0eb503d48cc6ebb00b74a29bc960c0d70c3f3f0f8fca5')
+sha512sums=('ded334b1478596e5c4af9f3f60ac01a668e99e45dd61cd0da2e42570e1ff3402f876e8f350f91296f791ea0f42d5bbd896ee5b08ec2b7689f163c688e21c9999')
 
 build() {
     cd "game.libretro.yabause-$pkgver-$_codename"

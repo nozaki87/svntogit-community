@@ -1,17 +1,17 @@
 # Maintainer: Morten Linderud <foxboron@archlinux.org>
 
 pkgname=sbctl
-pkgver=0.3
+pkgver=0.6
 pkgrel=1
 pkgdesc="Secure Boot key manager"
 arch=("x86_64")
 url="https://github.com/Foxboron/sbctl"
 license=("MIT")
-depends=("sbsigntools")
+depends=("binutils" "util-linux")
 makedepends=("go" "git" "asciidoc")
 source=("https://github.com/Foxboron/sbctl/releases/download/${pkgver}/${pkgname}-${pkgver}.tar.gz"{,.sig})
 validpgpkeys=("C100346676634E80C940FB9E9C02FF419FECBE16")
-sha256sums=('ad887d4085af8d0229757c9baff85dc49ba6fb701ce7acdedfc31e4ce872f0ff'
+sha256sums=('37c68dc07fdf2068c95161deb00848fa8a3c666598e234978bed048dcfdef6b6'
             'SKIP')
 
 build(){

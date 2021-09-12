@@ -1,38 +1,30 @@
 # Maintainer: kpcyrd <kpcyrd[at]archlinux[dot]org>
 
 pkgname=torbrowser-launcher
-_tor_key=2021-06-12
-pkgver=0.3.3
-pkgrel=1
+pkgver=0.3.5
+pkgrel=2
 pkgdesc="Securely and easily download, verify, install, and launch Tor Browser in Linux"
 url="https://github.com/micahflee/torbrowser-launcher"
-depends=('python' 'python-pyqt5' 'python-requests' 'python-pysocks' 'python-gpgme'
+depends=('python' 'python-pyqt5' 'python-requests' 'python-pysocks' 'python-gpgme' 'python-packaging'
          'gnupg' 'tor' 'hicolor-icon-theme' 'dbus-glib')
 makedepends=('python-setuptools' 'python-distro')
 optdepends=('apparmor: support for apparmor profiles')
 arch=('any')
 license=('MIT')
+backup=(
+  'etc/apparmor.d/local/torbrowser.Browser.firefox'
+  'etc/apparmor.d/local/torbrowser.Tor.tor'
+)
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/micahflee/torbrowser-launcher/archive/v${pkgver}.tar.gz"
-        # fix for python >= 3.8
-        "https://github.com/micahflee/torbrowser-launcher/pull/470/commits/b8774d7a4f3e23f01c2c772aa9f3de7b98e8e932.patch"
-        # fix for "force english version" on non-english system
-        "https://sources.debian.org/data/main/t/torbrowser-launcher/0.3.3-3/debian/patches/05-Fix-use-case-that-enforce-install-of-EN-version-on-n.patch"
-        # replace expired signing key: https://github.com/micahflee/torbrowser-launcher/pull/482
-        "tor-browser-developers-${_tor_key}.pub::https://sources.archlinux.org/other/community/torbrowser-launcher/tor-browser-developers-${_tor_key}.asc")
-sha512sums=('129bcc3006d1cda92ab521c5106cacccf934b964b737f28bd89de6872f061b9e039678ca34b8ed30f348a0a47c3d87661b103f48e19a7edfae72a69512220fe6'
-            'b2d831bac224d872146fafc313651ee1c2b9f36840dc31d77aa8849ebc3aa9f8965aec807464d51949a469140d82038a272d9f99284ffbf7869367738b7fa61a'
-            'd2a29a77d1873656a46672f0e1bd3bb9d3d5d479b6b5974c4318077b0ec0b4d68e36dc257f8ce0b2c72723e16a723795256ceb99e1375f47977d15e0d75aacfb'
-            'd8f14507963bcc836ffd306ca4da31747b9b0b04ba7b010d2e3d134f546829d29f89f0bb75f73ebfc13af179997ab4bfa0d813fd172e798e09ef6decb541e909')
-b2sums=('8792e5474efe32124b401287bfbe01caef40381a35bb09062903da09c51f246b6092da2a3ffb84531c8f2be1bb45079263b8e46c98c5efa370abc6200289ac99'
-        'f966f1447e73ecbc4a1f193db8e1f4a511a40f1219c411cee350230c6676bb15212fe910f74008344975919b933fcd41af7fb4e0a1cdca8dd77a6a884c7c1c2e'
-        '7a0c56f8b6bd9e7d596bf2dbe78879918e355160785ff4dc879a52608934d6423334abc7fbe387c272bede186218a21232a5fe54018d9bb95f6af4730881fbf1'
-        'b100ec92a55f86cfc5e3913db8feb9600865ee4ed713791e8bd0707956886e0f97474122bc89e06ac177e41b7127db437bec9f4e57c604718bfc339d9ee3af99')
+        https://github.com/micahflee/torbrowser-launcher/pull/593/commits/a4bc9789b0d25c5d604e310f313d85ee15871a65.patch)
+sha512sums=('d9e30a721393d1530bc288fd74925731b71016d34670b6b33e1e76e271f956e2d2e35bd29f81389b1c90db15257e1e6281bd3aeeb9c3cc533ab9a5d109803254'
+            'ff99b69786510db3ba0f5410dc3e858dcfbb402548e49e74fa5985d7c262a77ec17bb45e0ee39fb877628a68c3308e258296523f2839487516970fe0f4cd8691')
+b2sums=('87ba04a5dd49316148631d3da6cf0b328160b817b7c42062bf6eeb1bedfc2cad6276640422139adc2b4031bfb6d0aa9bb93636b8e629e3b53433909bdf962768'
+        '3a751b97878e20b97d74336697a3ad48b681bed3664c53ccef147141b91ea78af5b94df00a7b8b381c80bfbb1f3ee8081dc78b1c60ad0182eb7a0f70e1ff92b2')
 
 prepare() {
   cd "${pkgname}-${pkgver}"
-  patch --forward --strip=1 --input="${srcdir}/b8774d7a4f3e23f01c2c772aa9f3de7b98e8e932.patch"
-  patch --forward --strip=1 --input="${srcdir}/05-Fix-use-case-that-enforce-install-of-EN-version-on-n.patch"
-  cp "${srcdir}/tor-browser-developers-${_tor_key}.pub" share/torbrowser-launcher/tor-browser-developers.asc
+  patch -Np1 -i ../a4bc9789b0d25c5d604e310f313d85ee15871a65.patch
 }
 
 build() {

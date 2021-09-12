@@ -9,7 +9,7 @@
 
 pkgbase=qbittorrent
 pkgname=(qbittorrent qbittorrent-nox)
-pkgver=4.3.3
+pkgver=4.3.8
 pkgrel=1
 arch=('x86_64')
 url="https://www.qbittorrent.org"
@@ -18,9 +18,9 @@ depends=('libtorrent-rasterbar' 'qt5-base')
 makedepends=('boost' 'qt5-tools' 'qt5-svg')
 optdepends=('python: needed for torrent search tab')
 source=("https://downloads.sourceforge.net/sourceforge/qbittorrent/${pkgname}-${pkgver}.tar.xz"{,.asc})
-sha512sums=('6b92ecdc06fa47989d5f8f442ba21f1c848c8f14073d2c85e649a3c4f507f7abe663dd0f8cbc6ea5fff85432fc1ebb7b254b2dac6e991235ac22f94268f6a5dd'
+sha512sums=('1983bb97c8ba0f7cd36dcbb7af7428af3d69b3804fb93b9eee8da65f301e49a4f074a849331dbb69f70b2d27d8730b34833ca185cb3dda5c379010d146d6215f'
             'SKIP')
-b2sums=('0dae0c78b7311e0135fbbe15bad373b91e850999a074071cc9be65b799ace9bbf97890e0de1b0afc90493b386cbbf9d6f7044eeb9c3ee8f6a79350085133e74a'
+b2sums=('effa8963ca350b7b7a13adcfb711f33553db6f9bbe8d0c2155aa004f2101d9903ffbfd328ac91d78387de96a1e9e8acd5f642d1e4150e14d023ab8da98ff9381'
         'SKIP')
 validpgpkeys=('D8F3DA77AAC6741053599C136E4A2D025B7CC9A2') # sledgehammer999 <sledgehammer999@qbittorrent.org>
 

@@ -3,7 +3,7 @@
 # Contributor: Josip Ponjavic <josipponjavic at gmail dot com>
 
 pkgname=i3status-rust
-pkgver=0.14.7
+pkgver=0.20.4
 pkgrel=1
 pkgdesc='Resourcefriendly and feature-rich replacement for i3status, written in pure Rust'
 arch=('x86_64')
@@ -26,11 +26,11 @@ optdepends=('alsa-utils: for the volume block'
             'ttf-font-awesome: for the awesome icons'
             'upower: for the battery block')
 source=("https://github.com/greshake/i3status-rust/archive/v${pkgver}/${pkgname}-${pkgver}.tar.gz")
-b2sums=('ebe8ab9c9d9e67e00beb97a21076711feffa8e7b764e19c13c2e94ecc12270282304c699f5b0cab4118ec4fcdfc0592100c308c90051c734d62912f8eea7326c')
+b2sums=('94459d4efebdf654387487a2bd8aeaa24094f6d9dc3295ab5ab3245ff3a8c7b6a3c55b6dd0b1466a56dfc58ea9bb66c6c2b5b2b243f1297ad102de67cbdbd1f5')
 
 build() {
   cd ${pkgname}-${pkgver}
-  cargo build --release --locked
+  cargo build --release --locked --features 'pulseaudio maildir'
 }
 
 package() {
@@ -38,7 +38,15 @@ package() {
   install -Dm755 -t "${pkgdir}"/usr/bin target/release/i3status-rs
   install -Dm644 -t "${pkgdir}"/usr/share/man/man1 man/i3status-rs.1
 
-  for example in example_config.toml example_icon.toml example_theme.toml; do
+  for icon in files/icons/*.toml; do
+    install -Dm644 -t "${pkgdir}"/usr/share/${pkgname}/icons "${icon}"
+  done
+
+  for theme in files/themes/*.toml; do
+    install -Dm644 -t "${pkgdir}"/usr/share/${pkgname}/themes "${theme}"
+  done
+
+  for example in examples/*.toml; do
     install -Dm644 -t "${pkgdir}"/usr/share/doc/${pkgname}/examples/ ${example}
   done
 }

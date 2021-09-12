@@ -2,8 +2,8 @@
 
 pkgbase=passenger
 pkgname=(passenger mod_passenger nginx-mod-passenger)
-pkgver=6.0.8
-pkgrel=3
+pkgver=6.0.10
+pkgrel=1
 pkgdesc="Fast and robust web server and application server for Ruby, Python and Node.js"
 arch=('x86_64')
 url="https://www.phusionpassenger.com"
@@ -15,13 +15,19 @@ validpgpkeys=('D5F0851426939232F437AB722AC745A50A212A8C'
               '16378A33A6EF16762922526E561F9B9CAC40B2F7'  # auto-software-signing@phusion.nl
               'B0F4253373F8F6F510D42178520A9993A1C052F8') # Maxim Dounin <mdounin@mdounin.ru>
 source=(https://s3.amazonaws.com/phusion-passenger/releases/passenger-$pkgver.tar.gz{,.asc})
-sha256sums=('1e73767025b299c6f8421c2a0df1ca7163b767de47ffab0c6239deb7b809d16d'
+sha256sums=('3eb2c52652c96a136cc69cf342e3a61a8dd0e92cdbe9310a7aae249ab1abe0d4'
             'SKIP')
 
+prepare() {
+	mkdir -p build
+	cd build
+	ln -sf /usr/src/nginx/auto
+	ln -sf /usr/src/nginx/src
+}
+
 build(){
-  cp -r /usr/src/nginx .
-  cd "$srcdir"/nginx
-  ./configure --with-compat --add-dynamic-module=../$pkgbase-$pkgver/src/nginx_module
+  cd build
+  /usr/src/nginx/configure --with-compat --add-dynamic-module=../$pkgbase-$pkgver/src/nginx_module
   make modules
 
   cd "$srcdir"/$pkgbase-$pkgver
@@ -61,7 +67,7 @@ package_nginx-mod-passenger() {
   install -Dm644 "$srcdir"/$pkgbase-$pkgver/LICENSE \
                  "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
 
-  cd "$srcdir"/nginx/objs
+  cd build/objs
   for mod in ngx_*.so; do
     install -Dm755 $mod "$pkgdir"/usr/lib/nginx/modules/$mod
   done

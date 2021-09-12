@@ -5,20 +5,20 @@
 # Contributor: Christopher Rogers <slaxemulator@gmail.com>
 
 pkgname=wordpress
-pkgver=5.7.1
+pkgver=5.8.1
 pkgrel=1
 pkgdesc='Blog tool and publishing platform'
 arch=(any)
 url='https://wordpress.org/'
 license=(GPL)
 depends=(php)
-optdepends=('apache: Web server for serving WordPress'
+optdepends=('apache: Web server'
             'mariadb: Database server'
-            'nginx: Web server for serving WordPress')
+            'nginx: Web server')
 options=(emptydirs)
 install=$pkgname.install
 source=("https://wordpress.org/$pkgname-$pkgver.tar.gz")
-sha512sums=('9144a2269efc4ee24a732bacf8f25d7c02136db546c6cf86890b2690f001acfafb9ece1dde7dd7d557b5eb9f3e01a829aab1c7ae80384d4e9389155bdbc3df86')
+b2sums=('83bad2abc8c5a040e96e0387d6738abddbc976a8b74d7c019860133b7741ddce16bab43009eaacb481e66ce48d44320aa1b5d9ee3e8da8fcc33c30dc95bc8654')
 
 package() {
   install -d "$pkgdir/usr/share/webapps"

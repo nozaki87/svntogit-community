@@ -1,24 +1,44 @@
 # Maintainer: Alexander F. Rødseth <xyproto@archlinux.org>
+# Contributor: loqs
 # Contributor: Jorge Araya Navarro <jorgejavieran@yahoo.com.mx>
 # Contributor: Cristian Porras <porrascristian@gmail.com>
 # Contributor: Matthew Bentley <matthew@mtbentley.us>
 
 pkgname=godot
-pkgver=3.3
+pkgver=3.3.3
 pkgrel=1
 pkgdesc='Advanced cross-platform 2D and 3D game engine'
 url='https://godotengine.org'
 license=(MIT)
 arch=(x86_64)
-makedepends=(gcc scons yasm)
-depends=(alsa-lib freetype2 libglvnd libxcursor libxinerama libxrandr pulseaudio)
+makedepends=(gcc scons yasm alsa-lib pulseaudio)
+depends=(bullet embree freetype2 libglvnd libtheora libvorbis libvpx libwebp
+         libxcursor libxi libxinerama libxrandr mbedtls miniupnpc opusfile)
+optdepends=(alsa-lib pulseaudio)
 source=("$pkgname-$pkgver.tar.gz::https://github.com/godotengine/godot/archive/$pkgver-stable.tar.gz")
-b2sums=('280b3b371c96e7a39e23f843759754e932fe4fd62b774b5d2d0d0e687fdb5dc8be7d95a18465f52d6f00456f62451115b1bf2e4afc2923ce704ffcde0f06544d')
+b2sums=('f1388af0973c60339674b1bae0fe64cfcf00f6c30bd36d72c32035e6dcd0a2745070c574d010d96ad3b27bccfb571279985b58e1addda21dcea1cb5b3bb98473')
+
+prepare() {
+  # Disable the check that adds -no-pie to LINKFLAGS, for gcc != 6
+  sed -i 's,0] >,0] =,g' $pkgname-$pkgver-stable/platform/x11/detect.py
+}
 
 build() {
+  # Not unbundled yet:
+  #  enet (contains no upstreamed IPv6 support)
+  #  libsquish, recast, xatlas
+  #  AUR: libwebm, squish, wslay
+  local to_unbundle="bullet certs embree freetype libogg libpng libtheora libvorbis libvpx libwebp mbedtls miniupnpc opus pcre2 zlib zstd"
+  local system_libs=""
+  for _lib in $to_unbundle; do
+    system_libs+="builtin_"$_lib"=no "
+    rm -rf thirdparty/$_lib
+  done
+
   cd $pkgname-$pkgver-stable
   export BUILD_NAME=arch_linux
-  scons -j12 \
+  scons -j16 \
+    system_certs_path=/etc/ssl/certs/ca-certificates.crt \
     bits=64 \
     colored=yes \
     platform=x11 \
@@ -26,9 +46,10 @@ build() {
     target=release_debug \
     tools=yes \
     use_llvm=no \
-    CFLAGS="$CFLAGS -Wl,-z,relro,-z-now -w" \
-    CXXFLAGS="$CXXFLAGS -Wl,-z,relro,-z-now -w" \
-    LINKFLAGS="$LDFLAGS -Wl,-z,relro,-z-now -w"
+    CFLAGS="$CFLAGS -fPIC -Wl,-z,relro,-z,now" \
+    CXXFLAGS="$CXXFLAGS -fPIC -Wl,-z,relro,-z,now" \
+    LINKFLAGS="$LDFLAGS" \
+    $system_libs
 }
 
 package() {

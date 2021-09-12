@@ -1,7 +1,7 @@
 # Maintainer: BlackEagle <ike.devolder@gmail.com>>
 
 pkgname=kodi-addon-game-libretro-scummvm
-pkgver=2.1.1.12
+pkgver=2.1.1.15
 _codename=Matrix
 pkgrel=1
 pkgdesc="Libretro wrapper for Kodi's Game API"
@@ -11,7 +11,7 @@ license=('GPL')
 groups=('kodi-addons' 'kodi-addons-game')
 makedepends=('cmake' 'kodi-dev' 'kodi-addon-game-libretro' 'libretro-scummvm')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/kodi-game/game.libretro.scummvm/archive/$pkgver-$_codename.tar.gz")
-sha512sums=('8aa6d632378ae2699933f13c1c4d9a3bcf4c2f2d10978d69461b43dc27f4823d0dac2802cd78c7d7949403f21713de6e6ee16ee60fa925a979ce2845a7352b55')
+sha512sums=('c75ef3fd0e7c152ee49bc4df6d45162b54e67391780c46a5995bf541f01d6de17df87199f4a3bec324e6bf5720503653c9391db5b8bc0888676c182d1bb9da01')
 
 build() {
     cd "game.libretro.scummvm-$pkgver-$_codename"

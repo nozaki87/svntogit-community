@@ -1,0 +1,41 @@
+# Maintainer: George Rawlinson <grawlinson@archlinux.org>
+
+pkgname=nomad-driver-containerd
+_pkgname=containerd-driver
+pkgver=0.9.1
+pkgrel=1
+pkgdesc="A nomad taskdriver for containerd containers"
+arch=('x86_64')
+url="https://github.com/Roblox/nomad-driver-containerd"
+license=('MPL2')
+depends=('nomad' 'containerd')
+makedepends=('go' 'git')
+source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
+b2sums=('f0b20fe3234a1525145233ca5be8d09e0ca2f1284ccc578494e8f8891374a05951f4ca3bea8f74ed6f7c11b9d79aae496074dbdac5aba2b34edd158ae790bcca')
+
+prepare() {
+	cd "$pkgname-$pkgver"
+
+  # create directory for build output
+  mkdir build
+
+  # download dependencies
+  go mod vendor
+}
+
+build() {
+	cd "$pkgname-$pkgver"
+  go build \
+    -trimpath \
+    -buildmode=pie \
+    -mod=vendor \
+    -modcacherw \
+    -ldflags "-linkmode external -extldflags \"${LDFLAGS}\"" \
+    -o build \
+    .
+}
+
+package() {
+	cd "$pkgname-$pkgver"
+  install -vDm755 "build/$pkgname" "$pkgdir/usr/lib/nomad/plugins/$_pkgname"
+}

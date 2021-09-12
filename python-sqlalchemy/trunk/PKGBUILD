@@ -3,19 +3,19 @@
 # Contributor: Sébastien Luttringer <seblu@aur.archlinux.org>
 
 pkgname=python-sqlalchemy
-pkgver=1.4.11
+pkgver=1.4.23
 pkgrel=1
 arch=('x86_64')
 url="https://www.sqlalchemy.org/"
 license=('MIT')
 pkgdesc='Python SQL toolkit and Object Relational Mapper'
-depends=('python')
+depends=('python' 'python-greenlet')
 optdepends=('python-psycopg2: connect to PostgreSQL database')
 makedepends=('python-setuptools')
 checkdepends=('python-pytest-runner' 'python-pytest-xdist' 'python-mock')
 source=("https://pypi.io/packages/source/S/SQLAlchemy/SQLAlchemy-$pkgver.tar.gz"{,.asc})
 validpgpkeys=('83AF7ACE251C13E6BB7DEFBD330239C1C4DAFEE1')
-sha512sums=('28d5da109d754183e7f1887c652c47cd7162afec285a44ed6bc51566dc40d43cdb8cd1794f93f31b2e085488025f04243613d500936c220aaab3aedb75fb6dcd'
+sha512sums=('9e668b63487d0b9f9321a73bbf652aa82f31a90222429c4ba2f866edb0a313d8d10989febd456c87bdcde63ab595810232257fb011dce007538651426c1df0d1'
             'SKIP')
 
 prepare() {

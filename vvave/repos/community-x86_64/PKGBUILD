@@ -1,26 +1,19 @@
 # Maintainer: Antonio Rojas <arojas@archlinux.org>
 
 pkgname=vvave
-pkgver=1.2.1
+pkgver=2.0.0
 pkgrel=1
-pkgdesc="Multi-platform media player"
-url="https://mauikit.org/"
+pkgdesc='Multi-platform media player'
+url='https://mauikit.org/'
 arch=(x86_64)
 license=(GPL3)
-depends=(mauikit hicolor-icon-theme taglib)
+depends=(mauikit-filebrowsing mauikit-accounts hicolor-icon-theme taglib)
 makedepends=(extra-cmake-modules)
 groups=(maui)
 conflicts=(babe)
 replaces=(babe)
-source=(https://download.kde.org/stable/maui/$pkgname/$pkgver/$pkgname-$pkgver.tar.xz
-        vvave-taglib1.2.patch)
-sha256sums=('73b04bf3328a350c60fe05a1f8b2b0e86939574e15dc1aab23e153b7c22af4d7'
-            '6e1731c649a0a3411a34f1f2da61a770183d81b44924141ed3e2c473d22a7e96')
-
-prepare() {
-  rm $pkgname-$pkgver/cmake/FindTaglib.cmake # Fix build with taglib 1.2
-  patch -d $pkgname-$pkgver -p1 < vvave-taglib1.2.patch
-}
+source=(https://download.kde.org/stable/maui/$pkgname/$pkgver/$pkgname-$pkgver.tar.xz)
+sha256sums=('b272190acd0c44a9a27bcc971c10c8908fa78d0272a4ed092f8419dde235efb0')
 
 build() {
   cmake -B build -S $pkgname-$pkgver

@@ -1,7 +1,7 @@
 # Maintainer: kpcyrd <kpcyrd[at]archlinux[dot]org>
 
 pkgname=cargo-release
-pkgver=0.13.10
+pkgver=0.17.1
 pkgrel=1
 pkgdesc='Cargo subcommand "release": everything about releasing a rust crate'
 url='https://github.com/sunng87/cargo-release'
@@ -10,11 +10,16 @@ license=('MIT' 'APACHE')
 depends=('gcc-libs' 'openssl' 'zlib')
 makedepends=('cargo')
 source=(https://github.com/sunng87/${pkgname}/archive/v${pkgver}/${pkgname}-${pkgver}.tar.gz)
-b2sums=('70f7ff1689d59e61f927b11b1abf23c0a024f7051e6b76e8c4323ea2acf69f9b5a1d9d8fed52598a5a62fde597a1147549fa13eaf72dcb6408ed2953b7e1d041')
+b2sums=('70d439d9ea83797d612712cf024bb2840a1a053fa76fe9a3afe05be8587dbd185d7987f5fbba76fae3f75a58f279948d1fc909de7f67905841a2b68dc48cbb54')
+
+prepare() {
+  cd ${pkgname}-${pkgver}
+  cargo fetch --locked --target "$CARCH-unknown-linux-gnu"
+}
 
 build() {
   cd ${pkgname}-${pkgver}
-  cargo build --release --locked
+  cargo build --frozen --release
 }
 
 package() {

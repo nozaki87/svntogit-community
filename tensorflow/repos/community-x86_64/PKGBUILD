@@ -5,28 +5,32 @@
 
 pkgbase=tensorflow
 pkgname=(tensorflow tensorflow-opt tensorflow-cuda tensorflow-opt-cuda python-tensorflow python-tensorflow-opt python-tensorflow-cuda python-tensorflow-opt-cuda)
-pkgver=2.4.1
-_pkgver=2.4.1
-pkgrel=10
+pkgver=2.6.0
+_pkgver=2.6.0
+pkgrel=3
 pkgdesc="Library for computation using data flow graphs for scalable machine learning"
 url="https://www.tensorflow.org/"
 license=('APACHE')
 arch=('x86_64')
-depends=('c-ares' 'intel-mkl' 'onednn' 'pybind11' 'openssl-1.0' 'lmdb' 'libpng' 'curl' 'giflib' 'icu' 'libjpeg-turbo')
+depends=('c-ares' 'intel-mkl' 'onednn' 'pybind11' 'openssl' 'lmdb' 'libpng' 'curl' 'giflib' 'icu' 'libjpeg-turbo')
 makedepends=('bazel' 'python-numpy' 'cuda' 'nvidia-utils' 'nccl' 'git'
              'cudnn' 'python-pip' 'python-wheel' 'python-setuptools' 'python-h5py'
              'python-keras-applications' 'python-keras-preprocessing'
              'cython')
 optdepends=('tensorboard: Tensorflow visualization toolkit')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/tensorflow/tensorflow/archive/v${_pkgver}.tar.gz"
-        fix-h5py3.0.patch
-        build-against-actual-mkl.patch)
-sha512sums=('be8273f464c1c1c392f3ab0190dbba36d56a0edcc7991c1a86f16604c859056d3188737d11c3b41ec7918e1cf46d13814c50c00be8f459dde9f0fb618740ee3c'
-            '556e3dd4bf0989c139536a7fbfd423b67007839814b04d778790d1c51eb9a4e9f13730a004fc4361a5e6d8a0d08b7b1a28f6e26e184c07f9297c67073a4e9192'
-            'e51e3f3dced121db3a09fbdaefd33555536095584b72a5eb6f302fa6fa68ab56ea45e8a847ec90ff4ba076db312c06f91ff672e08e95263c658526582494ce08')
+        48935.patch
+        fix-c++17-compat.patch
+        build-against-actual-mkl.patch
+        openssl-1.1.patch)
+sha512sums=('d052da4b324f1b5ac9c904ac3cca270cefbf916be6e5968a6835ef3f8ea8c703a0b90be577ac5205edf248e8e6c7ee8817b6a1b383018bb77c381717c6205e05'
+            '8a0fb7e728b144656503ee54b3c90483c619adf17b2081dceb2bd6bcd1435dd64afba97526d94114d4c10fc002d2d213ae6717ad407285b18e438b05fc1ed2ad'
+            'f682368bb47b2b022a51aa77345dfa30f3b0d7911c56515d428b8326ee3751242f375f4e715a37bb723ef20a86916dad9871c3c81b1b58da85e1ca202bc4901e'
+            'e51e3f3dced121db3a09fbdaefd33555536095584b72a5eb6f302fa6fa68ab56ea45e8a847ec90ff4ba076db312c06f91ff672e08e95263c658526582494ce08'
+            'cb15e7331f62d6e77e1099055430cd026e5788f0cab202fbfad8e27c47fca9ad5e1467249683dcdaab8c76cab4dece016f8ecd0f0793adb256ff6d975f893125')
 
 # consolidate common dependencies to prevent mishaps
-_common_py_depends=(python-termcolor python-astor python-gast03 python-numpy python-protobuf absl-py python-h5py python-keras-applications python-keras-preprocessing python-tensorflow-estimator python-opt_einsum python-astunparse python-pasta python-flatbuffers)
+_common_py_depends=(python-termcolor python-astor python-gast03 python-numpy python-protobuf absl-py python-h5py python-keras python-keras-applications python-keras-preprocessing python-tensorflow-estimator python-opt_einsum python-astunparse python-pasta python-flatbuffers)
 
 get_pyver () {
   python -c 'import sys; print(str(sys.version_info[0]) + "." + str(sys.version_info[1]))'
@@ -62,11 +66,11 @@ prepare() {
   # MKLML version that Tensorflow wants to use is https://github.com/intel/mkl-dnn/releases/tag/v0.21
   # patch -Np1 -d tensorflow-${_pkgver} -i "$srcdir"/build-against-actual-mkl.patch
 
-  # Compile with C++17 by default (FS#65953)
-  #sed -i "s/c++14/c++17/g" tensorflow-${_pkgver}/.bazelrc
+  # https://github.com/tensorflow/tensorflow/pull/48935/files
+  patch -Np1 -d tensorflow-${_pkgver} -i "$srcdir"/48935.patch
 
-  # FS#68488
-  patch -Np1 -d tensorflow-${_pkgver} -i "$srcdir"/fix-h5py3.0.patch
+  # https://bugs.archlinux.org/task/71597
+  patch -p1 -d tensorflow-${_pkgver} -i "$srcdir"/openssl-1.1.patch
 
   # Get rid of hardcoded versions. Not like we ever cared about what upstream
   # thinks about which versions should be used anyway. ;) (FS#68772)
@@ -96,7 +100,7 @@ prepare() {
   export TF_NEED_IGNITE=0
   export TF_NEED_ROCM=0
   # See https://github.com/tensorflow/tensorflow/blob/master/third_party/systemlibs/syslibs_configure.bzl
-  export TF_SYSTEM_LIBS="boringssl,curl,cython,gif,icu,libjpeg_turbo,lmdb,nasm,pcre,png,pybind11,zlib"
+  export TF_SYSTEM_LIBS="boringssl,curl,cython,gif,icu,libjpeg_turbo,lmdb,nasm,png,pybind11,zlib"
   export TF_SET_ANDROID_WORKSPACE=0
   export TF_DOWNLOAD_CLANG=0
   export TF_NCCL_VERSION=$(pkg-config nccl --modversion | grep -Po '\d+\.\d+')
@@ -111,21 +115,19 @@ prepare() {
   export TF_CUDA_PATHS=/opt/cuda,/usr/lib,/usr
   export TF_CUDA_VERSION=$(/opt/cuda/bin/nvcc --version | sed -n 's/^.*release \(.*\),.*/\1/p')
   export TF_CUDNN_VERSION=$(sed -n 's/^#define CUDNN_MAJOR\s*\(.*\).*/\1/p' /usr/include/cudnn_version.h)
-  export TF_CUDA_COMPUTE_CAPABILITIES=5.2,5.3,6.0,6.1,6.2,7.0,7.2,7.5,8.0,8.6
+  # https://github.com/tensorflow/tensorflow/blob/1ba2eb7b313c0c5001ee1683a3ec4fbae01105fd/third_party/gpus/cuda_configure.bzl#L411-L446
+  # according to the above, we should be specifying CUDA compute capabilities as 'sm_XX' or 'compute_XX' from now on
+  # add latest PTX for future compatibility
+  export TF_CUDA_COMPUTE_CAPABILITIES=sm_52,sm_53,sm_60,sm_61,sm_62,sm_70,sm_72,sm_75,sm_80,sm_86,compute_86
 
-  # Required until https://github.com/tensorflow/tensorflow/issues/39467 is fixed.
   export CC=gcc
   export CXX=g++
 
-  export BAZEL_ARGS="--config=mkl -c opt --copt=-I/usr/include/openssl-1.0 --host_copt=-I/usr/include/openssl-1.0 --linkopt=-l:libssl.so.1.0.0 --linkopt=-l:libcrypto.so.1.0.0 --host_linkopt=-l:libssl.so.1.0.0 --host_linkopt=-l:libcrypto.so.1.0.0"
-
-  # Workaround for gcc 10+ warnings related to upb.
-  # See https://github.com/tensorflow/tensorflow/issues/39467
-  export BAZEL_ARGS="$BAZEL_ARGS --host_copt=-Wno-stringop-truncation"
+  export BAZEL_ARGS="--config=mkl -c opt"
 }
 
 build() {
-  echo "Building without cuda and without non-x86-64 optimizations"
+  echo "Building without cuda and without non-x87-64 optimizations"
   cd "${srcdir}"/tensorflow-${_pkgver}
   export CC_OPT_FLAGS="-march=x86-64"
   export TF_NEED_CUDA=0
@@ -225,6 +227,9 @@ _package() {
   ln -s libtensorflow_framework.so.${pkgver:0:1} "${pkgdir}"/usr/lib/libtensorflow_framework.so
   install -Dm644 tensorflow/c/c_api.h "${pkgdir}"/usr/include/tensorflow/tensorflow/c/c_api.h
   install -Dm644 LICENSE "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE
+
+  # Fix interoperability of C++14 and C++17. See https://bugs.archlinux.org/task/65953
+  patch -Np0 -i "${srcdir}"/fix-c++17-compat.patch -d "${pkgdir}"/usr/include/tensorflow/absl/base
 }
 
 _python_package() {

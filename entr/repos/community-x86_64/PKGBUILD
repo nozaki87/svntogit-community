@@ -1,7 +1,7 @@
 # Maintainer: Filipe Laíns (FFY00) <lains@archlinux.org>
 
 pkgname=entr
-pkgver=4.8
+pkgver=5.0
 pkgrel=1
 pkgdesc='Run arbitrary commands when files change'
 arch=('x86_64')
@@ -9,7 +9,7 @@ url='http://eradman.com/entrproject'
 license=('MIT')
 validpgpkeys=('519151D83E83D40A232B4D615C418B8631BC7C26' '5C418B8631BC7C26') # Eric Radman <ericshane@eradman.com>
 source=("$url/code/$pkgname-$pkgver.tar.gz"{,.asc})
-sha512sums=('fc99a257fe9a30a9b08f0b6283f9ee3b65c38362744842dd976a4ac7749df7f6ff630235443af17f664f9cbf2a197dbb8c1114fe491e675921745294b4fa4d8f'
+sha512sums=('f485efb7d05f1d099c85d8af2f313e3ed2f36720483afc3004479b5b8754c60c52a108b827efd017c674f01d6ced2878a317addef3960c8cdf9e6b142f2ad5fd'
             'SKIP')
 
 build() {

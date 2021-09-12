@@ -2,16 +2,22 @@
 # Contributor: Sequencer <liujiuyang1994@gmail.com>
 
 pkgname=python-schemdraw
-pkgver=0.8
-pkgrel=2
+pkgver=0.11
+pkgrel=1
 pkgdesc="Electrical circuit schematic drawing."
 url="https://bitbucket.org/cdelker/schemdraw"
 license=('BSD')
 arch=('any')
-depends=('python-numpy' 'python-matplotlib')
+depends=('python')
+optdepends=('python-matplotlib: for matplotlib backend'
+            'python-ziafont: for svg backend'
+            'python-ziamath: for svg backend'
+            'python-latex2mathml: for svg backend')
 makedepends=('python-setuptools')
-source=("$pkgname-$pkgver.tar.gz::https://bitbucket.org/cdelker/schemdraw/get/$pkgver.tar.gz")
-sha512sums=('2b467a8388b6e50a12b648a0caf1890f2f4ff1db1507d5518c4931c9fc119c234004302513c7b3c9527ddb9a3457d3ae77903ac88fdd5c8dc85d71c077f36895')
+checkdepends=('python-pytest-runner' 'python-nbval' 'python-matplotlib' 'python-ziafont'
+              'python-ziamath' 'python-latex2mathml')
+source=("$pkgname-$pkgver.tar.bz2::https://bitbucket.org/cdelker/schemdraw/get/$pkgver.tar.bz2")
+sha512sums=('328e0551178faf03fcaff29919a98bbd8845b81b16ae4372af549886310a0adcb8d045b248ebfcb8aaddd5080c9c265a8fb843a13b6730196a18e71a56718cec')
 
 prepare() {
   mv cdelker-schemdraw-* schemdraw-$pkgver
@@ -20,6 +26,11 @@ prepare() {
 build() {
   cd schemdraw-$pkgver
   python setup.py build
+}
+
+check() {
+  cd schemdraw-$pkgver
+  python setup.py pytest --addopts --nbval-lax
 }
 
 package() {

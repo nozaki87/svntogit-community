@@ -2,9 +2,9 @@
 # Maintainer: Eli schwartz <eschwartz@archlinux.org>
 
 pkgname=firefox-noscript
-pkgver=11.2.4
-pkgrel=1
-_file=3750385
+pkgver=11.2.11
+pkgrel=3
+_file=3816655
 pkgdesc="Extension for firefox which disables javascript"
 arch=('any')
 url="https://noscript.net/"
@@ -13,8 +13,8 @@ groups=('firefox-addons')
 makedepends=('unzip')
 source=("noscript-${pkgver}.xpi::https://addons.mozilla.org/firefox/downloads/file/${_file}/")
 noextract=("noscript-${pkgver}.xpi")
-sha256sums=('278ee526d7c3ce5236c1a04aa5b6605c81b82399b846e43cdf6f93f11fef1ec9')
-b2sums=('938ce606aba39274d4f6ea1aa40c129deb54ac3a412c185b0b46842179c45d357d30a02f24a78e557b885741a8a741c7e717894305b4c88022c8746768316518')
+sha256sums=('b833e81823986646dbc473ebbee987bd47757fbe79c9d1720150f08ba6ca9ba9')
+b2sums=('b2b91c0fdc4bc4ea29ff47f1801e06ec504948171d78b2bce8b387508e6d15dac5bf9f46d62e6ab74e19b233c186406e89df944cfd50e9ede357c28b44fd6ad1')
 
 package() {
   depends=('firefox')

@@ -1,7 +1,7 @@
 # Maintainer: Felix Yan <felixonmars@archlinux.org>
 
 pkgname=python-testfixtures
-pkgver=6.17.1
+pkgver=6.18.1
 pkgrel=1
 pkgdesc="A collection of helpers and mock objects that are useful when writing unit tests or doc tests"
 arch=('any')
@@ -12,7 +12,7 @@ makedepends=('python-setuptools')
 checkdepends=('python-pytest-runner' 'python-zope-component' 'python-sybil'
               'python-pytest-django' 'python-django' 'python-twisted')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/Simplistix/testfixtures/archive/$pkgver.tar.gz")
-sha512sums=('6424f813926516fd90693ac7ecf39a30c71e19b02965c6c7e5c23971555dc8f18a6f09dd419d6efea7bb1e35de1234684b10358ba25fcaa7ba191e9f7aa5c933')
+sha512sums=('3f6d5442dc61ea335c20226598d6bbc695e544abc02f10ed06f29ec3839f89a3e0a474b3c120ba77ecdf4d008b149b32751b98d1956a17ebe2d3d7fb7b6ba690')
 
 build() {
   cd "$srcdir"/testfixtures-$pkgver

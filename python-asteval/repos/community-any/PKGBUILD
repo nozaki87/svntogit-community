@@ -1,17 +1,19 @@
 # Maintainer: Felix Yan <felixonmars@archlinux.org>
 
 pkgname=python-asteval
-pkgver=0.9.23
+pkgver=0.9.25
 pkgrel=1
 pkgdesc="Minimalistic evaluator of python expression using ast module"
 url="https://github.com/newville/asteval"
 license=('MIT')
 arch=('any')
 depends=('python')
-makedepends=('python-setuptools')
+makedepends=('python-setuptools-scm')
 checkdepends=('python-pytest' 'python-numpy')
 source=("https://github.com/newville/asteval/archive/$pkgver/$pkgname-$pkgver.tar.gz")
-sha512sums=('972ae475b7c2225953efef7dcacc441a887d5311d8482ee43b49aa7906a241f3f186f4f49a272623e04c42b6a5adfc6335036f4157a1947510973912cd255ee4')
+sha512sums=('2e419911340d213930e7be2f8a0063b698d8cb31e190a19b05506b296a10fe3492fc6314d22ddc9e7e823b9f7f0d6030a9812bb7a663ffcaab1d1f917b9bbac9')
+
+export SETUPTOOLS_SCM_PRETEND_VERSION=$pkgver
 
 build() {
   cd asteval-$pkgver

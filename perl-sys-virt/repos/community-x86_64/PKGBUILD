@@ -1,8 +1,8 @@
 # Maintainer: Felix Yan <felixonmars@archlinux.org>
 
 pkgname=perl-sys-virt
-pkgver=6.3.0
-pkgrel=2
+pkgver=7.7.0
+pkgrel=1
 pkgdesc="Represent and manage a libvirt hypervisor connection"
 arch=('x86_64')
 license=('PerlArtistic')
@@ -12,7 +12,7 @@ makedepends=('perl-cpan-changes' 'perl-module-build' 'perl-xml-xpath' 'perl-test
              'perl-test-pod-coverage')
 options=('!emptydirs')
 source=("https://cpan.metacpan.org/authors/id/D/DA/DANBERR/Sys-Virt-v$pkgver.tar.gz")
-sha512sums=('7f224523cd08838b00b4e06b729a0cfc9570d3be469d251c114f60832cc024f4ad61d8836d7ad0e85284961f227fe2ded1ac5a891465a1d62d4e14389ad3e8e2')
+sha512sums=('09a62cdbae3f9a6f32c0b52d474ae9f6189bf3ccc1108508595bb91411b82e73983512dc86bb5f289a0bd2296a1a5ece4ab478c583f8a58b16b750cd83d061d7')
 
 build() {
   cd Sys-Virt-v$pkgver

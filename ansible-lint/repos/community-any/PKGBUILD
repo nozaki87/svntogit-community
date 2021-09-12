@@ -3,20 +3,20 @@
 # Contributor: Sander Boom <sanderboom@gmail.com>
 
 pkgname=ansible-lint
-pkgver=5.0.8
+pkgver=5.1.3
 pkgrel=1
 pkgdesc="Checks playbooks for practices and behaviour that could potentially be improved."
 arch=('any')
 url="https://github.com/ansible/ansible-lint"
 license=('MIT')
-depends=('python' 'ansible-base' 'python-ruamel-yaml' 'python-pyaml' 'python-rich' 'python-packaging'
+depends=('python' 'ansible-core' 'python-ruamel-yaml' 'python-pyaml' 'python-rich' 'python-packaging'
           'python-wcmatch' 'python-enrich' 'python-tenacity')
 checkdepends=('python-pytest')
 optdepends=('yamllint: check for yaml syntax mistakes'
             'ansible: check official ansible collections')
 source=(https://github.com/ansible/ansible-lint/archive/v${pkgver}/${pkgname}-${pkgver}.tar.gz
         disable_use_scm_version.patch)
-b2sums=('c1c0102a73acff2300966dd58a54adf6722e5ff89463a50674f505386a961a30857159a8d94e7c6cbfbe5677cbed53eea3c44b48d893a87e1bf54748b8ea969f'
+b2sums=('7850f8463ff1c7b7ad86f58c3aab22110e0ddf6d0ada8122ebe48b6cfc38e3391d43710e858806f6dd13d4d400d6cb1977f805df2d62ec3c86287b5a51d64ba5'
         'a090862e657bfc29c89b23b2ecc8c585e15f098310b997e39600b6bdf0cd433e1045e2da348ce27dc2d3c0f9ef01950cf0ec5e7b071bc43d85161faabd8a1f60')
 
 prepare() {

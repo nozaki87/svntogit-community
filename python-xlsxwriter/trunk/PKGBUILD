@@ -1,7 +1,8 @@
 # Maintainer: Andrzej Giniewicz <gginiu@gmail.com>
+# Contributor: George Rawlinson <grawlinson@archlinux.org>
 
 pkgname=python-xlsxwriter
-pkgver=1.4.0
+pkgver=3.0.1
 pkgrel=1
 pkgdesc="A Python module for creating Excel XLSX files"
 arch=('any')
@@ -9,12 +10,17 @@ url="https://github.com/jmcnamara/XlsxWriter"
 license=('BSD')
 depends=('python')
 makedepends=('python-setuptools')
-source=("${pkgname}-${pkgver}.tar.gz::https://github.com/jmcnamara/XlsxWriter/archive/RELEASE_${pkgver}.tar.gz")
-sha256sums=('56666d2aecd88616886becf4e933268f3ac974286b2f0918ae6e7fd4b4bd2869')
+source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/RELEASE_${pkgver}.tar.gz")
+sha256sums=('27d053943ee0fe302d711687ad37335187b9352db001f3b5d6b1c527a528667f')
 
 build() {
   cd "$srcdir"/XlsxWriter-RELEASE_${pkgver}
   python setup.py build
+}
+
+check() {
+  cd "$srcdir"/XlsxWriter-RELEASE_${pkgver}
+  python -m unittest discover
 }
 
 package() {

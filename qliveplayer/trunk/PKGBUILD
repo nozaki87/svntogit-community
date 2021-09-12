@@ -2,22 +2,26 @@
 # Contributor: Megumi_fox <i@megumifox.com>
 
 pkgname=qliveplayer
-pkgver=3.22.0
+pkgver=4.0.1
+_libcommit=03d3c7b0bf010986710182ba4ab9a887b4c3b42d
 pkgrel=1
 pkgdesc='Cute and useful Live Stream Player with danmaku support.'
 arch=('x86_64')
 url="https://github.com/IsoaSFlus/QLivePlayer"
 license=('GPL2')
-depends=('ffmpeg' 'mpv' 'python-aiohttp' 'qt5-base' 'qt5-quickcontrols2' 'qt5-graphicaleffects'
-         'qt5-quickcontrols' 'python')
-makedepends=('extra-cmake-modules' 'ninja')
-optdepends=('python-protobuf: for YouTube LiveChat support'
-            'streamlink: for foreign streaming service support')
-source=("https://github.com/IsoaSFlus/QLivePlayer/archive/$pkgver/$pkgname-$pkgver.tar.gz")
-sha512sums=('cd8f7255c101565dd1b90d9e9a7faedfff7b423d5a8d5f7cd0d35d0e991ce28f06b2631a90e9c4d8f787daa0ceb921004a206eaa1a25332a8c592f57c282ab11')
+depends=('ffmpeg' 'mpv' 'qt5-base' 'qt5-declarative' 'qt5-graphicaleffects' 'qt5-quickcontrols'
+         'qt5-quickcontrols2' 'qt5-svg')
+makedepends=('extra-cmake-modules' 'ninja' 'rust')
+optdepends=('streamlink: for foreign streaming service support')
+source=("https://github.com/IsoaSFlus/QLivePlayer/archive/$pkgver/$pkgname-$pkgver.tar.gz"
+        "https://github.com/IsoaSFlus/QLivePlayer-Lib/archive/$_libcommit/$pkgname-lib-$_libcommit.tar.gz")
+sha512sums=('f63ac6ec483355ae7cdc31296b4640af2c56f7cc1f011abb7072a7b18f588f77331e6bf0399668e7b44890a6bc6b7647d60db1124e7d0137e0aa89df5908c516'
+            '4330f869d325117f59b11300c50cbf69af31173ffe9c909cb7fb8bc752c23a5a49cb402fd95097540ec091f68382c1d34aa406c3a231774d348cb339a1dc1939')
 
 prepare() {
     mkdir -p build
+    rmdir QLivePlayer-$pkgver/src/QLivePlayer-Lib
+    ln -s ../../QLivePlayer-Lib-$_libcommit QLivePlayer-$pkgver/src/QLivePlayer-Lib
 }
 
 build() {

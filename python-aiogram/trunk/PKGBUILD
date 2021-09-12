@@ -2,7 +2,7 @@
 # Contributor: Evgeniy Filimonov <evgfilim1@gmail.com>
 
 pkgname=python-aiogram
-pkgver=2.13
+pkgver=2.14.3
 pkgrel=1
 pkgdesc="A pretty simple and fully asynchronous library for Telegram Bot API written with asyncio and aiohttp"
 arch=('any')
@@ -10,7 +10,8 @@ url="https://github.com/aiogram/aiogram"
 license=('MIT')
 depends=('python-aiohttp' 'python-babel')
 makedepends=('python-setuptools')
-checkdepends=('python-aiohttp-socks' 'python-aioredis' 'python-aresponses' 'python-pytest' 'pifpaf' 'redis')
+checkdepends=('python-aiohttp-socks' 'python-aioredis' 'python-aresponses' 'python-pytest'
+              'python-pytest-lazy-fixture' 'pifpaf' 'redis')
 optdepends=('python-uvloop: fast, drop-in replacement of the built-in asyncio event loop'
             'python-ujson: ultra fast JSON encoder and decoder written in pure C'
             'python-rapidjson: extremely fast C++ JSON parser and serialization library'
@@ -20,7 +21,7 @@ optdepends=('python-uvloop: fast, drop-in replacement of the built-in asyncio ev
 #            'python-rethinkdb: RethinkDB storage support'  # No such package yet
 )
 source=("$url/archive/v$pkgver/$pkgname-$pkgver.tar.gz")
-sha512sums=('e65beaf429eddc24457bb978683b60fd7874eb71cd247ff5613e1350594e74cad8519188dd3d9e5f624957c1fccde1fc2aecbfc558bcf7b293312950bf93fd64')
+sha512sums=('32003f5f69c41d66cf886c7bd9d5f37f5f99f4ca6d79c983bd5b69c80cd39d73ea3a38b433f8309096e6af70a4b5e1421dd9d5ff2b9e5f0401d8113b70edd49e')
 
 prepare() {
   cd aiogram-$pkgver
@@ -36,7 +37,8 @@ build() {
 
 check() {
   cd aiogram-$pkgver
-  pifpaf run redis -- bash -c 'python -m pytest --redis $PIFPAF_REDIS_URL'
+  # https://github.com/aiogram/aiogram/issues/639
+  pifpaf run redis -- bash -c 'python -m pytest --redis $PIFPAF_REDIS_URL --deselect tests/types/test_reply_keyboard.py::test_deserialize'
 }
 
 package() {

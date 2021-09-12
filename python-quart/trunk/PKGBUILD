@@ -1,8 +1,8 @@
 # Maintainer: Maxime Gauduin <alucryd@archlinux.org>
 
 pkgname=python-quart
-pkgver=0.14.1
-pkgrel=2
+pkgver=0.15.1
+pkgrel=1
 pkgdesc='A Python ASGI web microframework with the same API as Flask'
 url=https://gitlab.com/pgjones/quart
 arch=(any)
@@ -31,7 +31,7 @@ checkdepends=(
   python-pytest-sugar
   python-tox
 )
-_tag=f6709c6082a3cab9dffdcd937122f4d65a5990f7
+_tag=34b60e976e661b44a4b8c00db3b0171ff56a5a9b
 source=(git+https://gitlab.com/pgjones/quart.git#tag=${_tag})
 sha256sums=(SKIP)
 
@@ -42,7 +42,6 @@ pkgver() {
 
 build() {
   cd quart
-  export PYTHONHASHSEED=0
   python setup.py build
 }
 

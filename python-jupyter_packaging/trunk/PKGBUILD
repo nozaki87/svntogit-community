@@ -2,16 +2,16 @@
 
 _pipname=jupyter_packaging
 pkgname=python-jupyter_packaging
-pkgver=0.9.2
+pkgver=0.10.4
 pkgrel=1
-pkgdesc="Jupyter Packaging Utilities"
+pkgdesc='Jupyter Packaging Utilities'
 arch=(any)
-url="https://jupyter.org/"
+url='https://jupyter.org/'
 license=(custom)
 depends=(python-packaging python-deprecation python-wheel python-tomlkit)
 makedepends=(python-setuptools)
 source=(https://pypi.io/packages/source/j/$_pipname/$_pipname-$pkgver.tar.gz)
-sha256sums=('780082b43506eccb3fb39ed9306300b637245e622a9644701c60d89992468822')
+sha256sums=('589db027cb85a92612f9bcfaeecaa8a9072ac8a4bddaf827f648664258e587c4')
 
 build() {
   cd $_pipname-$pkgver

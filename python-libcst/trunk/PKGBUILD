@@ -2,8 +2,8 @@
 
 _pkgname=LibCST
 pkgname=python-libcst
-pkgver=0.3.18
-pkgrel=1
+pkgver=0.3.20
+pkgrel=2
 pkgdesc="A concrete syntax tree parser and serializer library for Python that preserves many aspects of Python's abstract syntax tree"
 arch=('any')
 url='https://github.com/Instagram/LibCST'
@@ -12,7 +12,7 @@ depends=('python-typing_extensions' 'python-typing_inspect' 'python-yaml')
 makedepends=('python-setuptools')
 checkdepends=('python-hypothesis' 'python-hypothesmith' 'python-isort' 'python-black')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
-sha512sums=('d1f3e18cd6c66408ac1b7cd324650ebae9d27ee68567501b79daf9b7ea8aad41398f55a4c45f2dcef2bd2d8674ed32dac5c720f06d0e588e8aa97a90189a1c2b')
+sha512sums=('03920d896850a228c3e48d9eb6256d6e781829965a6ccc4a8d9051ea8ad21a86c25b95cb4aef03b0fd3bd8d45694398dd7e30aeefc9d1b530747ee85ba73861f')
 
 prepare() {
   cd $_pkgname-$pkgver

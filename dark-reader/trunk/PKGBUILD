@@ -3,7 +3,7 @@
 
 pkgname=('dark-reader' 'firefox-dark-reader' 'thunderbird-dark-reader')
 pkgbase=dark-reader
-pkgver=4.9.32
+pkgver=4.9.34
 pkgrel=1
 pkgdesc='Inverts brightness of web pages and aims to reduce eyestrain while browsing the web'
 url=https://darkreader.org/
@@ -11,11 +11,15 @@ arch=('any')
 license=('MIT')
 makedepends=('npm' 'strip-nondeterminism')
 source=("https://github.com/darkreader/darkreader/archive/v$pkgver/darkreader-$pkgver.tar.gz")
-b2sums=('cf18f679c64f4b2b87a41d3a67d49ffae23f91c66cdb1ddad2874a136a09960446e473bdcdd2ccfabcd4cbe60fcf0b8fa17e19a9a8b9beeb85b6c8eb62173307')
+b2sums=('96faa077594277bf9f91ea2f12d219f77c29a81b8e2abd03d4493dc30be54c890b019c50dae147e95fc838742435191c5ecef1dab8fb414aa010f53c63935288')
+
+prepare() {
+  cd darkreader-$pkgver
+  npm ci
+}
 
 build() {
   cd darkreader-$pkgver
-  npm ci
   npm run build
   strip-nondeterminism -t zip build-*.xpi
 }

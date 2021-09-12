@@ -21,6 +21,18 @@ then
   exit 1
 fi
 
+# Find Java version
+JAVA_VERSION="$(${JAVA_EXEC} -version 2>&1 | head -1 | cut -d' ' -f 3 | tr -d '"')"
+
+# Fix for Java 16 compatibility
+# https://bugs.archlinux.org/task/71255
+# https://sourceforge.net/p/sweethome3d/bugs/1021/
+if [ $(vercmp "${JAVA_VERSION}" "11") -gt 0 ]
+then
+  # Add illegal-access=permit argument
+  JAVA_OPTS="${JAVA_OPTS} --illegal-access=permit"
+fi
+
 # Build classpath
 APP_CLASSPATH="SweetHome3D.jar:Furniture.jar:Textures.jar:Examples.jar:Help.jar:iText-2.1.7.jar:freehep-vectorgraphics-svg-2.1.1b.jar:sunflow-0.07.3i.jar:jmf.jar:batik-svgpathparser-1.7.jar:jeksparser-calculator.jar:jnlp.jar"
 if [ "${SWEETHOME3D_JAVA3D}" = "1.6" ]

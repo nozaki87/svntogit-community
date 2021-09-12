@@ -1,8 +1,8 @@
 # Maintainer: Felix Yan <felixonmars@archlinux.org>
 
 pkgname=python-osprofiler
-pkgver=3.4.0
-pkgrel=3
+pkgver=3.4.2
+pkgrel=1
 pkgdesc="OpenStack Profiler Library"
 arch=('any')
 url="https://docs.openstack.org/osprofiler/latest/"
@@ -12,7 +12,7 @@ depends=('python-netaddr' 'python-oslo-concurrency' 'python-oslo-serialization' 
 checkdepends=('python-ddt' 'python-docutils' 'python-elasticsearch' 'python-jaeger-client'
               'python-pymongo' 'python-redis' 'python-stestr')
 source=("https://github.com/openstack/osprofiler/archive/$pkgver/$pkgname-$pkgver.tar.gz")
-sha512sums=('dbe8f0a924e2ac2b59c657b201c0451419a6212fa091e6f50cef660d3ce5beef6e5477be698a3164eb57535f02ee9b5208aed64227ad82b7bbc3167cd31c2877')
+sha512sums=('19a697b63da84549f71c272abe9180f0b96f35e2e63f93057cd0289fb81f0366f4554a51c50600db39a03013690aaea200f20c54fc09f6b5e6587882abc6b9c4')
 
 export PBR_VERSION=$pkgver
 

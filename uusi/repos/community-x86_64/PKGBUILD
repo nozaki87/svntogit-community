@@ -1,28 +1,29 @@
 # Maintainer: Felix Yan <felixonmars@archlinux.org>
 
 pkgname=uusi
-pkgver=0.4.0.0
-pkgrel=15
+pkgver=0.4.2.0
+pkgrel=1
 pkgdesc="Tweak .cabal files"
 url="https://github.com/berberman/uusi"
 license=("MIT")
 arch=('x86_64')
-depends=('ghc-libs' 'haskell-microlens' 'haskell-microlens-th')
-makedepends=('ghc' 'haskell-hunit')
+depends=('ghc-libs')
+makedepends=('ghc')
+checkdepends=('haskell-hunit')
 source=("https://hackage.haskell.org/packages/archive/$pkgname/$pkgver/$pkgname-$pkgver.tar.gz")
-sha512sums=('acddec4ec01de73678a249ee05ac3a58c024b2f015cde81b78db9f71f12b46be6b6c84c093e56afda092f79333517154be3d7914b0caab01760acf5712ee2381')
-
-prepare() {
-  cd $pkgname-$pkgver
-  echo -e "import Distribution.Simple\nmain = defaultMain" > Setup.hs
-  sed -i 's/<3.1/<4/' $pkgname.cabal
-}
+sha512sums=('0d859230940ccf035578a61ecea6165c94de2865e860bb22addcaeaa89a2c214bf46bde8bcce1f0b04a1cd1b58d4d1a2271ca69904ba6055a421ebb4e40c1f7b')
 
 build() {
   cd $pkgname-$pkgver
 
+  if (( CHECKFUNC )); then
+    _opts=('--enable-tests')
+  else
+    _opts=('--disable-tests')
+  fi
+
   runhaskell Setup configure -O --enable-shared --enable-executable-dynamic --disable-library-vanilla \
-    --prefix=/usr --docdir=/usr/share/doc/$pkgname --enable-tests \
+    --prefix=/usr --docdir=/usr/share/doc/$pkgname "${_opts[@]}" \
     --dynlibdir=/usr/lib --libsubdir=\$compiler/site-local/\$pkgid \
     --ghc-option=-optl-Wl\,-z\,relro\,-z\,now \
     --ghc-option='-pie'

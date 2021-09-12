@@ -3,7 +3,7 @@
 
 pkgbase=cascadia-code
 pkgname=("ttf-${pkgbase}" "otf-${pkgbase}" "woff2-${pkgbase}")
-pkgver=2102.25
+pkgver=2106.17
 pkgrel=1
 pkgdesc="A monospaced font by Microsoft that includes programming ligatures"
 arch=("any")
@@ -13,8 +13,8 @@ source=(
     "${pkgname}-${pkgver}-release.zip::https://github.com/microsoft/${pkgbase}/releases/download/v${pkgver}/CascadiaCode-${pkgver}.zip"
     "${pkgname}-${pkgver}.tar.gz::https://github.com/microsoft/${pkgbase}/archive/v${pkgver}.tar.gz"
 )
-sha256sums=('a64e8834f06ec9acca4a5307cb6cf35922021d4fd0ca19096f8bf6a3e2515ad3'
-            '9201a17f6c16b3e32d75d516d0e22caf649d0384a59898d2d71bb8a7687239be')
+sha256sums=('22c030fec5e5c516580fd6e24b385c935baae2f6c110024aeba20240d533a68a'
+            'c5f0e54905ff7bbc63a66ae3ee96c1d9732b4db2f4181399e97d1a643b4f1035')
 
 function prepare() {
     cd "${srcdir}/otf/static"

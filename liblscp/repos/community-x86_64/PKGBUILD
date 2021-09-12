@@ -1,11 +1,11 @@
-# Maintainer: David Runge <dave@sleepmap.de>
+# Maintainer: David Runge <dvzrv@archlinux.org>
 # Contributor: Martin C. Doege <mdoege at compuserve dot com>
 # Contributor: Ray Rashif <schiv@archlinux.org>
 # Contributor: Shinlun Hsieh <yngwiexx@yahoo.com.tw>
 
 pkgname=liblscp
-pkgver=0.6.0
-pkgrel=3
+pkgver=0.9.4
+pkgrel=1
 pkgdesc="LinuxSampler Control Protocol C++ library"
 arch=('x86_64')
 url="https://www.linuxsampler.org/"
@@ -13,7 +13,8 @@ license=('LGPL2.1')
 depends=('glibc')
 provides=('liblscp.so')
 source=("https://download.linuxsampler.org/packages/${pkgname}-${pkgver}.tar.gz")
-sha512sums=('64c5cb51ac7821d65a8769415deb68cefa24684e1d4fa592a68c7e45cf2af02ffa41a2f2300ffc98a6d1d6d880279aa1b61499ac0fe59177c60fc0a2075ada15')
+sha512sums=('6aa9b15d538925edf3327ca05023bac8285611902703fec20572416dde5cd7300ed429a7db464d92b9f6c1d524b89066888f8cbd0d56283ff3c78074605f396a')
+b2sums=('f1824c75237e478888ffcd95c15b72e4746cbc8997924f70cced966baddb68877526cbbcd56ff419fa1eb5f1ca6a1537ce5db368ba41cac39e51813921720e9b')
 
 prepare() {
   cd "${pkgname}-${pkgver}"

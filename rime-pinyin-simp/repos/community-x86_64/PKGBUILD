@@ -1,8 +1,8 @@
 # Maintainer: Felix Yan <felixonmars@archlinux.org>
 
 pkgname=rime-pinyin-simp
-pkgver=0.0.0.20201109
-_commit=f5975ad8e324bbbc2c1eee94fdf8d66073efbbef
+pkgver=0.0.0.20210627
+_commit=b0e84cda02c613ebdedc127a26131b3800f45a8e
 pkgrel=1
 pkgdesc="Simple pinyin input for rime"
 arch=('x86_64')
@@ -12,7 +12,7 @@ license=('LGPL')
 depends=('rime-stroke')
 makedepends=('librime' 'rime-prelude' 'rime-essay')
 source=("https://github.com/rime/rime-pinyin-simp/archive/$_commit/rime-pinyin-simp-$_commit.tar.gz")
-sha512sums=('66ce32ba6c29039ce1e7c443996b0a36f25547cf66d018b718602d1568d643a65f17e4d5d9fb35d7ecd554d4997acb620dfb084d6f2254151218ad782b8a224d')
+sha512sums=('7d655c8b4232d8e9f3662ead73af7d0434f863cb5889405f457fca0290936e09428a8216e775d7030600479d51d2c6375c7b0bed2f3b6e002e83f1008913174e')
 
 prepare() {
   cd $pkgname-$_commit

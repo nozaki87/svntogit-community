@@ -1,8 +1,9 @@
 # Maintainer: Santiago Torres-Arias <santiago@archlinux.org>
+# Maintainer: Christian Rebischke <chris.rebischke@archlinux.org>
 
 pkgname=cosign
-pkgver=0.3.1
-pkgrel=2
+pkgver=1.1.0
+pkgrel=1
 pkgdesc="Container Signing with support for ephemeral keys and Sigstore signing"
 arch=('x86_64')
 url="https://github.com/sigstore/cosign"
@@ -10,7 +11,8 @@ license=('Apache')
 depends=('pcsclite')
 makedepends=('go' 'git')
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/sigstore/${pkgname}/archive/v${pkgver}.tar.gz")
-sha256sums=('61bd6b0a0eaf646e0e3fe47589b30e4e38a57532abb905e884d65d93557a8e22')
+sha512sums=('e8f9b97cb24c090645cac57a9eaf5e60e51745f5b8e020ac4f7a5e2f258aed70130548324a3d4c8709b4f146dca2a58f2955fc46e3021f9a887967852938e61c')
+b2sums=('e02fa406c5ea2ae1d9b722790573a1bd3110c3d378d41c6cf7e3bd1cac91b6188e240a0c115f11758efc558bbf4e3448455a9af9bfb4f3af01cd7faa500fb937')
 
 build(){
   cd "${pkgname}-${pkgver}"
@@ -23,7 +25,7 @@ build(){
   go build -o build/ ./...
 }
 
-test() {
+check() {
   cd "${pkgname}-${pkgver}"
   make test
 }

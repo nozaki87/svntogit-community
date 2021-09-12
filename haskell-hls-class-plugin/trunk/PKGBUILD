@@ -2,23 +2,22 @@
 
 _hkgname=hls-class-plugin
 pkgname=haskell-hls-class-plugin
-pkgver=1.0.0.0
-pkgrel=34
+pkgver=1.0.0.2
+pkgrel=3
 pkgdesc="Class/instance management plugin for Haskell Language Server"
 url="https://github.com/haskell/haskell-language-server#readme"
 license=("Apache")
 arch=('x86_64')
-depends=('ghc-libs' 'haskell-aeson' 'haskell-ghc' 'haskell-ghc-exactprint' 'haskell-ghcide'
-         'haskell-hls-plugin-api' 'haskell-lens' 'haskell-lsp' 'haskell-shake'
-         'haskell-unordered-containers')
-makedepends=('ghc' 'uusi')
+depends=('ghc-libs' 'haskell-aeson' 'haskell-ghc' 'haskell-ghc-api-compat' 'haskell-ghc-exactprint'
+         'haskell-ghcide' 'haskell-hls-plugin-api' 'haskell-lens' 'haskell-lsp')
+makedepends=('ghc' 'uusi' 'haskell-hls-test-utils' 'haskell-lsp-types')
+checkdepends=('git')
 source=("https://hackage.haskell.org/packages/archive/$_hkgname/$pkgver/$_hkgname-$pkgver.tar.gz")
-sha256sums=('c058077a64014ee596625f29d36bb12193cb88b42b855dabc165e8953dd77980')
+sha512sums=('cc316f581a975ec282c5463d522180b4401b0e154eeae1e333acaeeb77af80163b95bfb5796111026763557fc59d83d44455ed185290504182e1234a8547150f')
 
 prepare() {
   cd $_hkgname-$pkgver
   gen-setup
-  uusi -u ghcide $_hkgname.cabal
 }
 
 build() {
@@ -35,6 +34,11 @@ build() {
   runhaskell Setup unregister --gen-script
   sed -i -r -e "s|ghc-pkg.*update[^ ]* |&'--force' |" register.sh
   sed -i -r -e "s|ghc-pkg.*unregister[^ ]* |&'--force' |" unregister.sh
+}
+
+check() {
+  cd $_hkgname-$pkgver
+  runhaskell Setup test --show-details=direct
 }
 
 package() {

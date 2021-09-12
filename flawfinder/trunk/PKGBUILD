@@ -4,23 +4,17 @@
 # Contributor: Pranay Kanwar <pranay.kanwar@gmail.com>
 
 pkgname=flawfinder
-pkgver=2.0.11
+pkgver=2.0.18
 pkgrel=1
 pkgdesc='Searches through source code for potential security flaws'
-url='https://www.dwheeler.com/flawfinder'
+url='https://dwheeler.com/flawfinder/'
 arch=('any')
 license=('GPL2')
 depends=('python')
 makedepends=('python-setuptools')
-source=(https://www.dwheeler.com/flawfinder/flawfinder-${pkgver}.tar.gz)
-sha512sums=('4236da49914fa6317eb2fae1b3fd7ba08aa96a34bc5245bfd15b6532049193cbd0367bb3620e32252ce71cdd1128bec4b20c0e88b02c55d0ede1bb5bb091ddeb')
-b2sums=('e2aa109a0cc435da7a8ba5f40b5dc6474e27ec340785c0070fce4a648fb5a186f6f0f5ab4e53c8e06c91fb1cb15179ecdb605a7f7477968e4d5595fc46cbd7c8')
-
-prepare() {
-  cd ${pkgname}-${pkgver}
-  sed 's|env python.*|env python|' -i flawfinder
-  sed -E 's|(diff_file = open\(diffhitlist_filename)\)|\1, "rb")|' -i flawfinder
-}
+source=(https://dwheeler.com/flawfinder/flawfinder-${pkgver}.tar.gz)
+sha512sums=('630be03190f1a8900c001143a9cbb98d2bbd4cc1134097070b39b34a51ff8ee98ff060f082dd7fb5c6773ce1e751926a1b95faac6c307facdba445d919547940')
+b2sums=('8ddc04d7cef5946d574db499c9d3bd61f9bf8c556d58d649b50544d8c70e76c7dab15391464f5dac3dc229602a6988ddbfaa194dab579cc1b56112af519d6102')
 
 check() {
   cd ${pkgname}-${pkgver}

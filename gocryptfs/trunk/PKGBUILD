@@ -3,17 +3,19 @@
 
 _pkgauthor=rfjakob
 pkgname=gocryptfs
-pkgver=1.8.0
-pkgrel=2
+pkgver=2.1
+pkgrel=1
 pkgdesc='Encrypted overlay filesystem written in Go.'
 arch=('x86_64')
 url="https://github.com/${_pkgauthor}/${pkgname}"
 license=('MIT')
 depends=('gcc-libs' 'openssl' 'fuse')
 makedepends=('go' 'pandoc' 'man-db')
-source=("${pkgname}-${pkgver}.tar.gz::https://github.com/${_pkgauthor}/${pkgname}/releases/download/v${pkgver}/${pkgname}_v${pkgver}_src-deps.tar.gz"
-        "${pkgname}-${pkgver}.tar.gz.asc::https://github.com/${_pkgauthor}/${pkgname}/releases/download/v${pkgver}/${pkgname}_v${pkgver}_src-deps.tar.gz.asc")
-sha256sums=('c4ca576c2a47f0ed395b96f70fb58fc8f7b4beced8ae67e356eeed6898f8352a'
+source=(
+    "${pkgname}-${pkgver}.tar.gz::https://github.com/${_pkgauthor}/${pkgname}/releases/download/v${pkgver}/${pkgname}_v${pkgver}_src-deps.tar.gz"
+    "${pkgname}-${pkgver}.tar.gz.asc::https://github.com/${_pkgauthor}/${pkgname}/releases/download/v${pkgver}/${pkgname}_v${pkgver}_src-deps.tar.gz.asc"
+)
+sha256sums=('cf277ce6527cc0c04d19515e745fd598244a64b9b3afb3d30d5939da65242668'
             'SKIP')
 validpgpkeys=('FFF3E01444FED7C316A3545A895F5BC123A02740')
 

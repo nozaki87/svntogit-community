@@ -2,42 +2,37 @@
 
 pkgbase=percona-server
 pkgname=('libperconaserverclient' 'percona-server-clients' 'percona-server')
-pkgver=8.0.22_13
+pkgver=8.0.25_15
 _boost_ver=1.73.0
 _pkgver=${pkgver/_/-}
 _myver=${pkgver/_rel*}
-pkgrel=3
+pkgrel=2
 arch=('x86_64')
-makedepends=('cmake' 'zlib' 'lz4' 'zstd' 'libaio' 'systemd-tools' 'pam' 'numactl' 'jemalloc' 'openssl' 'rpcsvc-proto' 'boost' 'doxygen' 'graphviz')
+makedepends=('cmake' 'zlib' 'lz4' 'zstd' 'libaio' 'systemd-tools' 'pam' 'numactl' 'jemalloc' 'openssl'
+             'rpcsvc-proto' 'doxygen' 'graphviz' 'libevent' 'protobuf') # 'boost'
 license=('GPL')
 url="https://www.percona.com/software/mysql-database/percona-server"
 source=("https://www.percona.com/downloads/Percona-Server-${pkgver%.*_*}/Percona-Server-$_pkgver/source/tarball/percona-server-$_pkgver.tar.gz"
-        "https://dl.bintray.com/boostorg/release/$_boost_ver/source/boost_${_boost_ver//./_}.tar.gz"
+        "https://boostorg.jfrog.io/artifactory/main/release/$_boost_ver/source/boost_${_boost_ver//./_}.tar.gz"
         'my.cnf'
         'mysql-user.conf'
         'mysqlrouter-user.conf'
-        'icu68.patch'
         'build-hostname.patch'
-        'no-werror.patch'
-        'rocksdb-make.patch')
-sha256sums=('614249dc7790e82cabf22fdb20492be7ec5b8e98550f662204a17e0e8797cc9a'
+        'no-werror.patch')
+sha256sums=('447168d0cda3a0ef82ae0d20aa5af2fccfe5697c0f298262f1e8e315ac5c2dec'
             '9995e192e68528793755692917f9eb6422f3052a53c5e13ba278a228af6c7acf'
             'b467b04d6d06152b2abc33f2a6de63fef0fc922dd5119d2ee1d07d3c1a489731'
             '5d7710fe88ec6d298175a309c0b776142397b119c468830b2865980292ed5da6'
             '4ca7ffdcb2d1716d4f31e4c7dd314e5d76e64f13fdc67c5d81c53650b793f5e0'
-            '80189c3d1c171eea06567aa9c66e10675d7f43721d0475fa2fca5d1e6ae03ea8'
             '1537fdbb92dd1c135c1eb9f4d10c44fd02e652db66c933d731990a1196f1397c'
-            '2343a191c452b91caa458b03b0c1ef3f5afb0e7031816c68467af5c6a6ffe253'
-            '2ff495d271f99c4d0dba89e8ccde7e6b9789a4ea6b55034de9b9217b47e32c03')
+            '2343a191c452b91caa458b03b0c1ef3f5afb0e7031816c68467af5c6a6ffe253')
 
 prepare() {
 	cd $pkgbase-$_pkgver
 	rm -v sql/sql_yacc.{cc,h}
 
-	patch -p0 -i "$srcdir"/icu68.patch
-	patch -p1 -i "$srcdir"/build-hostname.patch
-	patch -p1 -i "$srcdir"/no-werror.patch
-	patch -p1 -i "$srcdir"/rocksdb-make.patch
+	patch --verbose -p1 -i "$srcdir"/build-hostname.patch
+	patch --verbose -p1 -i "$srcdir"/no-werror.patch
 
 	sed -r -e s@/var/run/mysqlrouter@/run/mysqlrouter@ \
 	       -e s@lib64/mysql@lib/mysql@ \
@@ -58,17 +53,20 @@ build() {
 	cd build
 
 	cmake ../$pkgbase-$_pkgver \
+		-DCMAKE_C_FLAGS_RELWITHDEBINFO="${CFLAGS} -DNDEBUG" \
+		-DCMAKE_CXX_FLAGS_RELWITHDEBINFO="${CXXFLAGS} -DNDEBUG" \
 		-Wno-dev \
-		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		-DCMAKE_POSITION_INDEPENDENT_CODE=ON \
 		-DBUILD_CONFIG=mysql_release \
-		-DFEATURE_SET=community \
 		-DREPRODUCIBLE_BUILD=ON \
 		-DCMAKE_INSTALL_PREFIX=/usr \
 		-DSYSCONFDIR=/etc/mysql \
 		-DMYSQL_DATADIR=/var/lib/mysql \
 		-DMYSQL_UNIX_ADDR=/run/mysqld/mysqld.sock \
 		-DDEFAULT_CHARSET=utf8mb4 \
-		-DDEFAULT_COLLATION=utf8mb4_general_ci \
+		-DDEFAULT_COLLATION=utf8mb4_0900_ai_ci \
+		-DWITH_EXTRA_CHARSETS=all \
 		-DENABLED_LOCAL_INFILE=ON \
 		-DINSTALL_LAYOUT=RPM \
 		-DINSTALL_SBINDIR=bin \
@@ -87,6 +85,8 @@ build() {
 		-DWITH_ZSTD=system \
 		-DWITH_SSL=system \
 		-DWITH_ICU=system \
+		-DWITH_LIBEVENT=system \
+		-DWITH_PROTOBUF=system \
 		-DWITH_LIBWRAP=OFF \
 		-DWITH_MECAB=OFF \
 		-DWITH_PAM=ON \
@@ -157,7 +157,8 @@ package_percona-server-clients() {
 package_percona-server() {
 	pkgdesc='Drop-in replacement for MySQL that provides improved performance, diagnostics, instrumentation and MyRocks storage engine'
 	backup=('etc/mysql/my.cnf' 'etc/mysqlrouter/mysqlrouter.conf')
-	depends=('libaio' 'systemd-tools' 'pam' 'jemalloc' 'numactl' 'lz4' 'zstd' 'openssl' 'libtirpc' 'curl' 'boost-libs')
+	depends=('libaio' 'systemd-tools' 'pam' 'jemalloc' 'numactl' 'lz4' 'zstd' 'openssl' 'libtirpc' 'curl'
+	         'libevent' 'protobuf' 'icu') # 'boost-libs'
 	optdepends=('perl-dbd-mysql')
 	conflicts=('mysql')
 	provides=("mysql=$_myver" "mariadb=$_myver")
@@ -194,7 +195,7 @@ package_percona-server() {
 	rm -r usr/share/aclocal usr/lib/pkgconfig
 
 	# provided by percona-server-clients
-	rm usr/bin/mysql{,admin,check,dump,import,show,slap,pump,binlog,test,_upgrade}
+	rm usr/bin/mysql{,admin,check,dump,import,show,slap,pump,binlog,test,_upgrade,_migrate_keyring}
 	rm usr/lib/perconaserver/plugin/authentication_*_client.so
 	rm usr/share/man/man1/mysql{,admin,check,dump,import,show,slap,pump,binlog,_upgrade}.1
 

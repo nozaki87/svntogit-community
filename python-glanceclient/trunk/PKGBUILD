@@ -2,20 +2,19 @@
 # Contributor: Daniel Wallace <danielwallace at gtmanfred dot com>
 
 pkgname=python-glanceclient
-pkgver=3.3.0
-pkgrel=1
+pkgver=3.5.0
+pkgrel=2
 pkgdesc="OpenStack Image API Client Library"
 arch=('any')
 url="https://docs.openstack.org/developer/python-glanceclient"
 license=('Apache')
-depends=('python-six' 'python-pbr' 'python-babel' 'python-prettytable' 'python-keystoneauth1'
-         'python-requests' 'python-warlock' 'python-oslo-utils' 'python-oslo-i18n' 'python-wrapt'
-         'python-pyopenssl')
-makedepends=('python-setuptools' 'python-pbr')
+depends=('python-pbr' 'python-prettytable' 'python-keystoneauth1' 'python-requests' 'python-warlock'
+         'python-oslo-utils' 'python-oslo-i18n' 'python-wrapt' 'python-pyopenssl')
+makedepends=('python-setuptools')
 checkdepends=('python-stestr' 'python-ddt' 'python-mock' 'python-requests-mock' 'python-testscenarios')
 options=('!emptydirs')
-source=("$pkgname-$pkgver.tar.gz::https://github.com/openstack/python-glanceclient/archive/$pkgver.tar.gz")
-sha512sums=('814097e19dbd3e0fa110b8d2e97c1faa3df654c80e081c9aba552932a0acafc495becc9fde6950779cac2adc126c1941a61ef31f098611940758b84f95643a65')
+source=("https://github.com/openstack/python-glanceclient/archive/$pkgver/$pkgname-$pkgver.tar.gz")
+sha512sums=('1f25df6b35176a5c40c5e384e429afacffc034f45a54a501b8fa60f83cacfee48f79660b7169510b91b144b1697e8acc352b77212aa458aaed5afeeecd4059ad')
 
 export PBR_VERSION=$pkgver
 

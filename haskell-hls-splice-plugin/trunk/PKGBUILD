@@ -2,24 +2,24 @@
 
 _hkgname=hls-splice-plugin
 pkgname=haskell-hls-splice-plugin
-pkgver=1.0.0.0
-pkgrel=34
+pkgver=1.0.0.3
+pkgrel=3
 pkgdesc="HLS Plugin to expand TemplateHaskell Splices and QuasiQuotes"
 url="https://hackage.haskell.org/package/hls-splice-plugin"
 license=("Apache")
 arch=('x86_64')
 depends=('ghc-libs' 'haskell-aeson' 'haskell-dlist' 'haskell-extra' 'haskell-foldl' 'haskell-ghc'
          'haskell-ghc-exactprint' 'haskell-ghcide' 'haskell-hls-plugin-api' 'haskell-lens'
-         'haskell-lsp' 'haskell-retrie' 'haskell-shake' 'haskell-syb' 'haskell-unliftio-core'
+         'haskell-lsp' 'haskell-retrie' 'haskell-syb' 'haskell-unliftio-core'
          'haskell-unordered-containers')
-makedepends=('ghc' 'uusi')
+makedepends=('ghc' 'uusi' 'haskell-hls-test-utils')
+checkdepends=('git')
 source=("https://hackage.haskell.org/packages/archive/$_hkgname/$pkgver/$_hkgname-$pkgver.tar.gz")
-sha256sums=('4bdec8dcc5cdc32e4786030cebe1170ba12d2378a5bd8016b12ea1474c94a9f6')
+sha512sums=('ffa006d350947c00e9b2e45dc5c7b6ddc31723d93ae8111443bae7c67df4bb0f4c62ac6c22a4bc085ce1f2a6d15f420d8da134f1c3787a47b5ba85fcd9674b41')
 
 prepare() {
   cd $_hkgname-$pkgver
   gen-setup
-  uusi -u ghcide $_hkgname.cabal
 }
 
 build() {
@@ -36,6 +36,11 @@ build() {
   runhaskell Setup unregister --gen-script
   sed -i -r -e "s|ghc-pkg.*update[^ ]* |&'--force' |" register.sh
   sed -i -r -e "s|ghc-pkg.*unregister[^ ]* |&'--force' |" unregister.sh
+}
+
+check() {
+  cd $_hkgname-$pkgver
+  runhaskell Setup test --show-details=direct
 }
 
 package() {

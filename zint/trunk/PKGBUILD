@@ -2,44 +2,43 @@
 
 pkgbase=zint
 pkgname=(zint zint-qt)
-pkgver=2.9.1
+pkgver=2.10.0
 pkgrel=1
-pkgdesc="Barcode encoding library supporting over 50 symbologies"
+pkgdesc='Barcode encoding library supporting over 50 symbologies'
 arch=('x86_64')
-url="http://zint.org.uk/"
-license=('GPL')
-depends=('hicolor-icon-theme' 'qt5-base')
-makedepends=('cmake' 'qt5-tools')
-source=("https://downloads.sourceforge.net/$pkgname/$pkgname-$pkgver-src.tar.gz"
-        zint-qt.appdata.xml)
-sha256sums=('bd286d863bc60d65a805ec3e46329c5273a13719724803b0ac02e5b5804c596a'
-            '6c99514fb9079b6e6322b3b11fed5ff2c43cdcdd24c15e3cbf2663b884fc2f0c')
+url='http://zint.org.uk/'
+license=('GPL3')
+makedepends=('cmake' 'ninja' 'qt6-tools')
+source=("https://downloads.sourceforge.net/$pkgbase/$pkgbase-$pkgver-src.tar.gz"
+        'zint-qt.appdata.xml')
+sha256sums=('bb97e98a32e140c344e92c8da84a9df413dca16083f2fcdc29791bec77350339'
+            '4286c7f56f0ea8fcf8dfa164b3a3fea08a02ad3b5111c6ac63c4d55134b67564')
 
 build() {
-	cd $pkgbase-$pkgver-src
-	cmake -DCMAKE_INSTALL_PREFIX=/usr
-	make
+  # Hack to force Qt6
+  CMAKE_PREFIX_PATH="6.0.0" \
+  cmake -S $pkgbase-$pkgver-src -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DUSE_QT6=ON
+  cmake --build build
 }
 
 package_zint() {
-	depends=('libpng')
+  depends=('libpng')
 
-	cd $pkgbase-$pkgver-src
-	make DESTDIR="$pkgdir" install
+  DESTDIR="$pkgdir" cmake --install build
 
-	rm "$pkgdir/usr/bin/zint-qt" \
-	   "$pkgdir/usr/include/qzint.h" \
-	   "$pkgdir/usr/lib/libQZint.so"*
+  rm "$pkgdir/usr/bin/zint-qt" \
+     "$pkgdir/usr/include/qzint.h" \
+     "$pkgdir/usr/lib/libQZint"*
 }
 
 package_zint-qt() {
-	pkgdesc="Zint Barcode Studio GUI"
-	depends=('hicolor-icon-theme' 'qt5-base' 'zint')
+  pkgdesc='Zint Barcode Studio GUI'
+  depends=('hicolor-icon-theme' 'qt6-tools' 'zint')
 
-	cd $pkgbase-$pkgver-src
-	make -C backend_qt DESTDIR="$pkgdir" install
-	make -C frontend_qt DESTDIR="$pkgdir" install
-	install -Dm644 zint.png "$pkgdir/usr/share/icons/hicolor/48x48/apps/zint.png"
-	install -Dm644 zint-qt.desktop "$pkgdir/usr/share/applications/zint-qt.desktop"
-	install -Dm644 ../zint-qt.appdata.xml "$pkgdir/usr/share/metainfo/zint-qt.appdata.xml"
+  DESTDIR="$pkgdir" cmake --install build/backend_qt
+  DESTDIR="$pkgdir" cmake --install build/frontend_qt
+
+  install -Dm644 $pkgbase-$pkgver-src/zint-qt.png "$pkgdir/usr/share/icons/hicolor/48x48/apps/zint-qt.png"
+  install -Dm644 $pkgbase-$pkgver-src/zint-qt.desktop "$pkgdir/usr/share/applications/zint-qt.desktop"
+  install -Dm644 zint-qt.appdata.xml "$pkgdir/usr/share/metainfo/zint-qt.appdata.xml"
 }

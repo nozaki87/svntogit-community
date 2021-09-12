@@ -1,8 +1,8 @@
 # Maintainer: Christian Rebischke <chris.rebischke@archlinux.org>
 # Contributor: ml <>
 pkgname=kubectl-cert-manager
-pkgver=1.2.0
-pkgrel=3
+pkgver=1.5.1
+pkgrel=1
 pkgdesc='Automatically provision and manage TLS certificates in Kubernetes'
 arch=('x86_64' 'aarch64')
 url='https://github.com/jetstack/cert-manager'
@@ -11,7 +11,8 @@ depends=('kubectl')
 makedepends=('git' 'go')
 groups=('kubectl-plugins')
 source=("$url/archive/v$pkgver/$pkgname-$pkgver.tar.gz")
-sha512sums=('e786fbe7eeb553f5604945ddc1cafa03dd817003bd7a0697a2e7e77d9873efd7d5bff9085ae2135115cec78531505b432e39fbc9dc3cbb4b5221966f2172e9fb')
+sha512sums=('26d4c7ac3a106bbd6fa1bfce5789f4a2c2469820a5f680d974b8d256077ffad14fa67b16a670c6398a848a95b5fdfccaeaf831824f14bc43be812199be77a2db')
+b2sums=('712a1a0a2bcfac84dc0dce8424fb7a1724c3dea4775660eb1984ea09d4893c3be95624f7ac384627530e4e77ba35e36426376ef5f125878ee16eb16d74adccda')
 
 build() {
   local _x _commit
@@ -35,8 +36,7 @@ build() {
 check() {
   cd cert-manager-"$pkgver"
   # we don't want e2e and other tests that explicitly want bazel
-  # disabling tests, because of expired certificate.. sigh
-  #go test -short ./cmd/ctl/...
+  go test -short ./cmd/ctl/...
 }
 
 package() {

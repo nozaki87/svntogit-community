@@ -1,7 +1,7 @@
 # Maintainer: David Runge <dvzrv@archlinux.org>
 
 pkgname=padthv1
-pkgver=0.9.21
+pkgver=0.9.23
 pkgrel=1
 pkgdesc="An old-school polyphonic additive synthesizer"
 arch=('x86_64')
@@ -16,13 +16,14 @@ optdepends=('alsa-lib: for standalone application'
             'new-session-manager: for session management using the standalone application'
             'qt6-wayland: for native wayland support')
 source=("https://download.sourceforge.net/${pkgname}/${pkgname}-${pkgver}.tar.gz")
-sha512sums=('33123e9adc2b5e5a59053b4fda92b01950b8ebf6aacd3a82e9ee5ffccf398169c57bbef913444be973647b1178eeec67cf75f94689415290ce980e61e5caaef2')
-b2sums=('985fe95f41cab8ad3f955858a2303da65534db9e14f44f392e2708a7e37069dc9f16bf53c1d6742a15faa700233562a87ff1735afb8ee6e735ba75a03bdc8841')
+sha512sums=('d313025c012b2944d5a0b3ef95bda8065f0f6bf4e280094344b8fc75f4312af178eb80771b2b1fa6caf6585b27b60f4f173ef67bd89a264ae4527e99ba99900a')
+b2sums=('464c135738cc8afde19f47cbe7589bf8481b1d8d25c248a621ceba619aaf41972acd02743511584de9442acb10c6d42e3012f5b1c06fbd80ff9dec488c0933c3')
 
 build() {
   cd "${pkgname}-${pkgver}"
   cmake -DCMAKE_INSTALL_PREFIX='/usr' \
         -DCMAKE_BUILD_TYPE='None' \
+        -DCONFIG_QT6=ON \
         -Wno-dev \
         -B build \
         -S .

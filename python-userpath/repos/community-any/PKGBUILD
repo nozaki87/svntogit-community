@@ -2,7 +2,7 @@
 
 _pkgname=userpath
 pkgname=python-$_pkgname
-pkgver=1.4.2
+pkgver=1.7.0
 pkgrel=1
 pkgdesc='Cross-platform tool for adding locations to the user PATH, no elevated privileges required!'
 arch=('any')
@@ -12,7 +12,7 @@ depends=('python' 'python-click' 'python-distro')
 makedepends=('python-setuptools')
 checkdepends=('python-pytest-runner')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/$pkgver.tar.gz")
-sha512sums=('09e6e75244d4364e8a1325f30414b0d5076c1d07a3c369e8164c0e46c753437f9122d00eb14faaed98292881cd78141bab7302fd35831aac4485027df7a18951')
+sha512sums=('faabda97ae4be23350ecf9e3be9b21b3b66b6873f31e094f5bd839b5ddd28d0968799217678b91fdf80a3b829aa1f7f6b451c55b0fc94f770e62f17dd6192b5e')
 
 build() {
   cd $_pkgname-$pkgver

@@ -1,3 +1,19 @@
+2021-08-18 Jaroslav Lichtblau <svetlemodry@archlinux.org>
+	* qmmp 2.0.0-1
+
+2021-07-31 Jaroslav Lichtblau <svetlemodry@archlinux.org>
+	* qmmp 1.5.1-1
+
+2021-06-13 Jaroslav Lichtblau <svetlemodry@archlinux.org>
+	* qmmp 1.5.0-2
+	* FS#71035 - adding pipewire
+
+2021-05-24 Jaroslav Lichtblau <svetlemodry@archlinux.org>
+	* qmmp 1.5.0-1
+
+2021-05-09 Jaroslav Lichtblau <svetlemodry@archlinux.org>
+	* qmmp 1.4.6-1
+
 2021-05-02 Jaroslav Lichtblau <svetlemodry@archlinux.org>
 	* qmmp 1.4.5-1
 

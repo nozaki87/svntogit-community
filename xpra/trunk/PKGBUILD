@@ -2,7 +2,7 @@
 # Contributor: Bug <bug2000@gmail.com>
 
 pkgname=xpra
-pkgver=4.1.3
+pkgver=4.2.2
 pkgrel=1
 pkgdesc="multi-platform screen and application forwarding system screen for X11"
 arch=('x86_64')
@@ -38,11 +38,11 @@ backup=('etc/xpra/xpra.conf' 'etc/xpra/xorg.conf'
 source=($pkgname-$pkgver.tar.xz::$url/src/$pkgname-$pkgver.tar.gz
         $pkgname-$pkgver.tar.xz.asc::$url/src/$pkgname-$pkgver.tar.gz.gpg)
 
-md5sums=('159f2050633051d2359b169097debcac'
+md5sums=('f9a740750479a1a284b98bf323f5b95c'
          'SKIP')
-sha1sums=('e2655672c757050480a83058c633dd79cffa4297'
+sha1sums=('2d38a71b40b0ad8c6d81cc4cfb4b6f899fee3d2b'
           'SKIP')
-sha256sums=('4deb263d199f5b2f88aaac68345774e285ff6f6af21ab7993de876af8b0bf094'
+sha256sums=('26f1f60b7eb4eb672e7a0b33c827d24f0275548d0d99d25d2c0de17f804c7e5a'
             'SKIP')
 validpgpkeys=('C11C0A4DF702EDF6C04F458C18ADB31CF18AD6BB') # Antoine Martin <antoine@nagafix.co.uk>
 

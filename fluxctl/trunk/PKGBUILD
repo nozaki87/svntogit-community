@@ -2,8 +2,8 @@
 
 pkgname=fluxctl
 _pkgname=flux
-pkgver=1.21.1
-pkgrel=2
+pkgver=1.24.0
+pkgrel=1
 pkgdesc="Controller for the GitOps Kubernetes operator flux"
 arch=('x86_64')
 url="https://github.com/fluxcd/flux"
@@ -11,7 +11,8 @@ license=('Apache')
 makedepends=('go' 'git')
 depends=('glibc')
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/fluxcd/flux/archive/${pkgver}.tar.gz")
-sha512sums=('bd850951abe72b78fff7c4b57bae2f5b0dc55a45d95d75c1feff8695043393e2547ac1c37562db8f62dc897e6f9fc4920c0b55a69ca386f3ff181aee43734e6b')
+sha512sums=('3fa23d87e040a59cd82c24a43c1443836b8a6b4454495bab1054d6ab1aac7410dc31fc84957dd9fe978563413dd99537abe5cec7afa5a77030f80f9f97ca089d')
+b2sums=('f7507e5c8a70f474f460d4a1cfb9ee6b024be58bb956b21eb793f4aada9fb11ab92b4285c55127c5467449b76722d75be0dded5725c5a4c0173f73b783c315d8')
 
 build() {
   cd "${_pkgname}-${pkgver}/cmd/fluxctl"

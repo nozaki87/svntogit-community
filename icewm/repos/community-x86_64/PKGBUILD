@@ -3,7 +3,7 @@
 # Contributor: Eric Bélanger <eric@archlinux.org>
 
 pkgname=icewm
-pkgver=2.3.3
+pkgver=2.7.0
 pkgrel=1
 pkgdesc='Window Manager designed for speed, usability, and consistency'
 arch=(x86_64)
@@ -11,10 +11,9 @@ url='https://ice-wm.org/'
 license=(LGPL)
 depends=(alsa-lib imlib2 librsvg libsndfile libxcomposite libxdamage libxinerama libxpm libxrandr)
 makedepends=(asciidoctor xorg-mkfontdir)
-groups=(icewm)
 optdepends=('perl: for icewm-menu-xrandr')
 source=("https://github.com/ice-wm/icewm/releases/download/$pkgver/$pkgname-$pkgver.tar.lz")
-sha256sums=('4162565cf7566d78d786e4ecf4b0639451b8464bcb24e761b1f08ef43e95e513')
+sha256sums=('c56b1d0f5d8efa2af3e38003770eab9165289aa87bd8f1627819c7f93f9433a3')
 
 build() {
   cd $pkgname-$pkgver

@@ -7,11 +7,14 @@
 # Contributor: GARETTE Emmanuel <gnunux at laposte dot net>
 # Contributor: Phillip Schichtel <phillip@schich.tel>
 
-# --->>> remember to rebuild/bump pigeonhole AND dovecot-fts-elastic in one step <<<---
+# --->>> remember to rebuild/bump the following packages TOGETHER with a new dovecot ABI:
+#   +pigeonhole
+#   +dovecot-fts-elastic
+#   +dovecot-fts-xapian
 
 pkgname=dovecot
-pkgver=2.3.14
-pkgrel=2
+pkgver=2.3.16
+pkgrel=1
 
 pkgdesc="An IMAP and POP3 server written with security primarily in mind"
 url="https://dovecot.org/"
@@ -19,12 +22,11 @@ arch=('x86_64')
 license=("LGPL")
 
 depends=('krb5' 'openssl' 'sqlite' 'mariadb-libs' 'libsodium'
-         'postgresql-libs' 'bzip2' 'lz4' 'expat' 'curl' 'pam')
-makedepends=('libcap' 'libldap' 'clucene' 'libsodium' 'lua')
+         'postgresql-libs' 'bzip2' 'lz4' 'expat' 'curl' 'pam' 'systemd-libs')
+makedepends=('libcap' 'libldap' 'lua53' 'xz' 'clucene' 'systemd')
 optdepends=('libldap: ldap plugin'
-            'xz: imap zlib  plugin'
-            'clucene: alternative FTS indexer'
-            'lua: LUA auth and push support')
+            'lua53: LUA auth and push support'
+            'clucene: alternative FTS indexer')
 
 provides=('imap-server' 'pop3-server')
 
@@ -38,7 +40,7 @@ source=("https://dovecot.org/releases/2.3/${pkgname}-${pkgver}.tar.gz"{,.sig}
         'dovecot.ld.so.conf'
         'dovecot.pam')
 
-sha256sums=('c8b3d7f3af1e558a3ff0f970309d4013a4d3ce136f8c02a53a3b05f345b9a34a'
+sha256sums=('03a71d53055bd9ec528d55e07afaf15c09dec9856cba734904bfd05acbc6cf12'
             'SKIP'
             'c5e3a8ffe23e5deb4f7893d9877d972347c2ee45c4ebf713de85c537e47cfcaf'
             '0b0625b1e66ca6a95d506fd00d6a68e70620c8ea28606e2528953ffb1806b08e'
@@ -60,19 +62,20 @@ prepare() {
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
 
-  ./configure --prefix=/usr --sysconfdir=/etc \
+  ./configure \
+    --prefix=/usr \
     --sbindir=/usr/bin \
+    --sysconfdir=/etc \
     --localstatedir=/var \
     --libexecdir=/usr/lib \
     --with-rundir=/run/dovecot \
     --with-moduledir=/usr/lib/dovecot/modules \
-    --with-systemdsystemunitdir=/usr/lib/systemd/system \
     --disable-static \
     --with-nss \
     --with-pam \
-    --with-mysql \
-    --with-pgsql \
     --with-sqlite \
+    --with-pgsql \
+    --with-mysql \
     --with-ssl=openssl \
     --with-ssldir=/etc/ssl \
     --with-gssapi \
@@ -82,11 +85,14 @@ build() {
     --with-bzlib \
     --with-lzma \
     --with-lz4 \
-    --with-libcap \
-    --with-solr \
+    --with-zstd \
     --with-lucene \
+    --with-solr \
     --with-sodium \
+    --with-libcap \
     --with-docs
+
+  sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
 
   make
 }

@@ -8,17 +8,17 @@
 
 pkgbase=calibre
 pkgname=calibre
-pkgver=5.17.0
+pkgver=5.27.0
 pkgrel=1
 pkgdesc="Ebook management application"
 arch=('x86_64')
 url="https://calibre-ebook.com/"
 license=('GPL3')
-_py_deps=('apsw' 'beautifulsoup4' 'cchardet' 'cssselect' 'css-parser' 'dateutil' 'dbus' 'dnspython'
-          'feedparser' 'html2text' 'html5-parser' 'lxml' 'markdown' 'mechanize' 'msgpack'
+_py_deps=('apsw' 'beautifulsoup4' 'cchardet' 'cssselect' 'css-parser' 'dateutil' 'dnspython'
+          'feedparser' 'html2text' 'html5-parser' 'jeepney' 'lxml' 'markdown' 'mechanize' 'msgpack'
           'netifaces' 'unrardll' 'pillow' 'psutil' 'py7zr' 'pychm' 'pygments' 'pyqt5'
           'pyqtwebengine' 'regex' 'zeroconf')
-depends=('hunspell' 'hyphen' 'icu' 'jxrlib' 'libmtp' 'libusb'
+depends=('hunspell' 'hyphen' 'icu' 'jxrlib' 'libmtp' 'libstemmer' 'libusb'
          'libwmf' 'mathjax' 'mtdev' 'optipng' 'podofo'
          "${_py_deps[@]/#/python-}" 'qt5-imageformats' 'qt5-svg' 'ttf-liberation' 'udisks2')
 makedepends=('qt5-x11extras' 'sip' 'pyqt-builder' 'xdg-utils' 'rapydscript-ng')
@@ -29,9 +29,9 @@ conflicts=('calibre-common' 'calibre-python3')
 replaces=('calibre-common' 'calibre-python3')
 source=("https://download.calibre-ebook.com/${pkgver}/calibre-${pkgver}.tar.xz"
         "https://calibre-ebook.com/signatures/${pkgbase}-${pkgver}.tar.xz.sig")
-sha256sums=('add8812f7637abfd3015f5861388c69166a4815f2103d1e30dc297b28ead56bb'
+sha256sums=('f528f15ee6a8258bb27251d3600858f770556c77b91c970bd0368f903fc3485b'
             'SKIP')
-b2sums=('e2707985df0d39f05dfaa35f41d48f82bfc2643855e2b830b9662bf113104f57885689b3000d123edeb5b1ac50f9f01ac809aabe81a8c4da2bde008926bb3893'
+b2sums=('2704f5d04b4039846b0b15a711a9a8afd308907181912d0c56dcc82ef2359fc2d7466d0244e2d0b15512ef380f28f6d26ba19bb995c1ef7e58e728c8593e706d'
         'SKIP')
 validpgpkeys=('3CE1780F78DD88DF45194FD706BC317B515ACE7C') # Kovid Goyal (New longer key) <kovid@kovidgoyal.net>
 

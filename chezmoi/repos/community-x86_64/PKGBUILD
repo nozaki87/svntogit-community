@@ -3,7 +3,7 @@
 # Contributor:  <godeater@gmail.com>
 
 pkgname=chezmoi
-pkgver=2.0.11
+pkgver=2.4.0
 pkgrel=1
 pkgdesc="Manage your dotfiles across multiple machines"
 arch=('x86_64')
@@ -12,7 +12,7 @@ license=('MIT')
 makedepends=('go' 'git')
 depends=('glibc')
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/twpayne/chezmoi/archive/v${pkgver}.tar.gz")
-sha512sums=('083043fd27dd71c251d89c418f9e9a994b2141574a09909374d07e33f2eb1256a2ac24e66895083a47a854209a769278814c5ef086510909ea7b671a5996fcee')
+sha512sums=('0fb74262321bf02a37062364b150218b04fa57a9e400b93b1a878fac48628bd07da6a9f70d3b6036143c9deb84de575556a1db42311a45dcea0903c434fa8145')
 
 build() {
   cd "$pkgname-$pkgver"
@@ -26,9 +26,10 @@ build() {
     -buildmode=pie \
     -mod=readonly \
     -modcacherw \
-    -tags noupgrade,noembeddocs \
+    -tags noupgrade \
     -ldflags "-X github.com/twpayne/chezmoi/cmd.DocsDir=/usr/share/doc/$pkgname \
               -X main.version=$pkgver \
+              -X main.date=$(date -u +'%Y-%m-%dT%H:%M:%SZ' --date=@${SOURCE_DATE_EPOCH}) \
               -extldflags ${LDFLAGS}" \
     .
 }

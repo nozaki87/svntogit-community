@@ -1,21 +1,25 @@
 # Maintainer: Maxim Baz <$pkgname at maximbaz dot com>
 
 pkgname=kak-lsp
-pkgver=9.0.0
-pkgrel=1
+pkgver=11.0.0
+pkgrel=2
 pkgdesc='Kakoune Language Server Protocol Client'
 arch=('x86_64')
-url='https://github.com/ul/kak-lsp'
+url='https://github.com/kak-lsp/kak-lsp'
 license=('custom:unlicense')
 depends=('kakoune')
 makedepends=('rust')
 optdepends=(
     'bash-language-server: language server for Bash'
+    'gopls: language server for Go'
+    'haskell-language-server: language server for Haskell'
+    'lua-language-server: language server for Lua'
     'python-language-server: language server for Python'
-    'go-tools: language server for Go'
+    'python-lsp-server: language server for Python'
+    'rust-analyzer: language server for Rust'
 )
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/ul/${pkgname}/archive/v${pkgver}.tar.gz")
-sha256sums=('25898b816a92fc2436c146d7cd2e891b608203fe63690aafa648e6ae8bfa9112')
+sha256sums=('33dc3b1e8ff6bd1dc45b569045d58f778931443b699fc0d51cfcbf13bae9148f')
 
 build() {
     cd "${pkgname}-${pkgver}"

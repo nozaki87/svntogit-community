@@ -2,8 +2,8 @@
 # Contributor: Ivan Shapovalov <intelfx@intelfx.name>
 
 pkgname=python-frozendict
-pkgver=1.2
-pkgrel=8
+pkgver=2.0.6
+pkgrel=1
 
 pkgdesc='An immutable dictionary'
 url='https://pypi.python.org/pypi/frozendict/'
@@ -14,7 +14,7 @@ depends=('python' 'python-setuptools')
 
 source=("https://pypi.org/packages/source/f/frozendict/frozendict-$pkgver.tar.gz")
 
-md5sums=('483ce6ddfe68ca197bc123aaafebf9ab')
+md5sums=('67fe973cf3faae650a3ac0cbda1b2773')
 
 build() {
 	cd "$srcdir"/frozendict-$pkgver

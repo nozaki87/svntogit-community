@@ -1,18 +1,18 @@
 # Maintainer: Antonio Rojas <arojas@archlinux.org>
 
 pkgname=jupyter-server
-pkgver=1.6.4
+pkgver=1.11.0
 pkgrel=1
-pkgdesc="Provides the backend for Jupyter web applications like Jupyter notebook, JupyterLab, and Voila"
+pkgdesc='Provides the backend for Jupyter web applications like Jupyter notebook, JupyterLab, and Voila'
 arch=(any)
-url="https://jupyter.org/"
+url='https://jupyter.org/'
 license=(custom)
 depends=(python-jupyter_client jupyter-nbformat jupyter-nbconvert python-terminado python-prometheus_client python-traitlets python-tornado
-         python-jinja python-send2trash python-anyio python-jupyter_packaging)
+         python-jinja python-send2trash python-anyio python-jupyter_packaging python-websocket-client python-requests-unixsocket)
 makedepends=(python-setuptools)
 optdepends=('jupyter-server-mathjax: to use local MathJax')
 source=(https://pypi.io/packages/source/j/${pkgname/-/_}/${pkgname/-/_}-$pkgver.tar.gz)
-sha256sums=('21c20986047563aba2997cb10ba9441a162ec1d65b5aece9d5fa625602bb2b40')
+sha256sums=('8ab4f484a4a2698f757cff0769d27b5d991e0232a666d54f4d6ada4e6a61330b')
 
 build() {
   cd ${pkgname/-/_}-$pkgver

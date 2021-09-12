@@ -2,7 +2,7 @@
 # Contributor: Gavin Lloyd <gavinhungry@gmail.com>
 
 pkgname=acme.sh
-pkgver=2.8.9
+pkgver=3.0.0
 pkgrel=1
 pkgdesc='An ACME Shell script, an acme client alternative to certbot'
 arch=('any')
@@ -11,7 +11,7 @@ license=('GPL3')
 depends=('bash')
 optdepends=('socat: for standalone mode')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/acmesh-official/acme.sh/archive/$pkgver.tar.gz")
-sha512sums=('94f771fcbc5b12a2a9992659884d16b543d70db52bccf20eddad931b4a5c233c0fd7362ce525e0cbebfdbd841824b815f5b419572f97b549fea7f2663c92c0a8')
+sha512sums=('e93e955100071fda9398131aad965fe6d5b51d9c496b1db0269744513baca4c8eb142d9a35a72b72d4919c004848696fdf9de1ae51edec835ae0f695a6cb14b1')
 
 package() {
   cd $pkgname-$pkgver

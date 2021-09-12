@@ -2,7 +2,7 @@
 # Contributor: speps <speps at aur dot archlinux dot org>
 
 pkgname=synthv1
-pkgver=0.9.21
+pkgver=0.9.23
 pkgrel=1
 pkgdesc="Old-school all-digital 4-oscillator subtractive polyphonic synthesizer with stereo fx"
 arch=('x86_64')
@@ -17,13 +17,14 @@ optdepends=('alsa-lib: for standalone application'
             'new-session-manager: for session management using the standalone application'
             'qt6-wayland: for native wayland support')
 source=("https://download.sourceforge.net/${pkgname}/${pkgname}-${pkgver}.tar.gz")
-sha512sums=('1c3304a15685dd51948fec65b94dd618951b1086bb9290219c751cd6bcd9d65b80ce746e430b4001c3e7e4586dc04e67aee3a33355aeb848c39f4b21e30c0eff')
-b2sums=('a5ce843f5a2f14039be72d43bce8ceef23f9810202cd49fa1fa73db25239078ef68ec368b9c68e7a7d7ecbf32f5f3fc25c8c12cb811f0b97043f5496ea2db8f2')
+sha512sums=('b4475b1da31fc539470efd4a0a8b7ebfd40b431908548c89f774abbe6f3e76de6dd8549c68c956c4d44cb3a784352897d5859580403aa9812fdfaf7081bfa324')
+b2sums=('8b8f53f86714ccba5d4c8dd2cc7e454551a2a0145da8201fd14d1ef8409ad7d02638a6ba425beed76b0e48321d7a17331a4cc749cfca357e2f480f9a089bc65f')
 
 build() {
   cd "${pkgname}-${pkgver}"
   cmake -DCMAKE_INSTALL_PREFIX='/usr' \
         -DCMAKE_BUILD_TYPE='None' \
+        -DCONFIG_QT6=ON \
         -Wno-dev \
         -B build \
         -S .

@@ -1,33 +1,46 @@
 # Maintainer: Jelle van der Waa <jelle@archlinux.org>
 # Maintainer: Orhun Parmaksız <orhun@archlinux.org>
+# Maintainer: Caleb Maclennan <caleb@alerque.com>
 # Contributor: Fabio 'Lolix' Loli <fabio.loli@disroot.org> -> https://github.com/FabioLolix
 # Contributor: Moritz Schönherr <moritz.schoenherr@gmail.com>
 
 pkgname=mdbook
-pkgver=0.4.7
-pkgrel=1
+pkgver=0.4.12
+pkgrel=3
 pkgdesc="Create book from markdown files, like Gitbook but implemented in Rust"
 url="https://github.com/rust-lang/mdBook"
 arch=('x86_64')
 license=('MPL2')
 depends=('gcc-libs')
-makedepends=('rust')
+makedepends=('cargo')
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/rust-lang/mdBook/archive/v${pkgver}.tar.gz")
-sha256sums=('5adbea6d60a7d4ec13dcf13b451336ce7127c2e872ea0d8482e9bb73f6f61dfd')
+sha256sums=('d28b958c71a7934fde1c22204c3dc41ffc74df98c90afc1bf3ddafd131d4af77')
 # https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md
+
+prepare() {
+  cd "mdBook-${pkgver}"
+  mkdir completions/
+  cargo fetch --locked --target "$CARCH-unknown-linux-gnu"
+}
 
 build() {
   cd "mdBook-${pkgver}"
-  cargo build --release --locked
+  cargo build --frozen --release
+  "./target/release/$pkgname" completions bash > "completions/$pkgname.bash"
+  "./target/release/$pkgname" completions fish > "completions/$pkgname.fish"
+  "./target/release/$pkgname" completions zsh > "completions/_$pkgname"
 }
 
 check() {
   cd "mdBook-${pkgver}"
-  cargo test --release --locked
+  cargo test --frozen
 }
 
 package() {
   cd "mdBook-${pkgver}"
   install -Dm 755 "target/release/${pkgname}" "${pkgdir}/usr/bin/${pkgname}"
   install -Dm 644 README.md -t "$pkgdir/usr/share/doc/$pkgname"
+  install -Dm 644 "completions/$pkgname.bash" "$pkgdir/usr/share/bash-completion/completions/$pkgname"
+  install -Dm 644 "completions/$pkgname.fish" -t "$pkgdir/usr/share/fish/vendor_completions.d"
+  install -Dm 644 "completions/_$pkgname" -t "$pkgdir/usr/share/zsh/site-functions"
 }

@@ -1,0 +1,27 @@
+# Maintainer: Orhun Parmaksız <orhun@archlinux.org>
+
+pkgname=lfs
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="Get information on your mounted disks"
+arch=('x86_64')
+url="https://github.com/Canop/lfs"
+license=('MIT')
+depends=('gcc-libs')
+makedepends=('rust')
+source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
+sha512sums=('47df74fb475b018d9017814ce3e31c4be23a01de738962efea1213580b275ee634a560b0b14223fea0fc8dd70b39233119d3e2f26c7468e10785b67bb0f5e910')
+
+build() {
+  cd "$pkgname-$pkgver"
+  cargo build --release --locked
+}
+
+package() {
+  cd "$pkgname-$pkgver"
+  install -Dm 755 "target/release/$pkgname" -t "$pkgdir/usr/bin"
+  install -Dm 644 README.md -t "$pkgdir/usr/share/doc/$pkgname"
+  install -Dm 644 LICENSE -t "$pkgdir/usr/share/licenses/$pkgname"
+}
+
+# vim: ts=2 sw=2 et:

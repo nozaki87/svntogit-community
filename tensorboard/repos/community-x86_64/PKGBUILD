@@ -2,7 +2,7 @@
 # Contributor: Konstantin Gizdov <arch at kge dot pw>
 
 pkgname=tensorboard
-pkgver=2.5.0
+pkgver=2.6.0
 pkgrel=1
 pkgdesc="TensorFlow's Visualization Toolkit"
 url='https://github.com/tensorflow/tensorboard'
@@ -11,16 +11,21 @@ license=('APACHE')
 depends=('python' 'python-werkzeug' 'python-numpy' 'python-bleach' 'python-wheel' 'python-markdown'
          'python-html5lib' 'python-protobuf' 'python-grpcio' 'python-google-auth-oauthlib'
          'python-tensorboard_plugin_wit' 'absl-py')
+makedepends=('bazel' 'python-setuptools' 'tree' 'rust' 'python-pip')
 optdepends=('python-tensorflow: advanced features for TensorBoard')
-makedepends=('bazel' 'python-setuptools' 'tree')
-source=("${pkgname}-${pkgver}::https://github.com/tensorflow/tensorboard/archive/${pkgver}.tar.gz")
-sha512sums=('f2c8e9d23dbfab2f21e90034275593a8761596afa5bc464b45a43058daf914d6d11425869e8d66c6be7cf057da9f2f9bc464e9df1f0a4dbab23a8c07b39f7a4d')
+source=("${pkgname}-${pkgver}.tar.gz::https://github.com/tensorflow/tensorboard/archive/${pkgver}.tar.gz")
+sha512sums=('6d6f6352f363d5efaca7687c98a848c6fc05962dfd913716cce71ce32b3d2cf15155c5cff037e315f3abe8a6d1f337e3fcec6c05f19df9180b05d84457138062')
 
 build() {
   cd "$pkgname-$pkgver"
 
-  bazel build --experimental_repo_remote_exec tensorboard:tensorboard
-  bazel build --experimental_repo_remote_exec //tensorboard/pip_package:build_pip_package
+  bazel build //tensorboard
+  bazel build //tensorboard/pip_package:build_pip_package
+
+  cd tensorboard/data/server
+  cargo build --release
+  python pip_package/build.py --server-binary target/release/rustboard --out-dir /tmp
+  cd "$srcdir/$pkgname-$pkgver"
 
   mkdir pypackage
   cp -R bazel-bin/tensorboard/pip_package/build_pip_package.runfiles/org_tensorflow_tensorboard/external pypackage
@@ -36,20 +41,15 @@ package() {
 
   install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 
+  pip install --ignore-installed --root "$pkgdir" /tmp/*.whl
+
   cd pypackage
   python setup.py install --root="$pkgdir" --optimize=1
 
   rm -r "$pkgdir"/usr/lib/python3.9/site-packages/external/
 
   _requires="$pkgdir"/usr/lib/python3.9/site-packages/tensorboard-${pkgver}-py3.9.egg-info/requires.txt
-  # This is ugly: We need to patch it to use current bleach and html5lib
-  # because old ones are not even compatible with Python 3.6 and we don't have
-  # those in Arch of course.
-  sed -i 's/bleach==.*/bleach/' ${_requires}
-  sed -i 's/html5lib==.*/html5lib/' ${_requires}
-  # Other ugly hack: workaround for issues 650
-  # https://github.com/tensorflow/tensorboard/issues/650
-  sed -i '/^futures/d' ${_requires}
+  sed -i 's/tensorboard-data-server.*/tensorboard-data-server/' ${_requires}
 }
 
 # vim:set ts=2 sw=2 et:

@@ -1,7 +1,7 @@
 # Maintainer: Felix Yan <felixonmars@archlinux.org>
 
 pkgname=python-google-auth
-pkgver=1.28.1
+pkgver=1.33.0
 pkgrel=1
 pkgdesc="Google Authentication Library"
 url="https://github.com/GoogleCloudPlatform/google-auth-library-python"
@@ -11,9 +11,9 @@ depends=('ca-certificates' 'python-pyasn1-modules' 'python-rsa' 'python-setuptoo
          'python-cachetools')
 checkdepends=('python-pytest' 'python-mock' 'python-requests' 'python-flask'
               'python-oauth2client' 'python-pytest-localserver' 'python-cryptography'
-              'python-freezegun' 'python-responses' 'python-pyopenssl')
-source=("$pkgname-$pkgver.tar.gz::https://github.com/GoogleCloudPlatform/google-auth-library-python/archive/v$pkgver.tar.gz")
-sha512sums=('3fe3e1d296ed829c15b8c814fba5603bd073c3c3578225804280ff77ce7fe9f5c6f51c9160b9df79f00286245403924739ef3c8db0d75f4f9003dc2038728dfa')
+              'python-freezegun' 'python-responses' 'python-pyopenssl' 'python-pyu2f')
+source=("https://github.com/GoogleCloudPlatform/google-auth-library-python/archive/v$pkgver/$pkgname-$pkgver.tar.gz")
+sha512sums=('3e8436b84ffaab6edc5bc8f891a931176c8c7d3847440b2870662f137590c5bc42277ec19808de628e38085939a44f6370b3c6da748d33111856c5000fe4bf2c')
 
 prepare() {
   # Use system cert

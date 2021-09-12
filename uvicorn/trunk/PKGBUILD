@@ -1,26 +1,34 @@
 # Maintainer: Filipe Laíns (FFY00) <lains@archlinux.org>
+# Maintainer: Maxime Gauduin <alucryd@archlinux.org>
 
 pkgname=uvicorn
-pkgver=0.13.4
+pkgver=0.15.0
 pkgrel=1
 pkgdesc='The lightning-fast ASGI server'
 arch=('any')
 url='https://github.com/encode/uvicorn'
 license=('BSD')
-depends=('python' 'python-click' 'python-h11' 'python-websockets' 'python-httptools' 'python-uvloop')
+depends=('python' 'python-asgiref' 'python-click' 'python-h11' 'python-websockets' 'python-httptools' 'python-uvloop')
 optdepends=('python-watchgod: watchgod reload')
-makedepends=('python-setuptools')
-source=("$pkgname-$pkgver.tar.gz::$url/archive/$pkgver.tar.gz")
-sha512sums=('5332494e0b43b4e87f9d6742be679527b1ec2bc4d2e061768594d44b1fd1d6961a2bd1fa23469fca6c530ef36d6123e453306c2bb664cb27b0cd6145b9a70fd7')
+makedepends=('git' 'python-setuptools')
+_tag=a6dff714f03d4b2434fa2ca6d800d2f42d8477ef
+source=("git+$url#tag=${_tag}")
+sha512sums=('SKIP')
+
+pkgver() {
+  cd $pkgname
+
+  git describe --tags
+}
 
 build() {
-  cd $pkgname-$pkgver
+  cd $pkgname
 
   python setup.py build
 }
 
 package() {
-  cd $pkgname-$pkgver
+  cd $pkgname
 
   python setup.py install --root="$pkgdir" --optimize=1 --skip-build
 

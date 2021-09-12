@@ -2,7 +2,7 @@
 
 _name=zita-jacktools
 pkgname=python-zita-jacktools
-pkgver=1.2.1
+pkgver=1.5.3
 pkgrel=1
 pkgdesc="Audio tools running as a Jack client"
 arch=('x86_64')
@@ -12,8 +12,8 @@ depends=('gcc-libs' 'glibc' 'python-zita-audiotools')
 makedepends=('fftw' 'jack' 'libsndfile' 'python-setuptools' 'zita-convolver'
 'zita-jclient' 'zita-resampler')
 source=("https://kokkinizita.linuxaudio.org/linuxaudio/downloads/${_name}-${pkgver}.tar.bz2")
-sha512sums=('df244a653b662bf117fbb37dd680df1a90a7ac0bb11638ea352fcc17da1902552bc4e00940cbdcc7bdbb22be46c06302b60068fb4874cf06176a9089439cf294')
-b2sums=('50f426ed17a53b234f1deb1ee7d26f2d573a904804ea26192b46f76b13715c1200978e4c4275a2e4543dd3fe84d28118b46913dab18a8d4fe8c92caa3f50de39')
+sha512sums=('5783bdfa8d351b3792cffa2cb32b886ee5a636aa176ccaaa1d4dad56040ffba1befe3142be72f5eafccb8bd83def821b63251756a5dce0b6d7e470078446a647')
+b2sums=('632eb4c9f5ffa20d68d4b001c75d352a1617764e8dd1c1cd9c025e3c7b725f35b2ddb230d58e1902ebe03e14e558156b9f48bfd514fb013d0fe58c2d8ebde826')
 
 prepare() {
   mv -v "${_name}-${pkgver}" "$pkgname-$pkgver"

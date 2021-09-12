@@ -1,0 +1,63 @@
+# Maintainer: George Rawlinson <grawlinson@archlinux.org>
+# Contributor: Haochen Tong <i at hexchain dot org>
+# Contributor: Qi Xiao <xiaqqaix at gmail dot com>
+
+pkgname=elvish
+pkgver=0.16.3
+pkgrel=1
+pkgdesc="A friendly and expressive Unix shell"
+arch=('x86_64')
+url="https://elv.sh"
+license=('BSD')
+makedepends=('git' 'go')
+install="$pkgname.install"
+source=("$pkgname-$pkgver.tar.gz::https://github.com/elves/elvish/archive/v$pkgver.tar.gz")
+b2sums=('e6e412cad068e01bf9d8d0d5709a3463e12bad782b2b0efe8c2b2810d349eae407de68a8b9226e4481e3f51b116207f884342b115e316b42eeb916d1c63bfdd7')
+
+prepare() {
+  cd "$pkgname-$pkgver"
+
+  # create directory for build output
+  mkdir build
+
+  # download dependencies
+  go mod vendor
+}
+
+build() {
+  cd "$pkgname-$pkgver"
+
+  # set Go flags
+  export CGO_CPPFLAGS="${CPPFLAGS}"
+  export CGO_CFLAGS="${CFLAGS}"
+  export CGO_CXXFLAGS="${CXXFLAGS}"
+
+  go build -v \
+    -trimpath \
+    -buildmode=pie \
+    -mod=vendor \
+    -modcacherw \
+    -ldflags "-linkmode external -extldflags ${LDFLAGS} \
+    -X github.com/elves/elvish/pkg/buildinfo.Reproducible=true \
+    -X github.com/elves/elvish/pkg/buildinfo.Version=$pkgver" \
+    -o build \
+    ./cmd/...
+}
+
+check() {
+  cd "$pkgname-$pkgver"
+  go test -v -race ./...
+}
+
+package() {
+  cd "$pkgname-$pkgver"
+
+  # binary
+  install -vDm755 -t "$pkgdir/usr/bin" build/elvish
+
+  # documentation
+  install -vDm644 -t "$pkgdir/usr/share/doc/$pkgname" ./*.md
+
+  # license
+  install -vDm644 -t "$pkgdir/usr/share/licenses/$pkgname" LICENSE
+}

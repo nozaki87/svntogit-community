@@ -1,7 +1,7 @@
 # Maintainer: BlackEagle <ike.devolder@gmail.com>>
 
 pkgname=kodi-addon-game-libretro-parallel-n64
-pkgver=2.0.0.13
+pkgver=2.0.0.16
 _codename=Matrix
 pkgrel=1
 pkgdesc="Libretro wrapper for Kodi's Game API"
@@ -11,7 +11,7 @@ license=('GPL')
 groups=('kodi-addons' 'kodi-addons-game')
 makedepends=('cmake' 'kodi-dev' 'kodi-addon-game-libretro' 'libretro-parallel-n64')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/kodi-game/game.libretro.parallel_n64/archive/$pkgver-$_codename.tar.gz")
-sha512sums=('5dbd939979c567b9756301e39c151655f296ef52513febde69ae9a0a74c0534ae0cf80938195da506606ab1eabfcec802c99c9747aefc2eaceddd3641577ae87')
+sha512sums=('50db734b168e0627567e7ffe32d2b46bac07604c7d47d54a76b64dd7c620c57edfd62e42e47361390a35903f38a21b473acdaa5997d52c66dec86ecfcf6339b2')
 
 build() {
     cd "game.libretro.parallel_n64-$pkgver-$_codename"

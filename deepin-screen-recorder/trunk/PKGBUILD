@@ -3,19 +3,20 @@
 # Contributor: Xu Fasheng <fasheng.xu[AT]gmail.com>
 
 pkgname=deepin-screen-recorder
-pkgver=5.9.3
+pkgver=5.10.2
 pkgrel=1
 pkgdesc='Deepin Screen Recorder'
 arch=('x86_64')
 url="https://github.com/linuxdeepin/deepin-screen-recorder"
 license=('GPL3')
-depends=('byzanz' 'deepin-qt5integration' 'deepin-dock' 'deepin-turbo' 'ffmpeg' 'kconfig' 'ki18n' 'kwindowsystem')
-makedepends=('qt5-tools')
+depends=('deepin-qt5integration' 'deepin-turbo' 'ffmpeg' 'libxtst')
+makedepends=('deepin-dock')
+optdepends=('deepin-shortcut-viewer: for shortcut display')
 provides=('deepin-screenshot')
 conflicts=('deepin-screenshot')
 groups=('deepin-extra')
 source=("https://github.com/linuxdeepin/deepin-screen-recorder/archive/$pkgver/$pkgname-$pkgver.tar.gz")
-sha512sums=('50df395dcb20fa031c174fd231889dd39b725c1ce1b344862e66ac32707dbcd147c4bade5d3bc28fad457c2810dbad8bdad5bdcd4cee26ac0108e82a3927918e')
+sha512sums=('975e8f3e19854df5d78f3b3819931eef0dea891362e5af03661d28e72a5707869cbf6fe6f3eab03a0520595f35c325cd5150ccd28efe0eee7c64d96f724d0f4c')
 
 prepare() {
   cd deepin-screen-recorder-$pkgver

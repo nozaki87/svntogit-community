@@ -1,7 +1,7 @@
 # Maintainer: Christian Rebischke <chris.rebischke@archlinux.org>
 
 pkgname=tanka
-pkgver=0.15.0
+pkgver=0.17.3
 pkgrel=1
 pkgdesc="Flexible, reusable and concise configuration for Kubernetes"
 arch=('x86_64')
@@ -10,7 +10,7 @@ license=('Apache')
 makedepends=('go')
 depends=('glibc')
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/grafana/tanka/archive/v${pkgver}.tar.gz")
-sha512sums=('7e620e300541601a5186bb6400c916b8cbc21b7d51fd669b6a83dea6ab54c2a6f99d3aeb5378338ab6cefdd6bd56094d679ab89c4067d83f70c5e210577e233c')
+sha512sums=('54a241ae40956f89e28dc13557f79fc63227ac16b7707ee0ec5534cede71ea5de64b567720ffee0575168818c20f87800569e6d28d2cc2d135083c5dd3ee0296')
 
 prepare() {
   export GOPATH="${srcdir}"

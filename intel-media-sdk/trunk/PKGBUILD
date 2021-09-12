@@ -2,17 +2,22 @@
 
 pkgbase=intel-media-sdk
 pkgname=('intel-media-sdk' 'libmfx')
-pkgver=20.5.1
+pkgver=21.3.2
 pkgrel=1
 pkgdesc='API to access hardware-accelerated video on Intel Gen graphics hardware platforms'
 arch=('x86_64')
 url='https://software.intel.com/en-us/media-sdk/'
 license=('MIT')
 makedepends=('libdrm' 'libva' 'wayland' 'intel-media-driver'
-             'cmake' 'libpciaccess' 'libx11' 'libxcb' 'python'
-             'opencl-headers' 'opencl-clhpp' 'ocl-icd' 'intel-compute-runtime')
-source=("https://github.com/Intel-Media-SDK/MediaSDK/archive/intel-mediasdk-${pkgver}.tar.gz")
-sha256sums=('047986646f185313df2159fd44bccd870e173bb1cae9c2501ac6b9774bfd424b')
+             'cmake' 'libpciaccess' 'libx11' 'libxcb' 'python')
+source=("https://github.com/Intel-Media-SDK/MediaSDK/archive/intel-mediasdk-${pkgver}.tar.gz"
+        '010-intel-media-sdk-fix-reproducible-build.patch'::'https://github.com/Intel-Media-SDK/MediaSDK/commit/f6925886f27a39eed2e43c5b7b6c342d00f7a970.patch')
+sha256sums=('45dd0eabee42ff4f9378851a8adbdfa781c8fef20822f5c9d8709db54cdd35f3'
+            'f1d8a4edf953cfec1516f1a8383c5ee033245aba16cfae0bc79b7de1a6365fcc')
+
+prepare() {
+    patch -d "MediaSDK-intel-mediasdk-${pkgver}" -Np1 -i "${srcdir}/010-intel-media-sdk-fix-reproducible-build.patch"
+}
 
 build() {
     cmake -B build -S "MediaSDK-intel-mediasdk-${pkgver}" \
@@ -21,9 +26,10 @@ build() {
         -DCMAKE_BUILD_TYPE:STRING='None' \
         -DCMAKE_INSTALL_PREFIX:PATH='/usr' \
         -DENABLE_ITT:BOOL='OFF' \
-        -DENABLE_OPENCL:BOOL='ON' \
+        -DENABLE_OPENCL:BOOL='OFF' \
         -DENABLE_WAYLAND:BOOL='ON' \
         -DENABLE_X11_DRI3:BOOL='ON' \
+        -DMFX_APPS_DIR='/usr/lib/mfx' \
         -Wno-dev
     make -C build
 }
@@ -34,11 +40,9 @@ check() {
 
 package_intel-media-sdk() {
     depends=('libdrm' 'libva' 'wayland' "libmfx=${pkgver}" 'intel-media-driver')
-    optdepends=('ocl-icd: for rotate_opencl plugin'
-                'intel-compute-runtime: for rotate_opencl plugin')
     
     make -C build DESTDIR="$pkgdir" install
-    ln -s ../share/mfx/samples/libcttmetrics.so "${pkgdir}/usr/lib/libcttmetrics.so"
+    ln -s mfx/samples/libcttmetrics.so "${pkgdir}/usr/lib/libcttmetrics.so"
     install -D -m644 "MediaSDK-intel-mediasdk-${pkgver}/LICENSE" -t "${pkgdir}/usr/share/licenses/${pkgname}"
     
     # remove core component libmfx

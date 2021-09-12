@@ -2,9 +2,9 @@
 # Contributor: Lubomir 'Kuci' Kucera <kuci24-at-gmail-dot-com>
 
 pkgname=gitlab-runner
-pkgver=13.11.0
-_commit=7f7a4bb0
-pkgrel=1
+pkgver=14.2.0
+_commit=58ba2b95
+pkgrel=2
 pkgdesc="The official GitLab CI runner written in Go"
 arch=('x86_64')
 url='https://gitlab.com/gitlab-org/gitlab-runner'
@@ -14,18 +14,42 @@ makedepends=('git' 'go' 'git' 'mercurial' 'gox')
 install=gitlab-runner.install
 replaces=('gitlab-ci-multi-runner')
 backup=('etc/gitlab-runner/config.toml')
-noextract=("prebuilt-${pkgver}-x86_64.tar.xz"
-           "prebuilt-${pkgver}-arm.tar.xz")
+noextract=("prebuilt-alpine-arm-${pkgver}.tar.xz"
+           "prebuilt-alpine-arm64-${pkgver}.tar.xz"
+           "prebuilt-alpine-s390x-${pkgver}.tar.xz"
+           "prebuilt-alpine-x86_64-pwsh-${pkgver}.tar.xz"
+           "prebuilt-alpine-x86_64-${pkgver}.tar.xz"
+           "prebuilt-ubuntu-arm-${pkgver}.tar.xz"
+           "prebuilt-ubuntu-arm64-${pkgver}.tar.xz"
+           "prebuilt-ubuntu-s390x-${pkgver}.tar.xz"
+           "prebuilt-ubuntu-x86_64-pwsh-${pkgver}.tar.xz"
+           "prebuilt-ubuntu-x86_64-${pkgver}.tar.xz")
 source=("git+https://gitlab.com/gitlab-org/gitlab-runner.git#tag=${_commit}"
-        "prebuilt-${pkgver}-x86_64.tar.xz::https://gitlab-runner-downloads.s3.amazonaws.com/v${pkgver}/helper-images/prebuilt-x86_64.tar.xz"
-        "prebuilt-${pkgver}-arm.tar.xz::https://gitlab-runner-downloads.s3.amazonaws.com/v${pkgver}/helper-images/prebuilt-arm.tar.xz"
+        "prebuilt-alpine-arm-${pkgver}.tar.xz::https://gitlab-runner-downloads.s3.amazonaws.com/v${pkgver}/helper-images/prebuilt-alpine-arm.tar.xz"
+        "prebuilt-alpine-arm64-${pkgver}.tar.xz::https://gitlab-runner-downloads.s3.amazonaws.com/v${pkgver}/helper-images/prebuilt-alpine-arm64.tar.xz"
+        "prebuilt-alpine-s390x-${pkgver}.tar.xz::https://gitlab-runner-downloads.s3.amazonaws.com/v${pkgver}/helper-images/prebuilt-alpine-s390x.tar.xz"
+        "prebuilt-alpine-x86_64-pwsh-${pkgver}.tar.xz::https://gitlab-runner-downloads.s3.amazonaws.com/v${pkgver}/helper-images/prebuilt-alpine-x86_64-pwsh.tar.xz"
+        "prebuilt-alpine-x86_64-${pkgver}.tar.xz::https://gitlab-runner-downloads.s3.amazonaws.com/v${pkgver}/helper-images/prebuilt-alpine-x86_64.tar.xz"
+        "prebuilt-ubuntu-arm-${pkgver}.tar.xz::https://gitlab-runner-downloads.s3.amazonaws.com/v${pkgver}/helper-images/prebuilt-ubuntu-arm.tar.xz"
+        "prebuilt-ubuntu-arm64-${pkgver}.tar.xz::https://gitlab-runner-downloads.s3.amazonaws.com/v${pkgver}/helper-images/prebuilt-ubuntu-arm64.tar.xz"
+        "prebuilt-ubuntu-s390x-${pkgver}.tar.xz::https://gitlab-runner-downloads.s3.amazonaws.com/v${pkgver}/helper-images/prebuilt-ubuntu-s390x.tar.xz"
+        "prebuilt-ubuntu-x86_64-pwsh-${pkgver}.tar.xz::https://gitlab-runner-downloads.s3.amazonaws.com/v${pkgver}/helper-images/prebuilt-ubuntu-x86_64-pwsh.tar.xz"
+        "prebuilt-ubuntu-x86_64-${pkgver}.tar.xz::https://gitlab-runner-downloads.s3.amazonaws.com/v${pkgver}/helper-images/prebuilt-ubuntu-x86_64.tar.xz"
         "gitlab-runner.service"
         "gitlab-runner.sysusers"
         "gitlab-runner.tmpfiles"
         "config.toml")
 sha512sums=('SKIP'
-            '0d3076e3509cbc67e2855df4ce8f23c3dae6d5e2d367119f4692e69cf798a17ada7138483cff7bcc084cc4e41e02835e9e249ad3a57e6aba215f8d6727249df1'
-            'ca095ed94bd5740d54a19aac35db8b98558497216261b1e8b1fca3bed2a34df9583d4cc62727536bb01f4f0e1bbe1aeb24ba77d51ca2284b8fd89d19b510e603'
+            '463abb8b4eedcc42b5043615fe4a9e7d011b165384ba5819e30861301d02776c7aa340e65f237641741dcc6a719b42149fc024a9e24d72c8e2096605d9e2064c'
+            'b6226ceadbef1f0bf1c93a57f3548f3c12f733c62d5faf441655669221a6560f6af323ad07d952778afd431da8cc33d979c7e5edb78e4792d199038a52e837b5'
+            '852b289ea573ab666ae20601886b2e7f3eaed675c69d7bf83ed8a30539e7a02078e51c0e502684d26af8c9ac5ebc98f824e72c33bb2e05012c08323c542ede8b'
+            'f3ae0bc16c9add05ea407c1cc440524a541305f3752b1af54ff8b7a5cfb2819e0148de9502ad4c3ca3a4dedc970cf3145f6f0474a3024b18637fd273a5fe3f45'
+            '0e6a76f4f9d7c180fdcdff0dac4216a163b18ed4e14533639c6f1336a1d6a80d06faa26b594e1ee6bb368d5e4f13ee2fc01049d83069feafbc173b3133424be6'
+            '19a1147123dafc8c0281c40c12aa82cf3e0b71983ab3d94cd8dc07a7f6adefb8a6a9479a5b2d0ffc986f267a32c90aaa97cf6e6567acbfb1eb672a0df9143e13'
+            '39570311748c58d7351bff85ad733cbd3fdc77376afb9b30c083321a209ac6d43044e3907ddebf508497df9a0edbc747794556729faebd46daf80f4907c1cc5e'
+            '9a5f7c1ed38d53f0e0a31697caf8cf139a780e539a0b51d6ccf6b4a9560cb2253dc440e0313f976f860765746e8cd377605ffe80405d41ee6adfcf59bc056ee4'
+            '292d904151fb75a8d6d5ad10a53307373207b9a412dc1b5bc74dcaff6e8d4d2b23850c692a61909b91c30f40639dcf8ebc77826c9d9506118663d8fc349396f6'
+            '51487f0ad21c9b6256730364aa34d77030bf1221b7e489ac41928039215ee46abd03e5ce860affb7e838ebfd1d07ec39ede8fe8a6beebc8f3531109bfb24627b'
             'c0af374b9986895aedcfaee6c67cfad68f0f7289f87e4611358adaff59a2f349f55764fe28b2b1f61f8bfeb61126d4f90d433c626fdf9b826a2de6217f86574f'
             '8aa7f08702e99053c696fcc2aaba83beb9e9cd6f31973d82862db9350ac46df3a095377625d31fe909677525290d2de922d7a97930ed235774cb8f0da8944d40'
             '6751d9fa0b27172d1b419c4138f5ac15cbc7c9147653a7258cf1470216142c637210bb60608c7ed0974e0e4057e5ddeae32225df1bb36e7dd1f20fec71e33cc3'
@@ -41,9 +65,6 @@ prepare() {
   sed -i "s/var VERSION.*/var VERSION = \"$version\"/" common/version.go
   sed -i "s/var REVISION.*/var REVISION = \"$revision\"/" common/version.go
   sed -i "s/var BRANCH.*/var BRANCH = \"$branch\"/" common/version.go
-
-  ln -sf "${srcdir}/prebuilt-${pkgver}-x86_64.tar.xz" prebuilt-x86_64.tar.xz
-  ln -sf "${srcdir}/prebuilt-${pkgver}-arm.tar.xz" prebuilt-arm.tar.xz
 }
 
 build() {
@@ -65,4 +86,9 @@ package() {
   install -Dm644 "${srcdir}/gitlab-runner.sysusers" "${pkgdir}/usr/lib/sysusers.d/gitlab-runner.conf"
   install -Dm644 "${srcdir}/gitlab-runner.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/gitlab-runner.conf"
   install -Dm755 gitlab-runner "${pkgdir}/usr/bin/gitlab-runner"
+
+  # Move prebuilt Docker images to hard-coded canonical location
+  for image in prebuilt-{alpine,ubuntu}-{arm,arm64,s390x,x86_64-pwsh,x86_64}-${pkgver}.tar.xz; do
+    install -Dm644 "${srcdir}/${image}" "${pkgdir}/usr/lib/gitlab-runner/helper-images/${image}"
+  done
 }

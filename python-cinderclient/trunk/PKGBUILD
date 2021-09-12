@@ -2,7 +2,7 @@
 # Contributor: Daniel Wallace <danielwallace at gtmanfred dot com>
 
 pkgname=python-cinderclient
-pkgver=7.4.0
+pkgver=8.1.0
 pkgrel=1
 pkgdesc="OpenStack Block Storage API Client Library"
 arch=('any')
@@ -12,7 +12,7 @@ depends=('python-six' 'python-pbr' 'python-babel' 'python-prettytable' 'python-k
          'python-requests' 'python-oslo-utils')
 checkdepends=('python-oslotest' 'python-requests-mock' 'python-ddt')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/openstack/python-cinderclient/archive/$pkgver.tar.gz")
-sha512sums=('350ec14a74bac7ac72a9e45f20177fc089f100d1f5fcf70a7d5417e070abcb51a434e63ba889b604ca85cf8a957259b0a3df3feb5dc96f02a7654b5c71fec9eb')
+sha512sums=('53bb2ce7aeb53f81e123911b7559c44a447e7d8de2ef5d42ca701f4f8a97b13c10348079b60de75a4c37565a0a75184facd86f7e63fdcc1955da9c5250208742')
 
 export PBR_VERSION=$pkgver
 

@@ -4,7 +4,7 @@
 # Contributor: Philipp Überbacher <hollunder at gmx dot at>
 
 pkgname=qtractor
-pkgver=0.9.21
+pkgver=0.9.23
 pkgrel=1
 pkgdesc="Audio/MIDI multitrack sequencer"
 arch=('x86_64')
@@ -21,13 +21,14 @@ optdepends=(
 )
 provides=('dssi-host' 'ladspa-host' 'lv2-host' 'vst-host' 'vst3-host')
 source=("https://sourceforge.net/projects/${pkgname}/files/${pkgname}/${pkgver}/${pkgname}-${pkgver}.tar.gz")
-sha512sums=('12d823c4efd557709d83e0e5ace6cb84ac066a0eddbfdbac0dbaf6b75e6bbe37c0e3548270e80fb89f318c58db4b0ebad95daac989eb7d6b8f82b8cc7ccc3a3c')
-b2sums=('8c76966695e6054cd0d3743313f50de1bf4f741dfaad0d60f41ae87bd531ce394d11c7fc719c75ee159bf0bf7dd3037679cb93d7d4295132a7dc2fa6d89a786e')
+sha512sums=('fe57cc82d072ed49569441bb9f25f5233c0d7a6e7f0958a84247c8896741f2e4b83067e69d8e7999ccd9e68002b0e6ba4dc084674286952c17d472ae9f507bbd')
+b2sums=('6ccf22ccc21ad36aecff63a16de9e3bb2ae19ba6fd7475432c3cd1e37ce2468f837a68c160ceec0f9c7ec9931e1fc1614c3a84cd0dd34078d1e227868338c021')
 
 build() {
   cd "${pkgname}-${pkgver}"
   cmake -DCMAKE_INSTALL_PREFIX='/usr' \
         -DCMAKE_BUILD_TYPE='None' \
+        -DCONFIG_QT6=ON \
         -Wno-dev \
         -B build \
         -S .

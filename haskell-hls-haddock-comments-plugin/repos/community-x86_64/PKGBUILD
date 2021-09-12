@@ -2,22 +2,22 @@
 
 _hkgname=hls-haddock-comments-plugin
 pkgname=haskell-hls-haddock-comments-plugin
-pkgver=1.0.0.0
-pkgrel=31
+pkgver=1.0.0.2
+pkgrel=3
 pkgdesc="Haddock comments plugin for Haskell Language Server"
 url="https://github.com/haskell/haskell-language-server"
 license=("Apache")
 arch=('x86_64')
 depends=('ghc-libs' 'haskell-ghc' 'haskell-ghc-exactprint' 'haskell-ghcide' 'haskell-hls-plugin-api'
          'haskell-lsp-types' 'haskell-unordered-containers')
-makedepends=('ghc' 'uusi')
+makedepends=('ghc' 'uusi' 'haskell-hls-test-utils')
+checkdepends=('git')
 source=("https://hackage.haskell.org/packages/archive/$_hkgname/$pkgver/$_hkgname-$pkgver.tar.gz")
-sha256sums=('231ba321483a3bb080cb592498d866e1571224f30318570c2b86c4b6721efeab')
+sha512sums=('f50c9fc595e8cebcff38d4fb7c3f6f8df59d0df5e8924718812c3ee38da38db5d25ab082e1347d8fdd6a01a779e2c03e029fb6b74bcfd6ebeb55ac1a21642fb6')
 
 prepare() {
   cd $_hkgname-$pkgver
   gen-setup
-  uusi -u ghcide $_hkgname.cabal
 }
 
 build() {
@@ -34,6 +34,11 @@ build() {
   runhaskell Setup unregister --gen-script
   sed -i -r -e "s|ghc-pkg.*update[^ ]* |&'--force' |" register.sh
   sed -i -r -e "s|ghc-pkg.*unregister[^ ]* |&'--force' |" unregister.sh
+}
+
+check() {
+  cd $_hkgname-$pkgver
+  runhaskell Setup test --show-details=direct
 }
 
 package() {

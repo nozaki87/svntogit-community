@@ -1,11 +1,12 @@
 # Maintainer: Chih-Hsuan Yen <yan12125@archlinux.org>
 
 pkgname=python-cfn-lint
-pkgver=0.49.0
+# https://github.com/aws-cloudformation/cfn-lint/blob/main/CHANGELOG.md
+pkgver=0.54.1
 pkgrel=1
 pkgdesc='CloudFormation Linter'
 arch=(any)
-url='https://github.com/aws-cloudformation/cfn-python-lint'
+url='https://github.com/aws-cloudformation/cfn-lint'
 license=('custom:MIT No Attribution')
 depends=(python python-yaml python-six python-aws-sam-translator
          python-jsonpatch python-jsonschema python-networkx
@@ -15,30 +16,29 @@ checkdepends=(python-pytest python-mock python-pydot)
 optdepends=(
   'python-pydot: for building graphs from templates'
 )
-source=("https://github.com/aws-cloudformation/cfn-python-lint/archive/v$pkgver/cfn-python-lint-$pkgver.tar.gz")
-sha256sums=('56c57130ba74a189ad47e9f0382c05c2026806d63e9098fb54791b3d38619fc1')
+source=("https://github.com/aws-cloudformation/cfn-lint/archive/v$pkgver/cfn-lint-$pkgver.tar.gz")
+sha256sums=('bb6ff0d193c8034225c638463e50432dd71d4d0be03a5a47576945f584b18481')
 
 build() {
-  cd cfn-python-lint-$pkgver
+  cd cfn-lint-$pkgver
   python setup.py build
 }
 
 check() {
-  cd cfn-python-lint-$pkgver
+  cd cfn-lint-$pkgver
 
   # Tests in test/integration need the cfn-lint binary
   python setup.py install_scripts --install-dir="$srcdir"/tmp_install
 
   export PYTHONPATH="$PWD/src"
   export PATH="$PATH:$srcdir/tmp_install"
-  # test_update_docs requires cfn-python-lint as a git repo
+  # test_update_docs requires cfn-lint as a git repo
   pytest test -k 'not test_update_docs'
 }
 
 package() {
-  cd cfn-python-lint-$pkgver
-  # use PYTHONHASHSEED=0 to work around https://bugs.python.org/issue34033
-  PYTHONHASHSEED=0 python setup.py install --root="$pkgdir" --optimize=1 --skip-build
+  cd cfn-lint-$pkgver
+  python setup.py install --root="$pkgdir" --optimize=1 --skip-build
 
   install -Dm644 LICENSE -t "$pkgdir"/usr/share/licenses/$pkgname
 }

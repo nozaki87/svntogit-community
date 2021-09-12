@@ -5,12 +5,12 @@
 
 pkgname=emscripten
 # NOTE: You need to run ./get-compatible-versions.sh after changing the pkgver!
-_binaryen_revision=67094a4a9b013a9705bcbf49ec7e0e8ab744389c
-_llvm_project_revision=3b677b81cec7b3c5132aee8fccc30252d87deb69
+_binaryen_revision=96d2c946329f26bb742684a70cb48e98aa55083d
+_llvm_project_revision=78e87970af888bbbd5652c31f3a8454e8e9dd5b8
 # Sadly, upstream currently suggests bundling a binaryen version for the time being:
 # https://github.com/emscripten-core/emscripten/issues/12252
 # I'm obviously unhappy about that but it appears to be the only practical solution for the time being.
-pkgver=2.0.17
+pkgver=2.0.27
 pkgrel=1
 pkgdesc="Compile C and C++ into highly-optimizable JavaScript for the web"
 arch=('x86_64')

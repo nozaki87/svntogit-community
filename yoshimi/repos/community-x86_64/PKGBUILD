@@ -2,7 +2,7 @@
 # Contributor: David Adler <d dot adler aet posteo dot de>
 
 pkgname=yoshimi
-pkgver=2.0.1
+pkgver=2.1.0
 pkgrel=1
 pkgdesc="A sophisticated soft-synth originally forked from ZynAddSubFX"
 arch=('x86_64')
@@ -18,8 +18,8 @@ optdepends=('alsa-lib: for standalone application'
             'readline: for standalone application'
             'ncurses: for standalone application')
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/${pkgname}/${pkgname}/archive/${pkgver}.tar.gz")
-sha512sums=('2e23ee811bfdbad4ca70d32c627d471189122cbf5db2d89d75dd4b3e5116d7d9b97db52be1e218bedba0a28cc1978a923c267d954bc7e44d9d1a07181268268a')
-b2sums=('4738696773d4542c1ed14b07025f1045b7b65230774fe627b69bc5948dd4e56bb4841980812e33db015a0d509c11a8ecf4c2d5efb6572a4c30e697eb5728fcca')
+sha512sums=('d90666ca2599d057d5c22abfc5e64f9a31eb323d13c50f771b92c5f94f7da9049b79dc8a478b3832142a97f8c2f5ea384a26e1543fdd6c063930989e34b146eb')
+b2sums=('f95fb49ec901e5a513960bfc4c1d27ce1979f3cd664d7ca7ddb723ad41fb06153749db0560a32f41c44c7fb433fde09ee49e898cb8bf55e232536b163d616992')
 
 build() {
   cd "${pkgname}-${pkgver}"

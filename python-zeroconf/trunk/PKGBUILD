@@ -3,7 +3,7 @@
 
 pkgname=python-zeroconf
 pkgver=0.29.0
-pkgrel=1
+pkgrel=2
 pkgdesc="A pure python implementation of multicast DNS service discovery"
 arch=('any')
 url="https://github.com/jstasiak/python-zeroconf"
@@ -27,7 +27,7 @@ package() {
 
 check() {
   cd "${pkgbase}-${pkgver}"
-  pytest -k test_integration_with_listener_ipv6 zeroconf/test.py
+  pytest -k 'not test_integration_with_listener_ipv6' zeroconf/test.py
 }
 
 # vim:set ts=2 sw=2 et:

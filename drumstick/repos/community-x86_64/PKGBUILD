@@ -3,7 +3,7 @@
 # Contributor: Dany Martineau <dany.luc.martineau@gmail.com>
 
 pkgname=drumstick
-pkgver=2.1.1
+pkgver=2.3.1
 pkgrel=1
 pkgdesc="MIDI libraries for Qt5/C++"
 arch=('x86_64')
@@ -15,8 +15,8 @@ makedepends=('alsa-lib' 'cmake' 'doxygen' 'docbook-xsl' 'fluidsynth' 'graphviz'
 provides=('libdrumstick-alsa.so' 'libdrumstick-file.so' 'libdrumstick-rt.so'
 'libdrumstick-widgets.so')
 source=("https://downloads.sourceforge.net/${pkgname}/${pkgver}/${pkgname}-${pkgver}.tar.bz2")
-sha512sums=('e811cbd1099c07171342cae4e6c1464e17c101dbd4fc320bd99914cc56488267692c61325156c26e7c1b9acd9e610308ada1858547431d0827e89e4e02034c92')
-b2sums=('9fd2ab5c048d79698f001dd9178b70b145d1cb2f990fcdb9e20f78f0251e22fb260109e0d6c74b6c6e47c96a365f084da104868ca75f345ceab98f9b0c5e0a28')
+sha512sums=('52d95afe06293b8b2b08a30b418fa96267d702217028bf7194c7243eb973c84c7bc399fdf729e23c3f6b5f61da5df6cb1fcd438941ed30626715b4f2a1f2797e')
+b2sums=('34b01a7823033338cfafa1602b2fce3ee8baa107347a4f5115ab927f2dc3126c84a2790c7c77d6b7c63c9dcdefd0df1b8da60c3dece8640024f8564533633322')
 
 build() {
   cd "${pkgname}-${pkgver}"

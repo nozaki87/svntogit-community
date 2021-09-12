@@ -1,7 +1,7 @@
 # Maintainer: BlackEagle <ike.devolder@gmail.com>>
 
 pkgname=kodi-addon-game-libretro-flycast
-pkgver=0.1.0.30
+pkgver=0.1.0.35
 _codename=Matrix
 pkgrel=1
 pkgdesc="Libretro wrapper for Kodi's Game API"
@@ -12,7 +12,7 @@ groups=('kodi-addons' 'kodi-addons-game')
 makedepends=('cmake' 'kodi-dev' 'kodi-addon-game-libretro' 'libretro-flycast')
 replaces=('kodi-addon-game-libretro-reicast')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/kodi-game/game.libretro.reicast/archive/$pkgver-$_codename.tar.gz")
-sha512sums=('bc72c2a0d8238ff37490ec339c8c1f3c2a68a6d324bcc22d1049d65101c468cf94133cb3fb4f44056d7f032cf9b5716810f2068d0b402e13f082feb567789df6')
+sha512sums=('2e4f7ec0651297bb816b9fed6e516514ff471367cb6bcfa8c40838a114a44f50d7cb59e2832ff168405b69ae00ba3ed223819f65471c295547890010236c5df2')
 
 build() {
     cd "game.libretro.flycast-$pkgver-$_codename"

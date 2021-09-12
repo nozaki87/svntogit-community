@@ -4,21 +4,21 @@
 
 _name=Ardour
 pkgname=ardour
-pkgver=6.6
-pkgrel=2
+pkgver=6.9
+pkgrel=1
 pkgdesc="Professional-grade digital audio workstation"
 arch=('x86_64')
 url="https://ardour.org/"
 license=('GPL2')
 groups=('pro-audio')
-depends=('atkmm' 'cairo' 'cairomm' 'gcc-libs' 'glibc' 'glibmm' 'gtkmm' 'libx11'
-'libxml2' 'pangomm' 'soundtouch' 'taglib')
-makedepends=('atk' 'aubio' 'boost' 'cppunit' 'curl' 'dbus' 'doxygen' 'fftw'
-'flac' 'fluidsynth' 'fontconfig' 'freetype2' 'gdk-pixbuf2' 'git' 'glib2'
-'graphviz' 'gtk2' 'harfbuzz' 'hidapi' 'itstool' 'jack' 'libarchive' 'liblo'
+depends=('cairo' 'gcc-libs' 'glibc' 'glibmm' 'gtkmm' 'libx11' 'libxml2'
+'soundtouch' 'taglib')
+makedepends=('atkmm' 'aubio' 'boost' 'cairomm' 'cppunit' 'curl' 'dbus'
+'doxygen' 'fftw' 'flac' 'fluidsynth' 'fontconfig' 'freetype2' 'gdk-pixbuf2'
+'git' 'glib2' 'graphviz' 'gtk2' 'hidapi' 'itstool' 'jack' 'libarchive' 'liblo'
 'liblrdf' 'libltc' 'libogg' 'libpulse' 'libsamplerate' 'libsndfile' 'libusb'
-'libwebsockets' 'lilv' 'lv2' 'pango' 'readline' 'rubberband' 'serd' 'sord'
-'sratom' 'suil' 'vamp-plugin-sdk' 'waf')
+'libwebsockets' 'lilv' 'lv2' 'pango' 'pangomm' 'readline' 'rubberband' 'serd'
+'sord' 'sratom' 'suil' 'vamp-plugin-sdk' 'waf')
 optdepends=('xjadeo: video monitoring'
             'harvid: video timeline'
             'new-session-manager: for session management')
@@ -32,10 +32,6 @@ b2sums=('SKIP'
 
 prepare() {
   cd "${pkgname}"
-
-  # glib2 >= 2.68 fixes
-  git cherry-pick -n "cc7b8b1bc5fb19e0ec5e476741c55627d4b62ba9"
-  git cherry-pick -n "ea01ec5988185228c41b7799b45c5051f0b80d15"
 
   # using vendored version of qm-dsp because qm-dsp >= 1.8.0 is not compatible
   patch -Np1 -i "../${pkgname}-6.2-vendor_qm-dsp.patch"
@@ -59,6 +55,7 @@ prepare() {
 
 build() {
   cd "${pkgname}"
+  export LINKFLAGS="$LDFLAGS"
   waf configure --prefix=/usr \
                 --configdir=/etc \
                 --cxx11 \
@@ -74,28 +71,20 @@ build() {
 }
 
 package() {
-  depends+=('libFLAC.so' 'libasound.so' 'libatk-1.0.so' 'libaubio.so'
-  'libarchive.so' 'libcurl.so' 'libdbus-1.so' 'libfftw3f.so'
+  depends+=('libFLAC.so' 'libasound.so' 'libatkmm-1.6.so' 'libaubio.so'
+  'libarchive.so' 'libcairomm-1.0.so' 'libcurl.so' 'libdbus-1.so' 'libfftw3f.so'
   'libfftw3f_threads.so' 'libfluidsynth.so' 'libfontconfig.so' 'libfreetype.so'
   'libgdk_pixbuf-2.0.so' 'libgdk-x11-2.0.so' 'libgio-2.0.so' 'libglib-2.0.so'
-  'libgobject-2.0.so' 'libgtk-x11-2.0.so' 'libharfbuzz.so' 'libjack.so'
-  'liblo.so' 'liblilv-0.so' 'liblrdf.so' 'libltc.so' 'libogg.so'
-  'libpango-1.0.so' 'libpangocairo-1.0.so' 'libpangoft2-1.0.so' 'libpulse.so'
+  'libgobject-2.0.so' 'libgtk-x11-2.0.so' 'libjack.so' 'liblo.so'
+  'liblilv-0.so' 'liblrdf.so' 'libltc.so' 'libogg.so' 'libpango-1.0.so'
+  'libpangocairo-1.0.so' 'libpangoft2-1.0.so' 'libpangomm-1.4.so' 'libpulse.so'
   'libreadline.so' 'librubberband.so' 'libsamplerate.so' 'libserd-0.so'
   'libsndfile.so' 'libsord-0.so' 'libsratom-0.so' 'libsuil-0.so'
   'libusb-1.0.so' 'libvamp-hostsdk.so' 'libvamp-sdk.so' 'libwebsockets.so')
+
   cd "${pkgname}"
   waf i18n --destdir="${pkgdir}"
   waf install --destdir="${pkgdir}"
-  # xdg integration
-  install -vDm 644 "build/gtk2_${pkgname}/${pkgname}.xml" \
-    -t "${pkgdir}/usr/share/mime/packages/"
-  install -vDm 644 "build/gtk2_${pkgname}/${pkgname}${pkgver%%.*}.desktop" \
-    "${pkgdir}/usr/share/applications/${pkgname}.desktop"
-  for size in 16 22 32 48 256 512; do
-    install -vDm 644 "gtk2_${pkgname}/resources/${_name}-icon_${size}px.png" \
-      "${pkgdir}/usr/share/icons/hicolor/${size}x${size}/apps/${pkgname}${pkgver%%.*}.png"
-  done
   # man pages
   install -vDm 644 "${pkgname}.1"* -t "${pkgdir}/usr/share/man/man1/"
 }

@@ -3,8 +3,8 @@
 # Contributor: Xu Fasheng <fasheng.xu[AT]gmail.com>
 
 pkgname=golang-github-linuxdeepin-go-dbus-factory
-pkgver=1.9.3
-pkgrel=2
+pkgver=1.9.22
+pkgrel=1
 pkgdesc='GO DBus factory for DDE'
 arch=('any')
 url="https://github.com/linuxdeepin/go-dbus-factory"
@@ -15,7 +15,7 @@ provides=('deepin-go-dbus-factory')
 conflicts=('deepin-go-dbus-factory')
 replaces=('deepin-go-dbus-factory')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/linuxdeepin/go-dbus-factory/archive/$pkgver.tar.gz")
-sha512sums=('77dc9ccb0cf45850ef92cb8475991358e274bac82099bd740769a11fcd9109c44193a08b2e5d115d903a9f61686855111ed28559458d069616231e19023b5e55')
+sha512sums=('a3150c0e1f448377aa50c92c97f6fb3425e054851e97019ea7deec818497d60afbccd1603f3c529f8388cbcf1091dc64748d71db9c597e4074f219cbff51ffd4')
 
 export GO111MODULE=off
 
@@ -24,7 +24,7 @@ prepare() {
   mkdir -p "$srcdir"/build/src/github.com/linuxdeepin
   cp -a "$srcdir"/go-dbus-factory-$pkgver "$srcdir"/build/src/github.com/linuxdeepin/go-dbus-factory
 
-  go get github.com/godbus/dbus github.com/fsnotify/fsnotify
+  go get github.com/godbus/dbus github.com/fsnotify/fsnotify gopkg.in/yaml.v3
 }
 
 build() {

@@ -1,0 +1,50 @@
+# Maintainer: David Runge <dvzrv@archlinux.org>
+
+_name=pywayland
+pkgname=python-pywayland
+pkgver=0.4.6
+pkgrel=1
+pkgdesc="Python bindings for the libwayland library"
+arch=('x86_64')
+url="https://github.com/flacjacket/pywayland"
+license=('Apache')
+depends=('python-cffi' 'wayland')
+makedepends=('python-setuptools' 'wayland-protocols')
+checkdepends=('python-pytest')
+# TODO: remove provides/conflicts/replaces after 2022-01-01
+conflicts=('pywayland')
+provides=('pywayland')
+replaces=('pywayland')
+source=("https://files.pythonhosted.org/packages/source/${_name::1}/${_name}/${_name}-${pkgver}.tar.gz")
+sha512sums=('339dc77b4fd8527309209eb91a3553777cebb7e4d4303a0be78ce92f62e683af38126b1dc6efbfd2d2eeec2c31664d5ed3d37a603e1e7d4874959de28de8effa')
+b2sums=('6f9625fbce7b0d51d0f0e10abd4860a1af5bd1f8bd95cfa9bf9eaa77c4d33ca7099ffce5a585305f04e2043a43260d532b28c4cfbdf5f35a02228e92f65f6dbe')
+
+prepare() {
+  mv -v "${_name}-$pkgver" "$pkgname-$pkgver"
+  cd "$pkgname-$pkgver"
+  mkdir -vp temp
+}
+
+build() {
+  cd "$pkgname-$pkgver"
+  python pywayland/ffi_build.py
+  python -m pywayland.scanner
+  python setup.py build
+}
+
+check() {
+  local _py_ver=$(python -c 'import sys; print(".".join(map(str, sys.version_info[:2])))')
+
+  cd "$pkgname-$pkgver"
+  export PYTHONPATH="build/lib.linux-${CARCH}-${_py_ver}:${PYTHONPATH}"
+  export XDG_RUNTIME_DIR="${PWD}/temp"
+  pytest -v
+}
+
+package() {
+  cd "$pkgname-$pkgver"
+  python setup.py install --skip-build \
+                          --optimize=1 \
+                          --root="${pkgdir}"
+  install -vDm 644 README.rst -t "${pkgdir}/usr/share/doc/${pkgname}"
+}
