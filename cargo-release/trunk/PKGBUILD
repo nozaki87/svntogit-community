@@ -1,7 +1,7 @@
 # Maintainer: kpcyrd <kpcyrd[at]archlinux[dot]org>
 
 pkgname=cargo-release
-pkgver=0.17.1
+pkgver=0.18.2
 pkgrel=1
 pkgdesc='Cargo subcommand "release": everything about releasing a rust crate'
 url='https://github.com/sunng87/cargo-release'
@@ -10,7 +10,7 @@ license=('MIT' 'APACHE')
 depends=('gcc-libs' 'openssl' 'zlib')
 makedepends=('cargo')
 source=(https://github.com/sunng87/${pkgname}/archive/v${pkgver}/${pkgname}-${pkgver}.tar.gz)
-b2sums=('70d439d9ea83797d612712cf024bb2840a1a053fa76fe9a3afe05be8587dbd185d7987f5fbba76fae3f75a58f279948d1fc909de7f67905841a2b68dc48cbb54')
+b2sums=('8a90abd426163683f5489d1a7df701356239381d038439b653d2175306daf277ff3c82bcc3720f4d78b18b0d1fcd35e6e031f828d09e8ee3df011c1938817ecf')
 
 prepare() {
   cd ${pkgname}-${pkgver}

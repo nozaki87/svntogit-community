@@ -5,16 +5,22 @@
 
 pkgname=gpxsee
 _pkgname=GPXSee
-pkgver=9.5
+pkgver=9.11
 pkgrel=1
 pkgdesc='GPS log file viewer and analyzer'
 arch=(x86_64)
 url='https://www.gpxsee.org/'
 license=(GPL3)
-depends=(qt6-imageformats)
+depends=(qt6-imageformats qt6-5compat)
 makedepends=(qt6-tools)
-source=(https://downloads.sourceforge.net/$pkgname/$_pkgname-$pkgver.tar.gz)
-sha256sums=('557f48c314a9ad536e7a05c808a39f47d5945df929e973dcd95fb48913622090')
+source=(https://downloads.sourceforge.net/$pkgname/$_pkgname-$pkgver.tar.gz
+        https://github.com/tumic0/GPXSee/commit/21cda471.patch)
+sha256sums=('8bd55580a6d6fbd9d7f754476cbd020eae212d252f95ca63d357edcb6c8859fa'
+            '7eec71ec92749893938c88d648466d5057238899a77c0c81742ed96da058821f')
+
+prepare() {
+  patch -d $_pkgname-$pkgver -p1 < 21cda471.patch # Fix icons install
+}
 
 build() {
   cd $_pkgname-$pkgver

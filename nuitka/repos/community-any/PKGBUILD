@@ -3,8 +3,8 @@
 # Contributor: Panagiotis Mavrogiorgos <pmav99@gmail.com>
 
 pkgname=nuitka
-pkgver=0.6.16.4
-pkgrel=2
+pkgver=0.6.17.5
+pkgrel=1
 pkgdesc='Python compiler with full language support and CPython compatibility'
 arch=(any)
 url='https://nuitka.net/'
@@ -17,7 +17,14 @@ optdepends=('ccache: for build caching'
             'pyside2: for using Qt5 APIs')
 options=(!emptydirs)
 source=("https://files.pythonhosted.org/packages/source/N/${pkgname^}/${pkgname^}-${pkgver}.tar.gz")
-b2sums=('96992903d89a70921ab92ce4c5fa4b547b67cf0133098cce0fafc8037ca9d0b627fb21f9cc98e112d26766b39b023e1aef1a3eceff71f32d7f6a30db7314882d')
+sha512sums=('7ae440504e4367a67a0fa01c5ba2ef5265b612c12f0aa2eb635f4bc3c6447817c7be4792441cec4f32cf55543c43c2f11ee9e72b6b7d2cdf2209e5b6ca2aa7c7')
+b2sums=('720b70d47a904c6a5dc34ef70635bc1d113be1368d434d2864715392eab162ccfa8c0f5161f9cecc4da949351ed1974fef212338c09d6f8a5850552ab6c238d6')
+
+prepare() {
+  cd ${pkgname^}-$pkgver
+  # in our build environment /etc/os-release will not exist, but /usr/lib/os-release will
+  sed -e 's|/etc/os-release|/usr/lib/os-release|' -i nuitka/utils/Utils.py
+}
 
 build() {
   cd ${pkgname^}-$pkgver
@@ -28,7 +35,7 @@ check() {
   cd ${pkgname^}-$pkgver
   # skip tests for other interpreters and those that require network access
   # NOTE: the test uses "strace", which is currently not supported by the reproducible build system
-  ./tests/run-tests --no-other-python --skip-reflection-test --skip-onefile-tests --skip-other-cpython-tests
+  ./tests/run-tests --no-other-python --skip-onefile-tests --skip-other-cpython-tests
 }
 
 package() {

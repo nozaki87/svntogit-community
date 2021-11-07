@@ -3,7 +3,7 @@
 # Contributor: Matthew Ellison <matt+aur@arroyonetworks.com>
 
 pkgname=pybind11
-pkgver=2.7.1
+pkgver=2.8.1
 pkgrel=1
 pkgdesc='A lightweight header-only library that exposes C++ types in Python and vice versa'
 arch=('any')
@@ -14,7 +14,7 @@ makedepends=('cmake' 'boost' 'eigen' 'python' 'python-setuptools' 'python-pytest
              #'python-sphinx' 'python-sphinx_rtd_theme' 'python-breathe')
 checkdepends=('python-numpy' 'python-scipy')
 source=("https://github.com/pybind/pybind11/archive/v${pkgver}/${pkgname}-${pkgver}.tar.gz")
-sha256sums=('616d1c42e4cf14fa27b2a4ff759d7d7b33006fdc5ad8fd603bb2c22622f27020')
+sha256sums=('f1bcc07caa568eb312411dde5308b1e250bd0e1bc020fae855bf9f43209940cc')
 
 build () {
     cd "${pkgname}-${pkgver}"

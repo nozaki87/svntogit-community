@@ -3,35 +3,24 @@
 
 _hkgname=mono-traversable
 pkgname=haskell-mono-traversable
-pkgver=1.0.15.1
-pkgrel=154
+pkgver=1.0.15.3
+pkgrel=3
 pkgdesc="Type classes for mapping, folding, and traversing monomorphic containers"
 url="https://github.com/snoyberg/mono-traversable"
 license=("MIT")
 arch=('x86_64')
 depends=('ghc-libs' 'haskell-hashable' 'haskell-split' 'haskell-unordered-containers'
          'haskell-vector' 'haskell-vector-algorithms')
-makedepends=('ghc' 'uusi' 'haskell-hunit' 'haskell-quickcheck' 'haskell-foldl' 'haskell-hspec')
-source=("https://hackage.haskell.org/packages/archive/${_hkgname}/${pkgver}/${_hkgname}-${pkgver}.tar.gz"
-        ghc9.patch)
-sha512sums=('adf1af35b93af0605667d8b033415f318c6dab225499fdd1d9eab349fb1eedca2623c98f9dce83f94ed27db75b6f0aa88027daa748c7b3db05f47f68b505b0c8'
-            '5fcbb4021f14a22198f352b3d223a14e3bd420e6b991d17e76db99aea1a89070ad915fe55f80928181588457013e0e542621c9cf6aa875ef382ac6bb861bcbb2')
-
-prepare() {
-    cd $_hkgname-$pkgver
-    # https://github.com/snoyberg/mono-traversable/issues/192
-    patch -p2 -i ../ghc9.patch
-    sed -i 's/main.hs/Main.hs/;/Spec/d' $_hkgname.cabal
-
-    uusi -d semigroups $_hkgname.cabal
-}
+makedepends=('ghc' 'haskell-hunit' 'haskell-quickcheck' 'haskell-foldl' 'haskell-hspec')
+source=("https://hackage.haskell.org/packages/archive/${_hkgname}/${pkgver}/${_hkgname}-${pkgver}.tar.gz")
+sha512sums=('55f469149b84ace246e6c0791de25fcc73317152986e4949c7ae9ae020bd6540586da090d58ba495ef7f251c4a3a02979a796af9fde975a54d3d1541527b7691')
 
 build() {
     cd $_hkgname-$pkgver
 
     runhaskell Setup configure -O --enable-shared --enable-executable-dynamic --disable-library-vanilla \
         --prefix=/usr --docdir=/usr/share/doc/$pkgname --enable-tests \
-        --dynlibdir=/usr/lib --libsubdir=\$compiler/site-local/\$pkgid
+        --dynlibdir=/usr/lib --libsubdir=\$compiler/site-local/\$pkgid --ghc-option=-fllvm
     runhaskell Setup build $MAKEFLAGS
     runhaskell Setup register --gen-script
     runhaskell Setup unregister --gen-script

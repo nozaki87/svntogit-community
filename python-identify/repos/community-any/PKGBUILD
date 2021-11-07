@@ -3,19 +3,19 @@
 
 _name=identify
 pkgname=python-identify
-pkgver=2.2.14
+pkgver=2.3.4
 pkgrel=1
 pkgdesc="File identification library for Python"
 arch=('any')
-url="https://github.com/chriskuehl/identify"
+url="https://github.com/pre-commit/identify"
 license=('MIT')
 depends=('python')
 makedepends=('python-setuptools')
 checkdepends=('python-editdistance-s' 'python-pytest')
 optdepends=('python-editdistance-s: for returning license identifiers')
-source=("${_name}-${pkgver}.tar.gz::https://github.com/chriskuehl/${_name}/archive/v${pkgver}.tar.gz")
-sha512sums=('9dc27e745f30fc1e6ee5135cdb82de004a5c60f17c47ab3e1deffe1c3c04adc47211bde161216be202db2171711a7dfea5f0ba60a56fea0cbc75ec6d55c6203f')
-b2sums=('9a23595173ab2ebfcbbcfc503e9750ef1e9c0c068e9d1a1b2f47dd2e08787f734541a79ae65b4a72a7de076b8f7ab4f877f3bb049560f33b38698729b9d5f3ab')
+source=("${_name}-${pkgver}.tar.gz::https://github.com/pre-commit/${_name}/archive/refs/tags/v${pkgver}.tar.gz")
+sha512sums=('ef20744faa05efd084fb7c9715bc1288845047f9092b8559e3dbc4f7b51dcd715caeb269eba36e4e25551ffab1cd9a84f171ea020604f6b1ba4d9215486ef181')
+b2sums=('2ba95b7d2c8ba07100416dd4109263cd38bec327b1f79ea0b3be344dcdcbea62edd81246f36e9b3e91ddb727ff9ad77a96bba4f668dfca030c2ca2469ab25676')
 
 prepare() {
   mv -v "${_name}-${pkgver}" "$pkgname-$pkgver"
@@ -34,9 +34,7 @@ check() {
 
 package() {
   cd "$pkgname-$pkgver"
-  python setup.py install --skip-build \
-    --optimize=1 \
-    --root="${pkgdir}"
+  python setup.py install --optimize=1 --root="${pkgdir}"
   install -vDm 644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
   install -vDm 644 README.md -t "${pkgdir}/usr/share/doc/${pkgname}"
 }

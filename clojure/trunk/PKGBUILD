@@ -6,8 +6,8 @@
 # Contributor: Vladimir Tsanev <tsachev@gmail.com>
 
 pkgname=clojure
-pkgver=1.10.3.943
-pkgrel=2
+pkgver=1.10.3.998
+pkgrel=1
 pkgdesc='Lisp dialect for the JVM'
 url='https://clojure.org/'
 arch=(any)
@@ -18,7 +18,7 @@ optdepends=('leiningen: automate clojure projects'
             'rlwrap: friendly shell with readline support')
 install=clojure.install
 source=("https://download.clojure.org/install/clojure-tools-$pkgver.tar.gz")
-b2sums=('8a635219254dd71486dd3f6b24c456af81b52878c21563fbd9d9fa4e298c18a80b9085cf249181cc0a4da0fc81be2844e424e674a53859e46d92bb2e53f01963')
+b2sums=('deb22d4f422ad5069888f180680db90fbd674f32ccaab820da8dd022a4bc60d242997f790db8db7bd5a09ce067c1d0c090d90330943e72823b25d617af5d5585')
 
 prepare() {
   cd clojure-tools

@@ -1,9 +1,9 @@
 # Maintainer: Jaroslav Lichtblau <svetlemodry@archlinux.org>
 
 pkgname=qmmp
-pkgver=2.0.0
+pkgver=2.0.2
 pkgrel=1
-pkgdesc="Qt5 based audio-player"
+pkgdesc="Qt based audio-player"
 arch=('x86_64')
 url="http://qmmp.ylsoftware.com/"
 license=('GPL')
@@ -31,7 +31,7 @@ optdepends=('flac: native FLAC support'
             'ffmpeg' 'libsamplerate' 'wavpack' 'mpg123')
 changelog=$pkgname.changelog
 source=(http://qmmp.ylsoftware.com/files/$pkgname/2.0/$pkgname-$pkgver.tar.bz2)
-sha512sums=('65592540e35827eec26bccd50acdca1f97a6731e78e14021d36fff3c46e3dab02cf38968c35b8185ef56b1dbfcb01aaf6fdd58ae13e8e788f3cf9010d3162f15')
+sha512sums=('6b19bc035178bfc574c0ca5be0325597cca7aaac75c5024e80b84b2f4eab05dd973a79b0f840f74a7d9a996e34d4cb865717fdd55b3275def1425c48043cba69')
 
 build() {
   cd "${srcdir}"/$pkgname-$pkgver

@@ -2,7 +2,7 @@
 # Contributor: Kaizhao Zhang <zhangkaizhao@gmail.com>
 
 pkgname=pyright
-pkgver=1.1.167
+pkgver=1.1.185
 pkgrel=1
 pkgdesc='Type checker for the Python language'
 arch=('any')
@@ -11,7 +11,7 @@ license=('MIT')
 depends=('nodejs>=12')
 makedepends=('npm')
 source=("$url/archive/$pkgver/$pkgname-$pkgver.tar.gz")
-b2sums=('077c005e76ec1381c1c497c5a3f5d80a7007aa24ef1f75b6de80b7a0ddfdecf21852c3789f12e9a6437860411d2e8c11e0a1c77e470d454523ceff931444c430')
+b2sums=('4d4533fa5996dd3de8a0c1a9618394b640faf80484e7483a024acae034f72bc7a9dd473c5d97a29efafcc452179cc48dfa1eac94352108e5188ebb5684a0ee0d')
 
 prepare() {
   cd $pkgname-$pkgver

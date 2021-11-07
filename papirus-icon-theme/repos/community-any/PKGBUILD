@@ -3,7 +3,7 @@
 # Contributor: Grigorii Horos <horosgrisa@gmail.com>
 
 pkgname=papirus-icon-theme
-pkgver=20210901
+pkgver=20211101
 pkgrel=1
 pkgdesc="Papirus icon theme"
 arch=('any')
@@ -11,7 +11,7 @@ url="https://github.com/PapirusDevelopmentTeam/papirus-icon-theme"
 license=("GPL3")
 depends=('gtk-update-icon-cache')
 source=("https://github.com/PapirusDevelopmentTeam/$pkgname/archive/$pkgver/$pkgname-$pkgver.tar.gz")
-sha512sums=('667c4ab3ac4cfc6732e995cc8908ea71e44cbdbc5975bc6a50a889cc59c1ba07fda7b8ec78b6e60cd21aaec2e2c61884d5a59dfd7451710c91c13614847e8a7c')
+sha512sums=('13b8e0624d1cb0a39f5dbb407682766de942a31a19b683ca1429dc9c97b4f236e070176f1a5e6f37893d0587276d37c6b8e3cee2bea72bf535598ea84704f717')
 
 package() {
   cd $pkgname-$pkgver

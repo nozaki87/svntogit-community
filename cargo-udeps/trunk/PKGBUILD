@@ -1,8 +1,9 @@
+
 # Maintainer: Orhun Parmaksız <orhun@archlinux.org>
 # Contributor: Vlad Frolov <frolvlad@gmail.com>
 
 pkgname=cargo-udeps
-pkgver=0.1.22
+pkgver=0.1.24
 pkgrel=1
 pkgdesc="Find unused dependencies in Cargo.toml"
 arch=('x86_64')
@@ -11,11 +12,16 @@ license=('MIT' 'Apache')
 depends=('curl')
 makedepends=('rust')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
-sha256sums=('d0e39795d737166d1c9b52d4e8a0eacf169373113530529646fdb66dee055924')
+sha256sums=('b24edd12783642484f7780f40b17d9e1f28e644407bf36f55c903add16b2b11e')
+
+prepare() {
+  cd "$pkgname-$pkgver"
+  cargo fetch --locked
+}
 
 build() {
   cd "$pkgname-$pkgver"
-  cargo build --release --locked
+  cargo build --release --frozen
 }
 
 # Tests require rustup nightly

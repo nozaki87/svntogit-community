@@ -2,8 +2,8 @@
 
 pkgbase=himalaya
 pkgname=('himalaya' 'vim-himalaya')
-pkgver=0.4.0
-pkgrel=5
+pkgver=0.5.1
+pkgrel=1
 pkgdesc="A CLI email client"
 arch=('x86_64')
 url="https://github.com/soywod/himalaya"
@@ -11,7 +11,7 @@ license=('BSD')
 depends=('gcc-libs' 'openssl')
 makedepends=('rust')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
-sha512sums=('abf3559b1f12c04761f0707cf5b3913afd76a6b1f05de22e2a936d7bbde64aa1fe8854216f7165af33acc615c7fa7f419c17ed9efd6b99bd8a8e51276d422ade')
+sha512sums=('8e45dff561d11ce7c3df9882d00345862dfca8ece112eb2134f59d9b3a550b3d06faa16697f451704d4f4fc56cb48783910de7fefb9f3a6e8d95fa9b6eb5cecc')
 
 prepare() {
   cd "$pkgname-$pkgver"
@@ -25,7 +25,7 @@ build() {
 
 check() {
   cd "$pkgname-$pkgver"
-  cargo test --frozen --locked --lib
+  cargo test --frozen
 }
 
 package_himalaya() {
@@ -37,7 +37,6 @@ package_himalaya() {
 }
 
 package_vim-himalaya() {
-  arch=('any')
   depends=('vim-plugin-runtime' 'himalaya')
   pkgdesc+=' - Vim UI plugin'
 

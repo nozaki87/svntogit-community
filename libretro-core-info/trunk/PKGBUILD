@@ -1,7 +1,7 @@
 # Maintainer: Maxime Gauduin <alucryd@archlinux.org>
 
 pkgname=libretro-core-info
-pkgver=1.9.8
+pkgver=1.9.12
 pkgrel=1
 pkgdesc='Libretro core info files'
 arch=(any)
@@ -9,7 +9,7 @@ url=https://github.com/libretro/libretro-core-info
 license=(GPL3)
 makedepends=(git)
 groups=(libretro)
-_tag=cf9854a29982507a3a7f934134dcaa3078fee96e
+_tag=53fd4297fe3a995b6af943a5a53d4081684b7752
 source=(git+https://github.com/libretro/libretro-core-info.git#tag=${_tag})
 sha256sums=(SKIP)
 

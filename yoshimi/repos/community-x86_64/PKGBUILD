@@ -2,7 +2,7 @@
 # Contributor: David Adler <d dot adler aet posteo dot de>
 
 pkgname=yoshimi
-pkgver=2.1.0
+pkgver=2.1.1.1
 pkgrel=1
 pkgdesc="A sophisticated soft-synth originally forked from ZynAddSubFX"
 arch=('x86_64')
@@ -18,14 +18,12 @@ optdepends=('alsa-lib: for standalone application'
             'readline: for standalone application'
             'ncurses: for standalone application')
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/${pkgname}/${pkgname}/archive/${pkgver}.tar.gz")
-sha512sums=('d90666ca2599d057d5c22abfc5e64f9a31eb323d13c50f771b92c5f94f7da9049b79dc8a478b3832142a97f8c2f5ea384a26e1543fdd6c063930989e34b146eb')
-b2sums=('f95fb49ec901e5a513960bfc4c1d27ce1979f3cd664d7ca7ddb723ad41fb06153749db0560a32f41c44c7fb433fde09ee49e898cb8bf55e232536b163d616992')
+sha512sums=('4feaf7b779d450e4d8f9612a141fdcd2858117c738c56bb43fa12a19f9806d6c990e560dfc62755c7d39e23608f516fb017b0c4063440996c5c17286a58bf946')
+b2sums=('eec292d489c01054ff3e7b4402a359d5abc29157048b475df8482630dccaae9fdff6cc697d95614778e34d363215633b0dc8beaeb1c832c02f98f0f21384b42e')
 
 build() {
   cd "${pkgname}-${pkgver}"
   cmake -DCMAKE_INSTALL_PREFIX='/usr' \
-        -DCMAKE_INSTALL_DATAROOTDIR='/usr/share' \
-        -DCMAKE_INSTALL_LIBDIR='/usr/lib' \
         -DCMAKE_BUILD_TYPE='None' \
         -Wno-dev \
         -B build\

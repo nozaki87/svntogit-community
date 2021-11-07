@@ -1,7 +1,7 @@
 # Maintainer: kpcyrd <kpcyrd[at]archlinux[dot]org>
 
 pkgname=vultr-cli
-pkgver=2.8.2
+pkgver=2.10.0
 pkgrel=1
 pkgdesc='Official command line tool for Vultr services'
 url='https://github.com/vultr/vultr-cli'
@@ -9,8 +9,8 @@ arch=('x86_64')
 license=('Apache')
 makedepends=('go')
 source=(https://github.com/vultr/${pkgname}/archive/v${pkgver}/${pkgname}-${pkgver}.tar.gz)
-sha512sums=('eca3e40fd12d6b2afc42ac5d1f9f7b2f1cd15b93679bdf638765be63342ee0da48d0fbd3c69e1dac672359d0839a4effbc35685f509baead5047f3229087d707')
-b2sums=('5327bf50aa31b95a7d7c057f075d89b030946ccdb36ce701964e1fa25a293144542448e4a6cde959efa921df660f00deb0758ef665ba5d5c774dad9f5f99fb10')
+sha512sums=('85005711972d0ed3c77a6e5bf0e1cd5fd65f2a3ee7aae7a49b9e4aed5e9b95260a0f1433710fbde16eca542e92e0a9f47c1145a86a6c6b6e042aab5d85454585')
+b2sums=('ebf9fd0f99b3b2590f9dada718119c6d9aba12860881a109a5f5de8599f1f4aaa8f88a9ff4e8b44f4eda6ea7757c76c31a482a65a9c3e8490b7c58fd07a7b3d9')
 
 build() {
   cd ${pkgname}-${pkgver}

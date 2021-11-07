@@ -1,17 +1,17 @@
 # Maintainer: Tim Meusel <tim@bastelfreak.de>
 # Contributor: arakmar
 pkgname=r10k
-pkgver=3.10.0
+pkgver=3.13.0
 pkgrel=1
 pkgdesc='Provides a general purpose toolset for deploying Puppet environments and modules.'
 arch=('any')
 url="https://github.com/puppetlabs/${pkgname}"
 license=('Apache')
-depends=('ruby' 'ruby-colored2' 'ruby-cri' 'ruby-gettext-setup' 'ruby-log4r' 'ruby-multi_json' 'ruby-semantic_puppet' 'ruby-puppet_forge' 'ruby-rugged' 'ruby-fast_gettext' 'ruby-gettext' 'ruby-faraday' 'ruby-faraday-net_http')
+depends=('ruby' 'ruby-colored2' 'ruby-cri' 'ruby-gettext-setup' 'ruby-log4r' 'ruby-multi_json' 'ruby-semantic_puppet' 'ruby-puppet_forge' 'ruby-rugged' 'ruby-fast_gettext' 'ruby-gettext' 'ruby-faraday' 'ruby-faraday-net_http' 'ruby-jwt')
 makedepends=('ruby-minitar' 'ruby-yard')
 checkdepends=('ruby-rspec')
 source=("${url}/archive/${pkgver}/${pkgname}-${pkgver}.tar.gz")
-sha512sums=('5fe227d1c853e70eb6cefcfeb33bfdaedee9929f8fe633f67ebbdce3ee46917fd56deabaa38362f71a3514da525a5bc29e7faaf0e3e4ca9d2b722c392c3d324e')
+sha512sums=('407d53aa122defccc22c92bcafef59cdb4b809051f688cb3b1cc29b44ab79f8786789e1a32865fe6eee69e6b5cda31375a891ad65fad96ea6808d0b77cc4d60a')
 options=('!emptydirs')
 
 prepare() {

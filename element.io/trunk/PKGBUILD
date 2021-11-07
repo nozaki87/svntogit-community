@@ -6,8 +6,8 @@
 _electron=electron13
 pkgbase=element.io
 pkgname=(element-web element-desktop)
-pkgver=1.7.34
-pkgrel=2
+pkgver=1.9.3
+pkgrel=1
 pkgdesc="Glossy Matrix collaboration client — "
 arch=(x86_64)
 url="https://element.io"
@@ -21,13 +21,13 @@ source=(element-web-${pkgver}.tar.gz::${_url}-web/archive/v${pkgver}.tar.gz
         autolaunch.patch
         io.element.Element.desktop
         element-desktop.sh)
-sha256sums=('16625882ac4c877ae0df12b203dd14438a48d744234dd3a5c72c681cf4e7ab2a'
+sha256sums=('81242647fb6d65c8c0ed6dee6feecdf999bd3b94a706116989d00bd61cc347f8'
             'SKIP'
-            '5eb795f0f9cf3a6d73bd05faac223d3cfa835d6a9d6d2e13f21ca214d827e516'
+            'b35f160d11bf27d753c9dead105a58545704c1ed86a9288bc93f0eead74ffa12'
             'SKIP'
             'aaae4ffa41590361dac0c159aecc1166f69e459e89faa9d5cab1202f0277e06f'
             '0103f28a32fe31f698836516783c1c70a76a0117b5df7fd0af5c422c224220f9'
-            'c1bd9ace215e3ec9af14d7f28b163fc8c8b42e23a2cf04ce6f4ce2fcc465feba')
+            '4c931121009985e7d3f73928c9db88508eedd974a7741e635bb290e3a2cd75db')
 validpgpkeys=(712BFBEE92DCA45252DB17D7C7BE97EFA179B100) # Element Releases <releases@riot.im>
 
 prepare() {
@@ -40,8 +40,8 @@ prepare() {
   cd ../element-desktop-${pkgver}
   patch -p1 < ../autolaunch.patch
   sed -i 's|"target": "deb"|"target": "dir"|' package.json
-  sed -i 's|"electronVersion": "13.1.6"|"electronVersion": "13.3.0"|' package.json
-  sed -i 's|"https://packages.riot.im/desktop/update/"|null|' element.io/release/config.json
+  sed -i 's|"electronVersion": "13.5.1"|"electronVersion": "13.5.2"|' package.json
+  sed -i 's|"https://packages.element.io/desktop/update/"|null|' element.io/release/config.json
   yarn install --no-fund
 }
 

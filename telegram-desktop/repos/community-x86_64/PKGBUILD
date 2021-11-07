@@ -1,14 +1,14 @@
 # Maintainer: Sven-Hendrik Haase <svenstaro@gmail.com>
 # Contributor: hexchain <i@hexchain.org>
 pkgname=telegram-desktop
-pkgver=3.0.1
+pkgver=3.2.2
 pkgrel=1
 pkgdesc='Official Telegram Desktop client'
 arch=('x86_64')
 url="https://desktop.telegram.org/"
 license=('GPL3')
 depends=('hunspell' 'ffmpeg' 'hicolor-icon-theme' 'lz4' 'minizip' 'openal' 'ttf-opensans'
-         'qt5-imageformats' 'qt5-svg' 'xxhash' 'libdbusmenu-qt5' 'kwayland' 'glibmm'
+         'qt5-imageformats' 'qt5-svg' 'qt5-wayland' 'libdbusmenu-qt5' 'xxhash' 'kwayland' 'glibmm'
          'rnnoise' 'pipewire' 'libxtst' 'libxrandr' 'jemalloc' 'libtg_owt')
 makedepends=('cmake' 'git' 'ninja' 'python' 'range-v3' 'tl-expected' 'microsoft-gsl'
              'extra-cmake-modules' 'gtk3' 'webkit2gtk')
@@ -16,7 +16,7 @@ optdepends=('gtk3: GTK environment integration'
             'webkit2gtk: embedded browser features'
             'xdg-desktop-portal: desktop integration')
 source=("https://github.com/telegramdesktop/tdesktop/releases/download/v${pkgver}/tdesktop-${pkgver}-full.tar.gz")
-sha512sums=('6bff6be5f2c0c7a17df61dccc5a3216dcbb95a1c6d3176442c530e2c1b525e6d15079b230d40751f20684da2a1067d4518a9a1ab90d49d1a7338d3e05239d447')
+sha512sums=('300ffb75994df28041990dae662e8031da972d0ced8aa9770c026fba61edbb87f2a2176e173febbdd2b859876e0d64b490b45c93408e7f41113d13abab1f2de6')
 
 build() {
     cd tdesktop-$pkgver-full
@@ -27,10 +27,12 @@ build() {
     cmake \
         -B build \
         -G Ninja \
+        -DDESKTOP_APP_QT6=off \
         -DCMAKE_INSTALL_PREFIX="/usr" \
         -DCMAKE_BUILD_TYPE=Release \
         -DTDESKTOP_API_ID=611335 \
         -DTDESKTOP_API_HASH=d524b414d21f4d37f08684c1df41ac9c
+    # Use Qt5 for the time being until kwayland has an easier way to work with Qt6.
     ninja -C build
 }
 

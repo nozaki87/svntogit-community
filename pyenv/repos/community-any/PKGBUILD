@@ -1,7 +1,7 @@
 # Maintainer: David Runge <dvzrv@archlinux.org>
 
 pkgname=pyenv
-pkgver=2.0.6
+pkgver=2.2.0
 pkgrel=1
 pkgdesc="Easily switch between multiple versions of Python"
 arch=('any')
@@ -10,8 +10,8 @@ license=('MIT')
 depends=('bash')
 optdepends=('git: installing development versions')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/${pkgname}/${pkgname}/archive/v${pkgver}.tar.gz")
-sha512sums=('825701054080b21c16053aa765d506780ddbd09036a8a6d8476fabb1c4b4ffd52fa883e727cc6823df43ec818c2d916d5e3142a4c9acfd70f6eda491744761c7')
-b2sums=('b50ac2f59129381187fef7ed94644e284179066bff56b711c41d86ca47411c94adcdc0f1139467e3dfb9f31d74673f76de183ad00b1193d304a11439e151c275')
+sha512sums=('e819030258c4f67156d84d2ae349bf16303547a05cf37277113737df8352269b3933fd765d8ebb6c187b830023ecc9cf81f168cac413d628c3c3fa4d06f01f74')
+b2sums=('fef784e87075a6772c78a3051331fbd3da1e077507164d8457f7c9303ec97a35687705303ebb37a1074eba95523a88cdbffc5fe0c0397756d3be4d2d1a18d374')
 
 package() {
   cd "$pkgname-$pkgver"
@@ -51,6 +51,8 @@ package() {
     "${pkgdir}/usr/share/bash-completion/completions/${pkgname}"
   install -vDm 644 completions/${pkgname}.zsh \
     "${pkgdir}/usr/share/zsh/site-functions/_${pkgname}"
+  # man page
+  install -vDm 644 man/man1/*.1 -t "${pkgdir}/usr/share/man/man1/"
   # docs
   install -vDm 644 {CHANGELOG,COMMANDS,README}.md \
     -t "${pkgdir}/usr/share/doc/${pkgname}"

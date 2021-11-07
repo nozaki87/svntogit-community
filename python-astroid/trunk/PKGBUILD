@@ -1,16 +1,18 @@
 # Maintainer: Caleb Maclennan <caleb@alerque.com>
+# Maintainer: Daniel M. Capella <polyzen@archlinux.org>
 # Contributor: Angel Velasquez <angvp@archlinux.org>
 # Contributor: Felix Yan <felixonmars@archlinux.org>
 
 _pyname=astroid
 pkgname=python-$_pyname
-pkgver=2.7.3
+pkgver=2.8.4
 pkgrel=1
 pkgdesc='A common base representation of python source code'
 arch=(any)
 url="https://github.com/PyCQA/$_pyname"
 license=(LGPL)
 _pydeps=(lazy-object-proxy
+         typing-extensions
          wrapt)
 depends=(python
          "${_pydeps[@]/#/python-}")
@@ -20,7 +22,7 @@ replaces=(python-logilab-astng)
 conflicts=(python-logilab-astng)
 _archive="$_pyname-$pkgver"
 source=("$url/archive/v$pkgver/$_archive.tar.gz")
-sha256sums=('47b332a2f57c18b35386befcedd11824aabd4e77d50153c11f114548c1ba1143')
+sha256sums=('c8da13c416071acfb0153cf1dcd0b40f61cf54261075f88d5bc1f8a02407c54e')
 
 build() {
 	cd "$_archive"

@@ -1,25 +1,17 @@
 # Maintainer: Sven-Hendrik Haase <svenstaro@gmail.com>
 pkgname=ogre
-pkgver=13.0.0
-pkgrel=2
+pkgver=13.1.1
+pkgrel=1
 pkgdesc='Scene-oriented, flexible 3D engine written in C++'
 arch=('x86_64')
 url='http://www.ogre3d.org'
 license=('custom:MIT')
-depends=('freeimage' 'freetype2' 'libxaw' 'libxrandr' 'rapidjson'
-         'zziplib' 'sdl2' 'glu' 'tinyxml' 'zlib')
+depends=('freeimage' 'freetype2' 'libxaw' 'libxrandr' 'sdl2' 'glu' 'pugixml' 'zlib')
 makedepends=('cmake' 'doxygen' 'graphviz' 'ttf-dejavu' 'mesa' 'python' 'ninja' 'cppunit')
 install=ogre.install
-source=("$pkgname-$pkgver.tar.gz::https://github.com/OGRECave/ogre/archive/v${pkgver}.tar.gz"
-        https://github.com/OGRECave/ogre/commit/74c5ce3da1054b88a19f8e9f79d4492ec271ea1f.patch)
+source=("$pkgname-$pkgver.tar.gz::https://github.com/OGRECave/ogre/archive/v${pkgver}.tar.gz")
 optdepends=('python: python bindings')
-sha512sums=('b137322251b6d4798b3b2bef8f2a1e81bbe7839fd085425f66ce55dea52f93562dab8ed32ea9f19a431c65783a00a202acea75c1ef207d30d0101ae05166c605'
-            '8b0b3edd71a9322ef62fa34b5d1362e3a5fa58dd2db4233ae26b299d2ddad2b872d59ba0f900fb8f43f757260988826b7ea9eb04f4fd50f603272e6aa89a768b')
-
-prepare() {
-  cd ogre-${pkgver}
-  patch -Np1 -i "${srcdir}"/74c5ce3da1054b88a19f8e9f79d4492ec271ea1f.patch
-}
+sha512sums=('aa9bde4dc9c40c4ea56ff554c0eb2bd1be596d808f3f3d83a8a7e92e828edbf573a3ff565eb50cba1247cf71007c60f7fd87746cb2059f13c16f4c73b2dccb25')
 
 build() {
   cd ogre-${pkgver}
@@ -28,19 +20,8 @@ build() {
     -Bbuild \
     -GNinja \
     -DCMAKE_INSTALL_PREFIX=/usr \
-    -DOGRE_CONFIG_ENABLE_JSON=ON \
-    -DOGRE_CONFIG_THREADS=1 \
-    -DOGRE_CONFIG_THREAD_PROVIDER="std" \
-    -DOGRE_BUILD_COMPONENT_PLANAR_REFLECTIONS=ON \
-    -DOGRE_BUILD_COMPONENT_TERRAIN=ON \
-    -DOGRE_BUILD_COMPONENT_VOLUME=ON \
-    -DOGRE_BUILD_COMPONENT_PAGING=ON \
-    -DOGRE_BUILD_COMPONENT_PROPERTY=ON \
-    -DOGRE_BUILD_COMPONENT_RTSHADERSYSTEM=ON \
-    -DOGRE_BUILD_COMPONENT_SCENE_FORMAT=ON \
-    -DOGRE_USE_BOOST=ON \
     -DOGRE_BUILD_TESTS=ON \
-    -DOGRE_INSTALL_SAMPLES_SOURCE=ON
+    -DOGRE_BUILD_DEPENDENCIES=OFF
 
   ninja -C build
   ninja -C build OgreDoc

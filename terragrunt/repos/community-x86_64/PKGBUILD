@@ -3,7 +3,7 @@
 # Contributor: Andreas 'Segaja' Schleifer <archlinux at segaja dot de>
 
 pkgname=terragrunt
-pkgver=0.31.10
+pkgver=0.35.6
 pkgrel=1
 pkgdesc='Thin wrapper for Terraform that provides extra tools for working with multiple Terraform modules'
 url='https://github.com/gruntwork-io/terragrunt'
@@ -12,12 +12,11 @@ makedepends=('git' 'go')
 depends=('glibc' 'terraform')
 license=('MIT')
 source=("${url}/archive/v${pkgver}/${pkgname}-${pkgver}.tar.gz")
-sha256sums=('efa57adb475ac69ab19cc24a22d380b2d2700bfb6361d8a33a712cc2f191830b')
-b2sums=('64416e4bb3a0df996fd11a358ec4c1c0d974e6ade1c92c676399f5b896fce242e8a48a2c9c41e30cd3ab147a8cb59a71c3db62a5abb42e92ec515d1e418903eb')
+sha256sums=('c9166789a1645f5595e4ea4f56ac9fbaa0087e8bbc4d80c6913325edb4e05faf')
+b2sums=('06378e9b5abd5568999a98ebe03aca7f31329814c5e6626aa2c224701ad7aa00a3f46102eccb3433aab4972b512c080865983cdc3bc58c50b9e8f25b55366f59')
 
 build() {
   cd ${pkgname}-${pkgver}
-  export GO11MODULE=on
   export CGO_CFLAGS="${CFLAGS}"
   export CGO_CXXFLAGS="${CXXFLAGS}"
   export CGO_CPPFLAGS="${CPPFLAGS}"

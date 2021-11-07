@@ -1,28 +1,28 @@
 # Maintainer: Felix Yan <felixonmars@archlinux.org>
 
 pkgname=python-phonenumbers
-pkgver=8.12.31
+pkgver=8.12.36
 pkgrel=1
 pkgdesc="Python version of Google's common library for parsing, formatting, storing and validating international phone numbers"
 arch=('any')
 url="https://github.com/daviddrysdale/python-phonenumbers"
 license=('Apache')
 depends=('python')
-makedepends=("python-setuptools")
-source=("$pkgname-$pkgver.tar.gz::https://github.com/daviddrysdale/python-phonenumbers/archive/v$pkgver.tar.gz")
-sha512sums=('a8abd5322b258cd26e3bfa1f38605813394d04b1246a32b24602224df58733e275d6860403a93427b214d286db8fb5039b4c5e81dfa4fe948aaa13f8deb48982')
+makedepends=('python-setuptools')
+source=("https://github.com/daviddrysdale/python-phonenumbers/archive/v$pkgver/$pkgname-$pkgver.tar.gz")
+sha512sums=('e7ead689868228cef1196e8b00790404530d7591085ee379f1ed15f83890b1b95a0b7758f62ae72b4baccc619b6611317b6399d7e1885dc64e4220fd223b33b1')
 
 build() {
-  cd python-phonenumbers-$pkgver
+  cd python-phonenumbers-$pkgver/python
   python setup.py build
 }
 
 check() {
-  cd python-phonenumbers-$pkgver
+  cd python-phonenumbers-$pkgver/python
   python setup.py test
 }
 
 package() {
-  cd python-phonenumbers-$pkgver
+  cd python-phonenumbers-$pkgver/python
   python setup.py install -O1 --root "$pkgdir"
 }

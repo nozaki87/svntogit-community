@@ -1,23 +1,18 @@
 # Maintainer: Bruno Pagani <archange@archlinux.org>
 
 pkgname=ospray
-pkgver=2.6.0
+pkgver=2.8.0
 pkgrel=1
 pkgdesc="Ray Tracing Based Rendering Engine for High-Fidelity Visualization"
 arch=(x86_64)
 url="https://www.ospray.org/"
 license=(Apache)
-depends=(intel-tbb embree ispc libgl glfw glu openmpi openimagedenoise openvkl rkcommon)
-makedepends=(cmake)
-source=(https://github.com/ospray/OSPRay/archive/v${pkgver}/${pkgname}-${pkgver}.tar.gz
-        ospray-gcc11.patch)
-sha256sums=('5efccd7eff5774b77f8894e68a6b803b535a0d12f32ab49edf13b954e2848f2e'
-            '8a93baf26947baac6fefec1b8461da4f22a831b860688433d332496aaa4ab108')
-
-prepare() {
-  cd ${pkgname}-${pkgver}
-  patch -p1 < ../ospray-gcc11.patch
-}
+depends=(intel-tbb embree ispc libgl glfw glu openmpi openimagedenoise openvkl rkcommon snappy)
+optdepends=('benchmark: benchmarks'
+            'gtest: tests suite')
+makedepends=(cmake benchmark gtest)
+source=(https://github.com/ospray/OSPRay/archive/v${pkgver}/${pkgname}-${pkgver}.tar.gz)
+sha256sums=('2dabc75446a0e2e970952d325f930853a51a9b4d1868c8135f05552a4ae04d39')
 
 build() {
   cmake -B build -S ${pkgname}-${pkgver} \

@@ -2,7 +2,7 @@
 
 _name=PyMuPDF
 pkgname=python-pymupdf
-pkgver=1.18.17
+pkgver=1.19.1
 pkgrel=1
 pkgdesc="Python bindings for MuPDF's rendering library"
 arch=('x86_64')
@@ -11,12 +11,9 @@ license=('AGPL3')
 depends=('glibc' 'gumbo-parser' 'jbig2dec' 'libmupdf' 'openjpeg2' 'python')
 makedepends=('freetype2' 'libjpeg-turbo' 'python-distro' 'python-setuptools' 'swig' 'systemd')
 checkdepends=('python-pillow' 'python-pytest')
-# pypi sdist tarball does not have tests
-# https://github.com/pymupdf/PyMuPDF/issues/1227
-# source=("https://files.pythonhosted.org/packages/source/${_name::1}/${_name}/${_name}-${pkgver}.tar.gz")
-source=("${pkgname}-${pkgver}.tar.gz::https://github.com/${_name}/${_name}/archive/refs/tags/${pkgver}.tar.gz")
-sha512sums=('fc1f993611579b33d48be086e9966b6e45e4811973cad250905ca17e3b8a79a2fb885587997248fae0cf2de3bd527cdb44190402338de156e64bd9ea31737eb9')
-b2sums=('1cee464f75ef6240e5353edea11ee67194061acb9a25ddaeedd87e071217f68bd349be5a01038b724d77b2e6f6376189a7132d61bfd4bc4e51f9552ca4f21fa6')
+source=("https://files.pythonhosted.org/packages/source/${_name::1}/${_name}/${_name}-${pkgver}.tar.gz")
+sha512sums=('1c451695d0a79ad3643ea69a26420685bc00c832fc223c7db50d9acc5e385f42451c18052d7b4865577d9883b39d75935103af5150689091a93609fe4f70d679')
+b2sums=('29e1ec07a0c57311e90fe31a37184fc2db63afd0183fea93c79ba99af74d32be079d404935147160f8580dae05c84415fe90f06deaf5f9ddf42a069097c3b0e4')
 
 prepare() {
   mv -v "$_name-$pkgver" "$pkgname-$pkgver"
@@ -33,9 +30,7 @@ check() {
   cd "$pkgname-$pkgver"
   mkdir -vp "${_test_dir}"
   # install to test dir for testing
-  python setup.py install --skip-build \
-                          --optimize=1 \
-                          --root="${_test_dir}"
+  python setup.py install --optimize=1 --root="${_test_dir}"
 
   export PYTHONPATH="${_test_dir}/${_site_packages}:${PYTHONPATH}"
   pytest -v -k "not test_font1 and not test_pageids and not test_textbox3"
@@ -43,10 +38,8 @@ check() {
 
 package() {
   depends+=('libfreetype.so' 'libjpeg.so')
+
   cd "$pkgname-$pkgver"
-  python setup.py install --skip-build \
-                          --optimize=1 \
-                          --root="${pkgdir}"
-  rm -rv "${pkgdir}/usr/README.md"
+  python setup.py install --optimize=1 --root="${pkgdir}"
   install -vDm 644 README.md -t "${pkgdir}/usr/share/doc/${pkgname}"
 }

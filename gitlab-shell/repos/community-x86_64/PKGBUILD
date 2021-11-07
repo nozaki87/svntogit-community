@@ -14,7 +14,7 @@
 pkgname=gitlab-shell
 pkgver=13.20.0
 pkgrel=1
-epoch=2
+epoch=3
 pkgdesc="Git management software"
 arch=('x86_64')
 url="https://gitlab.com/gitlab-org/gitlab-shell/"

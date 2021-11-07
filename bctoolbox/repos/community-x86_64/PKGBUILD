@@ -2,16 +2,16 @@
 # Contributor: Sergej Pupykin <arch+pub@sergej.pp.ru>
 
 pkgname=bctoolbox
-pkgver=5.0.18
+pkgver=5.0.49
 pkgrel=1
 pkgdesc='A library written in C that allows you to create and run audio and video streams'
 arch=(x86_64)
-url='https://github.com/BelledonneCommunications/bctoolbox'
+url='https://gitlab.linphone.org/'
 license=(GPL)
 depends=(mbedtls bcunit)
 makedepends=(cmake)
-source=(https://github.com/BelledonneCommunications/bctoolbox/archive/$pkgver/$pkgname-$pkgver.tar.gz)
-sha256sums=('63114fa35e3fe8d0c9f3be3340fea16e94f912971f0914e7e7ea2c6eb4062579')
+source=(https://gitlab.linphone.org/BC/public/bctoolbox/-/archive/$pkgver/$pkgname-$pkgver.tar.bz2)
+sha256sums=('7978ef70bd3d10a7356f92d8dd982f875b347fbec4152da6110550f2bd5b0f94')
 
 build() {
   cmake -B build -S $pkgname-$pkgver \

@@ -2,7 +2,7 @@
 
 pkgbase=materia-kde
 pkgname=(materia-kde kvantum-theme-materia)
-pkgver=20210722
+pkgver=20211027
 pkgrel=1
 pkgdesc="Materia theme for KDE Plasma 5"
 arch=(any)
@@ -10,7 +10,7 @@ url="https://github.com/PapirusDevelopmentTeam/materia-kde"
 license=(GPL3)
 options=(!strip)
 source=(${url}/archive/${pkgver}/${pkgbase}-${pkgver}.tar.gz)
-sha256sums=('c8202aed41454b58f2acddcf5b96abfdd5f721a5fc6950a72394ed9eff60c6f3')
+sha256sums=('cfabeecbfe5a9d3f163c61d00b8a75b1780788662d84f3686e9ebc3be985377f')
 
 package_materia-kde() {
     optdepends=('materia-gtk-theme: Matching GTK theme'

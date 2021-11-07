@@ -14,7 +14,7 @@
 pkgname=gitlab-shell
 pkgver=13.20.0
 pkgrel=1
-epoch=2
+epoch=3
 pkgdesc="Git management software"
 arch=('x86_64')
 url="https://gitlab.com/gitlab-org/gitlab-shell/"
@@ -88,9 +88,6 @@ package() {
 
   cp -r VERSION bin spec support "${pkgdir}${_datadir}"
   ln -fs "${_datadir}" "${pkgdir}/${_homedir}/"
-
-  # Compatibility for FS#64251
-  ln -s gitlab-shell "${pkgdir}"/${_datadir}/bin/gitlab-shell-ruby
 
   install -dm2770 -o 105 -g 105 "${pkgdir}${_homedir}/repositories"
 

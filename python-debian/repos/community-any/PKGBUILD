@@ -4,8 +4,8 @@
 # Contributor: Johannes Dewender   arch at JonnyJD dot net
 
 pkgname=python-debian
-pkgver=0.1.40
-pkgrel=2
+pkgver=0.1.42
+pkgrel=1
 pkgdesc='Python module to work with Debian-related data formats'
 arch=('any')
 url='https://salsa.debian.org/python-debian-team/python-debian'
@@ -13,7 +13,8 @@ license=('GPL')
 depends=('python-chardet' 'python-six')
 makedepends=('python-setuptools')
 source=("$pkgname-$pkgver.tar.gz::$url/-/archive/$pkgver/$pkgname-$pkgver.tar.gz")
-sha512sums=('20eed9ed09faab36d6223e9e980e77c8eb1ea8f886f8829bf290b9e8dc4cae8ccd69b0699be9e8e39522c4e71641129e0aae41bc5b25e7e7e30e33c4e64775b5')
+sha512sums=('b7f27dda52f110006c0397144ba725194d14947d78484e4846a9a2d1edb75b134aca409db3452cffbffbb8f592b3ba4eaf5d4c7531896b7cb8999fe0174b29fd')
+b2sums=('f2fa589462c17a41118f0f3408b62af0dd171ad25f537b1f8b7110e75f0924ac5c46cddd43a3a8521bff4f0de9f76fcd614081321a971c2953c6c598ddd43187')
 
 build() {
   cd "$pkgname-$pkgver"
@@ -23,7 +24,7 @@ build() {
 check() {
   cd "$pkgname-$pkgver"
   rm lib/debian/tests/test_deb{822,file}.py # remove failing tests .. for now
-  python3 -m unittest discover --verbose lib/
+  python -m unittest discover --verbose lib/
 }
 
 package() {

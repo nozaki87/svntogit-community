@@ -2,18 +2,20 @@
 # Contributor: desbma
 
 pkgname=zoxide
-pkgver=0.7.5
+pkgver=0.7.9
 pkgrel=1
 pkgdesc="A smarter cd command for your terminal"
 arch=('x86_64')
 url="https://github.com/ajeetdsouza/zoxide"
 license=('MIT')
+depends=('gcc-libs')
 makedepends=('rust')
 optdepends=(
   'fzf: for interactive selection'
 )
 source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
-b2sums=('bdcb42d5eca9b0c0402e782c9330749844d84822bf23220f53fbe5d6afdeed4a5ec40b6d9f396be61052bfc623151b2cddd06834898c6a77a0c80dc34596fc65')
+sha512sums=('9069e921a086479f0a90a285dda0fcac18f34f043cfd41d1ace19d3b8803a691fdfd22e4c23159dea46ab2353b8aa996b930ddc60cb57fabd7f9449292d1d912')
+b2sums=('b32c45c72f64927b595d9c3ccfc666f3f4d8606be37739074d16d79ae8c9e35242fb11813d8f58aaee808924945289760d0a5ec08fd295b137b7b7071a42a8d2')
 
 prepare() {
   cd "$pkgname-$pkgver"

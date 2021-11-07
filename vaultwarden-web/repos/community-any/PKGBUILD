@@ -1,13 +1,14 @@
 # Maintainer: Daniel M. Capella <polyzen@archlinux.org>
+# Maintainer: George Rawlinson <grawlinson@archlinux.org>
 # Contributor: Markus Richter <mqus at disroot dot org>
 
 pkgname=vaultwarden-web
-_pkgver=2.21.1
-pkgver=2.21.1
+_pkgver=2.24.1
+pkgver=2.24.1
 _upstreamver=${_pkgver%[[:lower:]]}
-_patchver=$_upstreamver
+_patchver=2.24.0 # relabel to _upstreamver later
 pkgrel=1
-pkgdesc='Bitwarden web vault with the patches to make it work with vaultwarden'
+pkgdesc='Bitwarden web vault with the patches to make it work with Vaultwarden'
 arch=('any')
 url=https://github.com/dani-garcia/bw_web_builds
 license=('GPL3')
@@ -17,9 +18,9 @@ provides=('bitwarden_rs-vault' 'bitwarden_rs-web')
 replaces=('bitwarden_rs-vault' 'bitwarden_rs-web')
 install=$pkgname.install
 source=("bitwarden-web::git+https://github.com/bitwarden/web.git#tag=v$_upstreamver"
-        "$pkgname-v$_patchver.patch::https://raw.githubusercontent.com/dani-garcia/bw_web_builds/v$_pkgver/patches/v$_patchver.patch")
+        "$pkgname-v$_patchver.patch::https://raw.githubusercontent.com/dani-garcia/bw_web_builds/v$pkgver/patches/v$_patchver.patch")
 b2sums=('SKIP'
-        'e4106009cfad41ee2289d791227d794708bff820acd0383538727b43a71fd84716d3b9a2c1e748d02b235df469c1853aa0cebbad3251dd5d4aa7e1ed19dbf254')
+        '261e82c0b65bbeb28e46acc9903ad79d03448a7a3c8033b2dfcc0aa77b9262bbd3538245e6ec27e1e90a475628ea46c54c0a4ac11dd77dbf10a8452f86d81c2b')
 
 pkgver() {
   echo $_pkgver | sed 's/[[:lower:]]$/.&/'
@@ -29,12 +30,13 @@ prepare() {
   cd bitwarden-web
   git submodule update --init
   patch --forward --strip=1 --input=../$pkgname-v$_patchver.patch
+
   npm ci
 }
 
 build() {
   cd bitwarden-web
-  npm run dist
+  npm run dist:oss:selfhost
 }
 
 package() {
