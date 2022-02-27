@@ -97,7 +97,8 @@ build() {
 
   cd mozc/src
 
-  sed -i -r 's/^bazel\sbuild.*$/\0 unix\/emacs\/emacs.gyp:mozc_emacs_helper/g' ../scripts/build_fcitx5_bazel
+  sed -i -r 's#^bazel\sbuild.*$#\0 unix/emacs:mozc_emacs_helper#g' ../scripts/build_fcitx5_bazel
+  sed -i -r 's#(^bazel)\s(build.*$)#\1 --host_jvm_args=--add-opens=java.base/java.lang=ALL-UNNAMED \2#' ../scripts/build_fcitx5_bazel
   QT_BASE_PATH=/usr/include/qt ../scripts/build_fcitx5_bazel
 
   # Extract license part of mozc
@@ -108,7 +109,7 @@ package() {
   cd mozc/src
   export PREFIX="${pkgdir}/usr"
   export _bldtype
-  sed -i -r '0,/install/s#^install.*$#\0\ninstall -D -m 755 "bazel-bin/unix/emacs/mozc_emacs_helper" "${PREFIX}/bin/mozc_emacs_helper"#' ./install_server_bazel
+  sed -i -r '0,/install/s#^install.*$#\0\ninstall -D -m 755 "bazel-bin/unix/emacs/mozc_emacs_helper" "${PREFIX}/bin/mozc_emacs_helper"#' ../scripts/install_server_bazel
   ../scripts/install_server_bazel
 
   install -d "${pkgdir}/usr/share/licenses/$pkgname/"
