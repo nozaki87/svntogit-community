@@ -1,22 +1,25 @@
 # Maintainer: Felix Yan <felixonmars@archlinux.org>
 # Maintainer: Daurnimator <daurnimator@archlinux.org>
-# Maintainer: Daniel M. Capella <polyzen@archlinux.org>
-# Contributor: Caleb Maclennan <caleb@alerque.com>
+# Maintainer: Caleb Maclennan <caleb@alerque.com>
+# Contributor: Daniel M. Capella <polyzen@archlinux.org>
 
 pkgname=yq
-pkgver=2.12.2
-pkgrel=2
-pkgdesc="Command-line YAML/XML processor - jq wrapper for YAML/XML documents"
+pkgver=2.14.0
+pkgrel=1
+pkgdesc="Command-line YAML, XML, TOML processor - jq wrapper for YAML/XML/TOML documents"
 arch=('any')
 url="https://github.com/kislyuk/yq"
 license=('Apache')
-depends=('jq' 'python-yaml' 'python-xmltodict' 'python-toml'
-         'python-argcomplete')
-makedepends=('python-setuptools')
+depends=('jq'
+         'python-argcomplete'
+         'python-toml'
+         'python-xmltodict'
+         'python-yaml')
+makedepends=('python-setuptools-scm')
 conflicts=('go-yq')
 source=("https://files.pythonhosted.org/packages/source/y/$pkgname/$pkgname-$pkgver.tar.gz")
-sha256sums=('2f156d0724b61487ac8752ed4eaa702a5737b804d5afa46fa55866951cd106d2')
-b2sums=('956513d466024eadd3ff97d64fc83cd336929cf5ae4ec6e30d4717061a571e837ad4ee2215a4cf1039dcb8061ff5453df98d3ae1623fe05e73776d227aa6a5d0')
+sha256sums=('f4bf2b299d1e5c7ebd74cfb25d1f5d9b6401063bac07a2d09a156144c1d644e1')
+b2sums=('07e200524390e938705854c5d1ac4921fbc8f165cdbf8152e36124e52a1c51c70d6d711b67a3dac8c2bbf1f75040466e8d94505aa5f19e388a31bbcdc92e91bd')
 
 prepare() {
   cd $pkgname-$pkgver

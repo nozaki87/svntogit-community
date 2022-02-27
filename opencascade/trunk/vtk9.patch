@@ -1,5 +1,3 @@
-diff --git a/src/IVtkDraw/IVtkDraw_HighlightAndSelectionPipeline.hxx b/src/IVtkDraw/IVtkDraw_HighlightAndSelectionPipeline.hxx
-index 9e8a4e028a..8491febece 100644
 --- a/src/IVtkDraw/IVtkDraw_HighlightAndSelectionPipeline.hxx
 +++ b/src/IVtkDraw/IVtkDraw_HighlightAndSelectionPipeline.hxx
 @@ -23,6 +23,7 @@
@@ -10,8 +8,6 @@ index 9e8a4e028a..8491febece 100644
  #include <vtkActor.h>
  #include <vtkPolyData.h>
  #include <vtkPolyDataMapper.h>
-diff --git a/src/IVtkVTK/IVtkVTK_ShapeData.hxx b/src/IVtkVTK/IVtkVTK_ShapeData.hxx
-index 0fda1748ab..3ca3a8eeb9 100644
 --- a/src/IVtkVTK/IVtkVTK_ShapeData.hxx
 +++ b/src/IVtkVTK/IVtkVTK_ShapeData.hxx
 @@ -23,6 +23,7 @@
@@ -22,8 +18,6 @@ index 0fda1748ab..3ca3a8eeb9 100644
  #include <Standard_WarningsRestore.hxx>
  
  class vtkIdTypeArray;
-diff --git a/src/InterfaceGraphic/InterfaceGraphic.hxx b/src/InterfaceGraphic/InterfaceGraphic.hxx
-index c533f68cd5..6410892618 100644
 --- a/src/InterfaceGraphic/InterfaceGraphic.hxx
 +++ b/src/InterfaceGraphic/InterfaceGraphic.hxx
 @@ -40,6 +40,8 @@

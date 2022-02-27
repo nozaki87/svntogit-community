@@ -1,10 +1,10 @@
-# Maintainer: Dan Printzell <arch@vild.io>
+# Maintainer: Dan Printzell <wild@archlinux.org>
 # Maintainer: Filipe Laíns (FFY00) <lains@archlinux.org>
 
 pkgname=dscanner
-pkgver=0.11.1
+pkgver=0.12.0
 pkgrel=1
-_pkgcommit=7809598da0e06a319d35d3b6edb4277710fa776b
+_pkgcommit=cdf881c10386bb9cf9115af80daa86a48e93833b
 pkgdesc="Swiss-army knife for D source code"
 arch=('x86_64')
 url="https://github.com/dlang-community/D-Scanner"

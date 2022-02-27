@@ -1,25 +1,26 @@
 # Maintainer: kpcyrd <kpcyrd[at]archlinux[dot]org>
 
 pkgname=cargo-release
-pkgver=0.18.2
-pkgrel=1
+pkgver=0.20.2
+pkgrel=3
 pkgdesc='Cargo subcommand "release": everything about releasing a rust crate'
 url='https://github.com/sunng87/cargo-release'
 arch=('x86_64')
 license=('MIT' 'APACHE')
-depends=('gcc-libs' 'openssl' 'zlib')
-makedepends=('cargo')
+depends=('gcc-libs' 'libgit2' 'libssh' 'openssl' 'zlib')
+makedepends=('cargo' 'pkg-config')
 source=(https://github.com/sunng87/${pkgname}/archive/v${pkgver}/${pkgname}-${pkgver}.tar.gz)
-b2sums=('8a90abd426163683f5489d1a7df701356239381d038439b653d2175306daf277ff3c82bcc3720f4d78b18b0d1fcd35e6e031f828d09e8ee3df011c1938817ecf')
+b2sums=('a1ea3b05fc9396d0af1f7150204d2dd12bcee0fdcb34d352b18bca77aada26a7d367086f0d5811480a5f1030ad34d7f4f446b2e86045c12f2c168112f1dd3aa9')
 
 prepare() {
   cd ${pkgname}-${pkgver}
+  sed -i 's/"vendored-libgit2"//' Cargo.toml
   cargo fetch --locked --target "$CARCH-unknown-linux-gnu"
 }
 
 build() {
   cd ${pkgname}-${pkgver}
-  cargo build --frozen --release
+  LIBSSH2_SYS_USE_PKG_CONFIG=1 cargo build --frozen --release
 }
 
 package() {

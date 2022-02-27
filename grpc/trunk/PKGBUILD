@@ -4,7 +4,7 @@
 
 pkgbase='grpc'
 pkgname=('grpc' 'python-grpcio' 'php-grpc' 'php7-grpc' 'grpc-cli')
-pkgver=1.41.1
+pkgver=1.43.2
 _gtestver=c9ccac7cb7345901884aabf5d1a786cfa6e2f397
 pkgrel=1
 pkgdesc="High performance, open source, general RPC framework that puts mobile and HTTP/2 first."
@@ -13,22 +13,17 @@ url='https://grpc.io'
 license=('BSD')
 makedepends=('re2' 're2c' 'protobuf' 'php' 'php7' 'c-ares' 'openssl' 'chrpath' 'cython'
              'cmake' 'benchmark' 'python-setuptools' 'abseil-cpp' 'ninja')
+checkdepends=('python-six')
 source=("https://github.com/grpc/grpc/archive/v$pkgver/$pkgbase-$pkgver.tar.gz"
         "https://github.com/google/googletest/archive/$_gtestver/googletest-$_gtestver.tar.gz"
-        "grpc-assert.patch"
-        "python-grpcio-use-system-abseil.patch"
-        "benchmark-1.6.patch")
-sha256sums=('12a4a6f8c06b96e38f8576ded76d0b79bce13efd7560ed22134c2f433bc496ad'
+        "python-grpcio-use-system-abseil.patch")
+sha256sums=('b74ce7d26fe187970d1d8e2c06a5d3391122f7bc1fdce569aff5e435fb8fe780'
             '443d383db648ebb8e391382c0ab63263b7091d03197f304390baac10f178a468'
-            'ec0fc6af1b191da8660d1fd807da0f38f1dca1e6ee3bc7abbe69d5bc2049116f'
-            '3cfb289266f9d2697b917e4400f18a6592f95a99e658e401c1332870b219358b'
-            '9ced7c26961872daa9e3053d2dfce3cdf50593354384ad0664910852566f3be2')
+            '3cfb289266f9d2697b917e4400f18a6592f95a99e658e401c1332870b219358b')
 
 prepare() {
   cd "$srcdir/$pkgbase-$pkgver"
-  patch -Np1 -i ../grpc-assert.patch
   patch -Np1 -i ../python-grpcio-use-system-abseil.patch
-  patch -Np1 -i ../benchmark-1.6.patch
 
   ln -sf "$srcdir/googletest-$_gtestver/"{googlemock,googletest} \
     third_party/googletest
@@ -128,7 +123,7 @@ package_grpc() {
 
 package_python-grpcio() {
   pkgdesc='Python language bindings for grpc, remote procedure call (RPC) framework'
-  depends=('c-ares' 'python' 're2' 'abseil-cpp')
+  depends=('c-ares' 'python' 'python-six' 're2' 'abseil-cpp')
 
   cd "$srcdir/$pkgbase-$pkgver"
   python setup.py install -O1 --skip-build --root="$pkgdir"

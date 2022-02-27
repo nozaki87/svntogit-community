@@ -1,22 +1,25 @@
 # Maintainer: Felix Yan <felixonmars@archlinux.org>
 
 pkgname=python-softlayer
-pkgver=5.9.3
+pkgver=5.9.9
 pkgrel=1
 pkgdesc="A library for SoftLayer's API"
 arch=('any')
 license=('MIT')
 url='https://github.com/softlayer/softlayer-python'
-depends=('python-six' 'python-ptable' 'python-click' 'python-requests' 'python-prompt_toolkit'
+depends=('python-six' 'python-prettytable' 'python-click' 'python-requests' 'python-prompt_toolkit'
          'python-pygments' 'python-urllib3')
 makedepends=('python-setuptools')
-checkdepends=('python-pytest-runner' 'python-mock' 'python-testtools')
-source=("$pkgname-$pkgver.tar.gz::https://github.com/softlayer/softlayer-python/archive/v$pkgver.tar.gz")
-sha512sums=('cfba38de3e10d92d91a41cc108e0fcb5be2d815077c72b80ed382eeb8c0822412aaef5436bd276d8c4b351358e14da7303a1d37a5ea46c31cf591150137dd8da')
+checkdepends=('python-pytest-runner' 'python-mock' 'python-testtools' 'tk')
+source=("$pkgname-$pkgver.tar.gz::https://github.com/softlayer/softlayer-python/archive/v$pkgver.tar.gz"
+         https://github.com/softlayer/softlayer-python/commit/bfcbc022dd0f16c13ad6618c6dfca01ced9c9b7e.patch)
+sha512sums=('3391605664f46616f771f0337cbc4c5e5c88a80c84849bc83bf4105ecf1e591315c94d8b18bde76b34d2b4f98c1e5f7890a3cd204796e9af14a6eab01697cc78'
+            '07400a8b643cc35eb479be36a074e75bf60576c318409b935e7646ef2b055a2eb510b077e3d19ddf2e4ef5071cb658affc0d82a38c25436bc612b307e174be35')
 
 prepare() {
   cd softlayer-python-$pkgver
   sed -i 's/==/>=/' setup.py
+  patch -p1 < ../bfcbc022dd0f16c13ad6618c6dfca01ced9c9b7e.patch # replace PTable with prettytable
 }
 
 build() {
@@ -35,7 +38,11 @@ package() {
   install -D -m644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
 
   # It's only present when tests are enabled, so adding -f
-  rm -rf "$pkgdir"/usr/lib/python3.9/site-packages/tests
+  rm -rf "$pkgdir"/usr/lib/python3.10/site-packages/tests
+
+  # Prevent collisions with `sl` package; This command is deemed deprecated by
+  # the project anyway
+  rm -f "$pkgdir/usr/bin/sl"
 }
 
 # vim:set ts=2 sw=2 et:

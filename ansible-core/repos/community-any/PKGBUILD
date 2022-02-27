@@ -1,4 +1,4 @@
-# Maintainer: Sven-Hendrik Haase <svenstaro@gmail.com>
+# Maintainer: Sven-Hendrik Haase <svenstaro@archlinux.org>
 # Contributor: Bartłomiej Piotrowski <bpiotrowski@archlinux.org>
 # Contributor: Daniel Wallace <danielwallace at gtmanfred dot com>
 # Contributor: Chris <seitz.christoph@gmail.com>
@@ -6,7 +6,7 @@
 # Contributor: atweiden <archbaum@gmail.com>
 
 pkgname=ansible-core
-pkgver=2.11.6
+pkgver=2.12.2
 pkgrel=1
 pkgdesc='Radically simple IT automation platform'
 arch=('any')
@@ -25,7 +25,7 @@ optdepends=('sshpass: for ssh connections with password'
 makedepends=('python-setuptools')
 backup=('etc/ansible/ansible.cfg')
 source=("https://pypi.python.org/packages/source/a/ansible-core/ansible-core-${pkgver}.tar.gz")
-sha512sums=('d14686afb7b2802be3bca3baf6f3840d33f7994b7c48fcb4d42f871e13e4eb54ffef413e124dbe614a55041c23b509f5e887b687dbb6c4868425957cac45910a')
+sha512sums=('a9afc3768d27a7049c275da8780e6dcd7da42263fc9065a1df1aabd0d8c54020313e9065349a6f52138e11eafb176348bf2ec33c0c1b08dc9837b7ac832542af')
 
 build() {
   cd ansible-core-${pkgver}

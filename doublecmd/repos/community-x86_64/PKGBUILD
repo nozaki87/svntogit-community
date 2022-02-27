@@ -4,7 +4,7 @@
 
 pkgbase=doublecmd
 pkgname=('doublecmd-gtk2' 'doublecmd-qt5')
-pkgver=1.0.1
+pkgver=1.0.4
 pkgrel=1
 url="http://doublecmd.sourceforge.net/"
 arch=('x86_64')
@@ -21,7 +21,7 @@ optdepends=(
 source=(
     "https://downloads.sourceforge.net/project/$pkgbase/Double%20Commander%20Source/$pkgbase-$pkgver-src.tar.gz"
 )
-sha512sums=('35fd6ed538a1ca04a9ee97e0e7c3bf598f8d7d8bd2dff4f5bee5a44782f2e170dc4ab2e7504c51c7048a05fd65adaa4dbe37344496ad155546e4ab03c8871299')
+sha512sums=('b87ea4e733377cf5584ffaf214ba0f9f92d7973319651385f9cb5d98783b32c07a485489d71b12dc9e06f26f7747824ef346c7eebbd719eba0a7c80fd60610ff')
 
 prepare() {
     cp -a /usr/lib/lazarus ./
@@ -37,11 +37,11 @@ prepare() {
 }
 
 build() {
-    msg2 'build gtk'
+    # build gtk
     cd "$srcdir/$pkgbase-gtk"
     ./build.sh beta gtk2
 
-    msg2 'build qt5'
+    # build qt5
     cd "$srcdir/$pkgbase-qt5"
     ./build.sh beta qt5
 }

@@ -3,18 +3,18 @@
 # Contributor: Juergen Hoetzel <juergen@archlinux.org>
 
 pkgname=snd
-pkgver=21.8
+pkgver=22.1
 pkgrel=1
 pkgdesc="An advanced sound editor"
-arch=('x86_64')
+arch=(x86_64)
 url="https://ccrma.stanford.edu/software/snd/"
-license=('custom:free')
-groups=('pro-audio')
-depends=('glibc' 'glu' 'gmp' 'gsl' 'libglvnd' 'libmpc' 'libx11' 'libxext'
-'libxpm' 'libxt' 'mpfr' 'openmotif')
+license=(custom:free)
+groups=(pro-audio)
+depends=(glibc glu gmp gsl libglvnd libmpc libx11 libxext
+libxpm libxt mpfr openmotif)
 # TODO: maybe replace mpg123 with mpg321
-makedepends=('alsa-lib' 'fftw' 'flac' 'gendesk' 'jack' 'ladspa' 'libpulse'
-'libsamplerate' 'mpg123' 'ruby' 'speex' 'timidity++' 'vorbis-tools' 'wavpack')
+makedepends=(alsa-lib fftw flac gendesk jack ladspa libpulse
+libsamplerate mpg123 ruby speex timidity++ vorbis-tools wavpack)
 optdepends=(
   'flac: For flac support'
   'mpg123: For MPEG support'
@@ -25,9 +25,10 @@ optdepends=(
   'vorbis-tools: For OGG support'
   'wavpack: For wav support'
 )
+options=(debug)
 source=("https://sourceforge.net/projects/${pkgname}/files/${pkgname}/${pkgver}/${pkgname}-${pkgver}.tar.gz")
-sha512sums=('f3ddefe8d208ec5bb5c25ac73833c4c61395fd4a1a9bf01ab5658d10ac9799190086d9602ea5fab4103e662eef58db2f5f01800eb39d84fcd9f3c838700e9da5')
-b2sums=('5c9c70a5eaa7d4e34723027b39f2530b08163c324fe4fae53827f0477b8b21c9eb5ec27ddb5eb8d5eee3744f19cb77d3915fa16fca46022e1f5c58453c2be92c')
+sha512sums=('1dc36e041c6970965832d10a8cfd3ebc2fd68bc3b06ea9a76150fe3283645d60c63188badead50b3fbfa6f9de91d52c4238fbc6b33bacaade4a1fc55b37101d1')
+b2sums=('a322d1896f7899931b6a0619f3e6e7084b7ac25b8cf503c81ea98fc18f6af8a17e21e0e651bc57493fa37ae75813a369c6f11625384f7dce1875cd2e51928178')
 
 prepare() {
   gendesk -f -n \
@@ -82,7 +83,7 @@ build() {
 }
 
 package() {
-  depends+=('libasound.so' 'libfftw3.so' 'libjack.so' 'libsamplerate.so')
+  depends+=(libasound.so libfftw3.so libjack.so libsamplerate.so)
 
   (
   cd "${pkgname}-${pkgver}"
@@ -102,8 +103,7 @@ package() {
   # license
   install -vDm 644 COPYING -t "${pkgdir}/usr/share/licenses/${pkgname}"
   # docs
-  install -vDm 644 {{HISTORY,README}.Snd,NEWS} \
-    -t "${pkgdir}/usr/share/doc/${pkgname}/"
+  install -vDm 644 {{HISTORY,README}.Snd,NEWS} -t "${pkgdir}/usr/share/doc/${pkgname}/"
   install -vDm 644 *.html -t "${pkgdir}/usr/share/doc/${pkgname}/html"
   install -vDm 644 pix/*.png -t "${pkgdir}/usr/share/doc/${pkgname}/html/pix"
 

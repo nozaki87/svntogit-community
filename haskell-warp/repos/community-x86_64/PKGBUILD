@@ -3,8 +3,8 @@
 
 _hkgname=warp
 pkgname=haskell-warp
-pkgver=3.3.17
-pkgrel=41
+pkgver=3.3.19
+pkgrel=4
 pkgdesc="A fast, light-weight web server for WAI applications."
 url="https://github.com/yesodweb/wai"
 license=("MIT")
@@ -17,7 +17,7 @@ depends=('ghc-libs' 'haskell-auto-update' 'haskell-bsb-http-chunked'
 makedepends=('ghc' 'haskell-async' 'haskell-doctest' 'haskell-http-client' 'haskell-hspec'
              'haskell-hunit' 'haskell-quickcheck')
 source=("https://hackage.haskell.org/packages/archive/${_hkgname}/${pkgver}/${_hkgname}-${pkgver}.tar.gz")
-sha512sums=('387795bca41d3fe8bb42c0312f1a96916f0cc12a78790b86f926a5c8ca117b0aedf2886cf958ad3813c53870b9a5fa1cf8e69bf4eb9c096eaae1cae108b1b999')
+sha512sums=('ed952c9aace0de7e0a11d2c34ad401d28dc342e3dc8c5c6d7c3ced725d12abfca2944c3bd2687d216ff1b661761019ee5ea37e446f28e574d1e3a0e0b1949682')
 
 build() {
     cd $_hkgname-$pkgver

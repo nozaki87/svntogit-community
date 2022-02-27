@@ -3,7 +3,7 @@
 # Contributor: Xu Fasheng <fasheng.xu[AT]gmail.com>
 
 pkgname=deepin-session-ui
-pkgver=5.4.29
+pkgver=5.5.6
 pkgrel=1
 pkgdesc='Deepin desktop-environment - Session UI module'
 arch=('x86_64')
@@ -17,7 +17,7 @@ provides=('deepin-notifications')
 conflicts=('dde-workspace' 'dde-session-ui' 'deepin-notifications')
 replaces=('dde-workspace' 'dde-session-ui' 'deepin-notifications')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/linuxdeepin/dde-session-ui/archive/$pkgver.tar.gz")
-sha512sums=('dca6b1665b7dbfe2ea81353393b7d6a1b3ae2f9520e39b92ad87917dce12a7f92e65a2881a4dee52c407934a28b325478b09183b24e0c7195a1b2b785b710cc4')
+sha512sums=('24137948bb92b42b70d06c7eab2bae6278d71e46a35b767aac9f93f33241e404f31416e8f7ed2fbcf7d859b4d8f635f441244867424c6ac11471e2d6d3266fd2')
 
 prepare() {
   cd dde-session-ui-$pkgver

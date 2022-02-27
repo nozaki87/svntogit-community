@@ -3,7 +3,7 @@
 
 _name=dulwich
 pkgname=python-dulwich
-pkgver=0.20.26
+pkgver=0.20.32
 pkgrel=1
 pkgdesc='Pure-Python implementation of the Git file formats and protocols'
 arch=('x86_64')
@@ -18,8 +18,8 @@ optdepends=('python-fastimport: for fast-import support'
             'python-pyopenssl: for HTTPS support via urllib3'
             'python-pyinotify: to watch for changes to refs')
 source=("https://files.pythonhosted.org/packages/source/${_name::1}/$_name/$_name-$pkgver.tar.gz")
-sha256sums=('38aa50f859c8ea53071a049c3f1d5cc54f7dc60a4136a1ab631756a79f6582b5')
-b2sums=('1f027d98c214210caae687f0d5afa0ffe9d758942b6ef20a9d2823808ed0b857283698daaed492451ac63a718df1bd6a91e53ea521e1943328fcc963140fe752')
+sha256sums=('dc5498b072bdc12c1effef4b6202cd2a4542bb1c6dbb4ddcfc8c6d53e08b488c')
+b2sums=('21d41a7b1e491848a11ab3e3b1b63bfbe1798b38ef331136b07609f004e780672477e91a637dd3b1ccd3b26e359461e1a16d759ac2cb98d1091fbdb1968c00a9')
 
 build() {
   cd $_name-$pkgver
@@ -28,7 +28,9 @@ build() {
 
 check() {
   cd $_name-$pkgver
-  python -m unittest dulwich.tests.test_suite
+  python -m venv --system-site-packages test-env
+  test-env/bin/python setup.py install --optimize=1 --skip-build
+  test-env/bin/python -m unittest dulwich.tests.test_suite
 }
 
 package() {

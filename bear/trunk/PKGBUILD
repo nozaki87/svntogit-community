@@ -1,0 +1,38 @@
+# Maintainer: George Rawlinson <grawlinson@archlinux.org>
+# Contributor: Yiyao Yu <yuydevel at protonmail dot com>
+# Contributor: Moritz Lipp <mlq@pwmt.org>
+
+pkgname=bear
+pkgver=3.0.18
+pkgrel=2
+pkgdesc="A tool to generate compilation database for clang tooling"
+arch=('x86_64')
+url="https://github.com/rizsotto/Bear"
+license=('GPL3')
+depends=('grpc' 'fmt' 'spdlog' 'nlohmann-json')
+makedepends=('git' 'cmake' 'gtest' 'python' 'llvm')
+_commit='275ac3ea4d3907eb194995d5e16f6f9b204c4600'
+source=("$pkgname::git+$url.git#commit=$_commit")
+b2sums=('SKIP')
+
+pkgver() {
+  cd "$pkgname"
+  git describe --tags
+}
+
+prepare() {
+  cmake \
+    -B build \
+    -S "$pkgname" \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_SYSCONFDIR=/etc \
+    -DCMAKE_INSTALL_LIBEXECDIR="lib/$pkgname"
+}
+
+build() {
+  cmake --build build
+}
+
+package() {
+  DESTDIR="$pkgdir" cmake --install build
+}

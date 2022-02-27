@@ -2,20 +2,20 @@
 
 pkgbase=himalaya
 pkgname=('himalaya' 'vim-himalaya')
-pkgver=0.5.1
+pkgver=0.5.6
 pkgrel=1
 pkgdesc="A CLI email client"
 arch=('x86_64')
 url="https://github.com/soywod/himalaya"
 license=('BSD')
 depends=('gcc-libs' 'openssl')
-makedepends=('rust')
+makedepends=('cargo')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
-sha512sums=('8e45dff561d11ce7c3df9882d00345862dfca8ece112eb2134f59d9b3a550b3d06faa16697f451704d4f4fc56cb48783910de7fefb9f3a6e8d95fa9b6eb5cecc')
+sha512sums=('f3dac1a9a6d001f0e0bf25bb00d7f94275a5a38313b30971d23fc47650434611fc9aa5f3f76f8c6eef244747c9bd7051c0f37cb1ea414166143ac9d96e200647')
 
 prepare() {
   cd "$pkgname-$pkgver"
-  cargo fetch --locked
+  cargo fetch --locked --target "$CARCH-unknown-linux-gnu"
 }
 
 build() {
@@ -25,7 +25,7 @@ build() {
 
 check() {
   cd "$pkgname-$pkgver"
-  cargo test --frozen
+  cargo test --frozen -- --skip "test_imap_backend"
 }
 
 package_himalaya() {

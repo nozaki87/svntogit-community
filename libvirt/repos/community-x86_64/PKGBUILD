@@ -1,3 +1,4 @@
+# Maintainer: Sven-Hendrik Haase <svenstaro@archlinux.org>
 # Maintainer: Robin Broda <robin@broda.me>
 # Contributor: Christian Rebischke <chris.rebischke@archlinux.org>
 # Contributor: Sergej Pupykin <pupykin.s+arch@gmail.com>
@@ -5,13 +6,12 @@
 
 pkgname=(libvirt libvirt-storage-gluster libvirt-storage-iscsi-direct libvirt-storage-rbd)
 epoch=1
-pkgver=7.9.0
-pkgrel=1
+pkgver=8.0.0
+pkgrel=2
 pkgdesc="API for controlling virtualization engines (openvz,kvm,qemu,virtualbox,xen,etc)"
 arch=('x86_64')
 url="https://libvirt.org/"
 license=('LGPL' 'GPL3') #libvirt_parthelper links to libparted which is GPL3 only
-install=libvirt.install
 depends=('libpciaccess' 'yajl' 'fuse2' 'gnutls' 'parted' 'libssh' 'libxml2' 'numactl' 'polkit')
 makedepends=('meson' 'libxslt' 'python-docutils' 'lvm2' 'open-iscsi' 'libiscsi' 'ceph-libs' 'glusterfs'
              'bash-completion' 'rpcsvc-proto' 'dnsmasq' 'iproute2' 'qemu-headless')
@@ -95,10 +95,12 @@ backup=(
   'etc/sasl2/libvirt.conf'
 )
 source=("https://libvirt.org/sources/$pkgname-$pkgver.tar.xz"{,.asc}
-        "find_programs.ini")
-sha256sums=('829cf2b5f574279c40f0446e1168815d3f36b89710560263ca2ce70256f72e8c'
+        "$pkgname"-fix-snapshot-revert.patch::https://gitlab.com/libvirt/libvirt/-/commit/76deb65.patch
+        "$pkgname"-fix-virProcessGetStatInfo.patch::https://gitlab.com/libvirt/libvirt/-/commit/105dace.patch)
+sha256sums=('51e6e8ff04bafe96d7e314b213dcd41fb1163d9b4f0f75cdab01e663728f4cf6'
             'SKIP'
-            '735ac805fbf06021418f82297845babf481d5681bd939a6994fbdf36fe1661e4')
+            '06164af980ab2ece221de494f4da5a0d38c22c0f1ac527dd53aed2e2dbf1ed48'
+            'a7b0f7b2941c0fed41205c8db3d3d37ed9ccee910e44196d2d2bf5aa0eb986d8')
 validpgpkeys=('453B65310595562855471199CA68BE8010084C9C') # Jiří Denemark <jdenemar@redhat.com>
 
 prepare() {
@@ -113,7 +115,9 @@ prepare() {
     src/qemu/qemu.conf \
     src/qemu/test_libvirtd_qemu.aug.in
 
-  sed -i 's/notify/simple/' src/remote/libvirtd.service.in
+  # bugs fixed post-release
+  patch -Np1 < ../libvirt-fix-snapshot-revert.patch
+  patch -Np1 < ../libvirt-fix-virProcessGetStatInfo.patch
 }
 
 build() {
@@ -121,7 +125,6 @@ build() {
 
   arch-meson build \
     --libexecdir=lib/libvirt \
-    --native-file "$srcdir"/find_programs.ini \
     -Drunstatedir=/run \
     -Dqemu_group=kvm \
     -Dnetcf=disabled \
@@ -167,9 +170,6 @@ package_libvirt() {
   chmod 0750 "$pkgdir/usr/share/polkit-1/rules.d"
   chmod 600 "$pkgdir"/etc/libvirt/nwfilter/*.xml \
     "$pkgdir/etc/libvirt/qemu/networks/default.xml"
-
-  # Strip auto-generated UUID, so it will be generated per-install. (reproducible builds)
-  sed -i 's|<uuid>.*</uuid>|<uuid></uuid>|' "$pkgdir"/etc/libvirt/qemu/networks/default.xml
 
   rm -rf \
     "$pkgdir/run" \

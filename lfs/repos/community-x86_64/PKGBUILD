@@ -1,20 +1,20 @@
 # Maintainer: Orhun Parmaksız <orhun@archlinux.org>
 
 pkgname=lfs
-pkgver=1.3.0
+pkgver=2.1.1
 pkgrel=1
-pkgdesc="Get information on your mounted disks"
+pkgdesc="Get information on your mounted filesystems"
 arch=('x86_64')
 url="https://github.com/Canop/lfs"
 license=('MIT')
 depends=('gcc-libs')
-makedepends=('rust')
+makedepends=('cargo')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
-sha512sums=('5a29b021069204025bcfdec461085287fdfeed0bbf3d5f3105b617ccf37a3927c6706fdf0be5b93346985c20dc7f7e902bb4df2dfb8207a3887d800efd6e9603')
+sha512sums=('6f4a01721ab7bf24ef6715f3448a0da870292210748988b734b50cac8fce3acff853451cf556b85d0fc3c37b7b389bb4c5c50aefa61d3c744a0006db818ad975')
 
 prepare() {
   cd "$pkgname-$pkgver"
-  cargo fetch --locked
+  cargo fetch --locked --target "$CARCH-unknown-linux-gnu"
 }
 
 build() {

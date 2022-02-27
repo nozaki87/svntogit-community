@@ -4,12 +4,12 @@
 # This must be built against the version of dovecot being used,
 # otherwise it will fail to load and thus work.
 # Specify the version of dovecot to be used here:
-_dcpkgver=2.3.16
+_dcpkgver=2.3.18
 # Make sure to bump pkgrel if changing this.
 
 pkgname=dovecot-fts-xapian
 _pkgname="${pkgname#dovecot-}"
-pkgver=1.4.13
+pkgver=1.5.3
 pkgrel=1
 pkgdesc="Dovecot FTS plugin based on Xapian"
 arch=('x86_64')
@@ -18,7 +18,8 @@ license=('LGPL2.1')
 depends=("dovecot=${_dcpkgver}" 'icu' 'xapian-core')
 install="$pkgname.install"
 source=("$pkgname-$pkgver.tar.gz::$url/archive/$pkgver.tar.gz")
-b2sums=('37c6ba70a7f41206169b515602b5f22f8ae02a1bb7b3b24019604d31e60688d33dbd5244c183f0e6ddafc05e7891fa039ce1c57790dd0e0fc4d03a670703f8ac')
+sha512sums=('b1fe46a4440dd3736e17f3f65131f4e7dc9326e5bb555bde640809b4add04efd076abffaae37af9104037a9dade3ac23d14dc32d19c38442c46a2cb617514a77')
+b2sums=('c4ba14e85f616a8536a5c2fa94267df362e11974ff12d187cea63d7904b6e8ce3e0144133e602f49e607901ecf2321205d58e761dc374c0bf09ab6a2f2289e4e')
 
 build() {
   cd "$_pkgname-$pkgver"

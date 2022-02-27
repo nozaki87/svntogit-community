@@ -2,7 +2,7 @@
 
 pkgbase=rebuilderd
 pkgname=(rebuilderd rebuilderd-tools)
-pkgver=0.15.0
+pkgver=0.18.1
 pkgrel=1
 pkgdesc='Independent verification system of binary packages'
 url='https://github.com/kpcyrd/rebuilderd'
@@ -10,11 +10,11 @@ arch=('x86_64')
 license=('GPL3')
 depends=('openssl' 'shared-mime-info' 'xz' 'libzstd.so')
 makedepends=('cargo' 'sqlite' 'scdoc')
-source=(https://github.com/kpcyrd/${pkgname}/archive/v${pkgver}/${pkgname}-${pkgver}.tar.gz
+source=(${pkgname}-${pkgver}.tar.gz::https://github.com/kpcyrd/${pkgname}/archive/refs/tags/v${pkgver}.tar.gz
         https://github.com/kpcyrd/${pkgname}/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.gz.asc)
-sha512sums=('ef336444e4cd976706a5fa7f24377c54f38f91aa69c5eaf550d072ac93b643c45c0c0b2f6e6fa987ecfb285ef9b5e5911b3968195446559fa1fbd92c983048db'
+sha512sums=('8374ce08fbcf7014b6d39e0dd340e228d8308a5fc6fbd127e3c9cdec9e2f7a854e03d342e8784928323b1bc4a8f27f98ba60e21c12737b345e3811755fda936b'
             'SKIP')
-b2sums=('ffe2c9516660c5907281bce125011f6729f228d4aafc222e7c44b9de4f99759df27b95ec478e518522174ae6617a5cdaedefdef14890e58d575ac8eed6a7a846'
+b2sums=('e59bddaa096fb413de327498ffa37c4dc0aa5545a08e6d87bedd79e67c5952d536230123f3d3bdd628806d01cc4ca02f13b7000bb65efbbd6b91771b2c01921c'
         'SKIP')
 
 validpgpkeys=("64B13F7117D6E07D661BBCE0FE763A64F5E54FD6")

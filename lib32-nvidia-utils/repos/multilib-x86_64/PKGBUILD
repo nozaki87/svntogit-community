@@ -1,11 +1,11 @@
-# Maintainer: Sven-Hendrik Haase <svenstaro@gmail.com>
+# Maintainer: Sven-Hendrik Haase <svenstaro@archlinux.org>
 # Contributor: Thomas Baechler <thomas@archlinux.org>
 # Contributor: James Rayner <iphitus@gmail.com>
 
 _pkgbasename=nvidia-utils
 pkgbase=lib32-$_pkgbasename
 pkgname=('lib32-nvidia-utils' 'lib32-opencl-nvidia')
-pkgver=495.44
+pkgver=510.54
 pkgrel=1
 arch=('x86_64')
 url="http://www.nvidia.com/"
@@ -14,7 +14,7 @@ license=('custom')
 options=('!strip')
 _pkg="NVIDIA-Linux-x86_64-${pkgver}"
 source=("https://us.download.nvidia.com/XFree86/Linux-x86_64/${pkgver}/${_pkg}.run")
-sha512sums=('bc9054e6028ba172906e6eb9a0b8f5cfc3ae74d57f3e95e0f9057879e3af07a4b19479e80d81e948872bc47bbd674f77f5f81d4debd2e2c3ce45058cd9211802')
+sha512sums=('1e65e96c1ae1cccd5cd483f2b65927e3594d28f3774459dfd094530f445f4b0f5368a3b7eebf4970bd2632438cca2cbb93af50a59a3a87a2c13d08ed5155164c')
 
 create_links() {
     # create soname links

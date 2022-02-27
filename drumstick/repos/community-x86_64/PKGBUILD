@@ -3,33 +3,32 @@
 # Contributor: Dany Martineau <dany.luc.martineau@gmail.com>
 
 pkgname=drumstick
-pkgver=2.4.1
+pkgver=2.5.1
 pkgrel=1
 pkgdesc="MIDI libraries for Qt5/C++"
-arch=('x86_64')
+arch=(x86_64)
 url="https://drumstick.sourceforge.io/"
-license=('GPL2')
-depends=('gcc-libs' 'glibc' 'hicolor-icon-theme' 'qt5-base')
-makedepends=('alsa-lib' 'cmake' 'doxygen' 'docbook-xsl' 'fluidsynth' 'graphviz'
-'libpulse' 'qt5-tools')
-provides=('libdrumstick-alsa.so' 'libdrumstick-file.so' 'libdrumstick-rt.so'
-'libdrumstick-widgets.so')
+license=(GPL2)
+depends=(gcc-libs glibc hicolor-icon-theme qt5-base)
+makedepends=(alsa-lib cmake doxygen docbook-xsl fluidsynth graphviz
+libpulse qt5-tools)
+provides=(libdrumstick-alsa.so libdrumstick-file.so libdrumstick-rt.so
+libdrumstick-widgets.so)
+options=(debug)
 source=("https://downloads.sourceforge.net/${pkgname}/${pkgver}/${pkgname}-${pkgver}.tar.bz2")
-sha512sums=('1e3b37d06d857676e7e7f54d6ef4117a83cbf1cd28ae5c8459ed2bac85a87c21d891c1553c2103cfe2af288e4d12ea1bd7c8c940c9970af343f30beee4b7d79e')
-b2sums=('e15c553fc3dc932d5468e8559616115633947d567b91168a9fa9d6e2268e89e32bcf79d7f8c1011f6b6d1e27b16c4613929a3249caaf47d322b7702f7ccc6da1')
+sha512sums=('bfa0f823c45cef85152f92b21a4e4998fd8e674c742bc2423c7b58559f83c68d327e3bc520217b348c19310dbf3ebbe39c89b160be9d3e8e6a95a99ca9d7c307')
+b2sums=('70cf08bc9d616f265ac42379edeccd17a31ede490ace066ec4ca1635d042fae9b6c6698fbfa1be4c73878a674b6cd81b5a58c094d021db4e1e29556bf235cf9c')
 
 build() {
-  cd "${pkgname}-${pkgver}"
   cmake -DCMAKE_INSTALL_PREFIX=/usr \
-        -DCMAKE_BUILD_TYPE='None' \
+        -DCMAKE_BUILD_TYPE=None \
         -Wno-dev \
         -B build \
-        -S .
+        -S $pkgname-$pkgver
   make VERBOSE=1 -C build
 }
 
 check() {
-  cd "${pkgname}-${pkgver}"
   # some tests fail due to insufficient system privileges, hence only run those
   # that make sense in the build environment
   # https://sourceforge.net/p/drumstick/bugs/24/
@@ -38,9 +37,8 @@ check() {
 }
 
 package() {
-  depends+=('libasound.so' 'libfluidsynth.so' 'libpulse.so' 'libpulse-simple.so')
-  cd "${pkgname}-${pkgver}"
+  depends+=(libasound.so libfluidsynth.so libpulse.so libpulse-simple.so)
+
   make DESTDIR="${pkgdir}/" install -C build
-  install -t "${pkgdir}/usr/share/doc/${pkgname}/" \
-    -vDm 644 {AUTHORS,ChangeLog,NEWS,readme.md,TODO}
+  install -vDm 644 $pkgname-$pkgver/{AUTHORS,ChangeLog,NEWS,readme.md,TODO} -t "${pkgdir}/usr/share/doc/${pkgname}/"
 }

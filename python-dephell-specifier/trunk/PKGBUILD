@@ -1,9 +1,10 @@
-# Maintainer: Eli Schwartz <eschwartz@archlinux.org>
+# Maintainer: Caleb Maclennan <caleb@alerque.com>
+# Contributor: Eli Schwartz <eschwartz@archlinux.org>
 
 _pkgname=dephell_specifier
 pkgname=python-dephell-specifier
 pkgver=0.2.2
-pkgrel=3
+pkgrel=5
 pkgdesc="Work with version specifiers"
 arch=('any')
 url="https://github.com/dephell/${_pkgname}"

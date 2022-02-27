@@ -1,17 +1,18 @@
-# Maintainer: Sven-Hendrik Haase <svenstaro@gmail.com>
+# Maintainer: Sven-Hendrik Haase <svenstaro@archlinux.org>
 # Maintainer: Caleb Maclennan <caleb@alerque.com>
 
 pkgname=zola
-pkgver=0.14.1
-pkgrel=2
+pkgver=0.15.3
+pkgrel=1
 pkgdesc="An opinionated static site generator"
 arch=('x86_64')
 url="https://github.com/getzola/zola"
 depends=('gcc-libs')
 makedepends=('cargo')
 license=('MIT')
+options=(!lto)
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/getzola/zola/archive/v${pkgver}.tar.gz")
-sha256sums=('28e50071009a1430c5f8df94e2585d095f85f906f04101fe35ee9ed53c353cc4')
+sha256sums=('89a590549249e60a01f1a1f66ee23fedc711afd4e9a669ee1328e5c99ea958c8')
 
 prepare() {
   cd zola-$pkgver

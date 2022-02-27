@@ -2,7 +2,7 @@
 # Contributor: Johannes Schleifenbaum <johannes [at] js-webcoding [dot] de>
 
 pkgname=testssl.sh
-_pkgver=3.0.5
+_pkgver=3.0.7
 pkgver=${_pkgver/-/.}
 pkgrel=1
 pkgdesc='Testing TLS/SSL encryption'
@@ -11,11 +11,11 @@ arch=('any')
 license=('GPL2')
 depends=('bash' 'coreutils' 'util-linux' 'openssl' 'inetutils' 'bind-tools' 'procps-ng')
 makedepends=('perl' 'perl-data-dump' 'perl-json' 'perl-test-base')
-source=(https://github.com/drwetter/testssl.sh/archive/${_pkgver}/${pkgname}-${pkgver}.tar.gz
+source=(https://github.com/drwetter/testssl.sh/archive/v${_pkgver}/${pkgname}-${pkgver}.tar.gz
         set-install-dir.patch)
-sha512sums=('0f3fa081f047bf2d3fb2f3b65fcdbec976af54143a2d8ffbece6eff7545cc2a6e134247f9533fb1614d52d900fc66d7f50c97f02678b5dfb9842c3c69c0f81f0'
+sha512sums=('703099f3c7d7d040f064466c721e30ee594a8d495add113b899b14d21848c8488e2d447c1af87ecd3d0d2b00dbeecc3a7914c26721b5b1936cfa818cf6599d53'
             '82bb83a5553bdc8d02cb655c76163ac9c86b0fc1cff9c5627cb035eae016c5a8b76a3a9e278de4578779bf63a35548815a53911288872530d65c1100c065f621')
-b2sums=('fed4f02f4c5db3975f711e5e1fa0f0018b5e89f8a3afbd94763ec86dc4f739ee25504769b61fc1dd0000ce7ce400f4d3267116cd21d14b003d9b6fd5706a84cb'
+b2sums=('d3b6abd5bb46e26ccb13afd9c9440e80fd80566db2bf04bb72b254dbebdc69957a0bae82436ce0b3f826f7c829a0cf73589eedc60735c629d010c8cb76e196a0'
         '26f90e385085e0c50bd877b37e85f489177bcef0be90baad096c6f3e95732542e2adcaf2aa03ba75d264607d869ea479b768834ba476e258eea291c452f4f3b9')
 
 prepare() {

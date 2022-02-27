@@ -1,4 +1,4 @@
-# Maintainer: Sven-Hendrik Haase <svenstaro@gmail.com>
+# Maintainer: Sven-Hendrik Haase <svenstaro@archlinux.org>
 # Contributor: John Sowiak <john@archlinux.org>
 # Contributor: tobias <tobias@archlinux.org>
 
@@ -7,8 +7,8 @@
 # fine with them.
 
 pkgname=blender
-pkgver=2.93.5
-pkgrel=7
+pkgver=3.0.1
+pkgrel=5
 epoch=17
 pkgdesc="A fully integrated 3D graphics creation suite"
 arch=('x86_64')
@@ -16,9 +16,10 @@ license=('GPL')
 url="https://www.blender.org"
 depends=('libpng' 'libtiff' 'openexr' 'python' 'desktop-file-utils' 'python-requests' 'potrace'
          'shared-mime-info' 'hicolor-icon-theme' 'xdg-utils' 'glew' 'openjpeg2' 'python-numpy'
-         'freetype2' 'openal' 'ffmpeg' 'fftw' 'boost-libs' 'opencollada' 'alembic' 'openxr'
+         'freetype2' 'openal' 'ffmpeg4.4' 'fftw' 'boost-libs' 'opencollada' 'alembic' 'openxr'
          'openimageio' 'libsndfile' 'jack' 'opencolorio' 'openshadinglanguage' 'openimagedenoise'
-         'jemalloc' 'libspnav' 'ptex' 'opensubdiv' 'openvdb' 'log4cplus' 'sdl2' 'embree' 'libharu')
+         'jemalloc' 'libspnav' 'ptex' 'opensubdiv' 'openvdb' 'log4cplus' 'sdl2' 'embree' 'libharu'
+         'draco')
 makedepends=('cmake' 'boost' 'mesa' 'git' 'llvm' 'cuda' 'ninja')
 optdepends=('cuda: cycles renderer cuda support')
 options=(!strip)
@@ -27,15 +28,19 @@ source=("git+https://git.blender.org/blender.git#tag=v$pkgver"
         "git+https://git.blender.org/blender-addons-contrib.git"
         "git+https://git.blender.org/blender-translations.git"
         "git+https://git.blender.org/blender-dev-tools.git"
-        https://developer.download.nvidia.com/redist/optix/v7.0/OptiX-7.0.0-include.zip
-        blender-openexr3.patch)
+        https://developer.download.nvidia.com/redist/optix/v7.3/OptiX-7.3.0-Include.zip
+        blender-openexr3.patch
+        force-draco1.patch
+        force-draco2.patch)
 sha512sums=('SKIP'
             'SKIP'
             'SKIP'
             'SKIP'
             'SKIP'
-            'b2cff73def3757d4259f4b4d318a8ccfe166bf7c215cbb2124f1c81bd6e742f96207285b24eb4d99b527b7b97dc6d5e8fdf2f16d78d5d1e2684c26d681328491'
-            'e2dd7210d26b70445e9ae8e33dea35111ad0b0aca9d3b4ded3df560d0fcc8dc044868f729e0f090a04b6f316f083b5505a7056ce088e8702065add87b9b457e5')
+            'd842e989bf86f4ae932f8708f6340861de4ea33b21435cceeb9a5e3135ef2ddb671e19fe11c397bddbf85894ba312194eac5acc21cbec70607120c0bda0100ef'
+            'e2dd7210d26b70445e9ae8e33dea35111ad0b0aca9d3b4ded3df560d0fcc8dc044868f729e0f090a04b6f316f083b5505a7056ce088e8702065add87b9b457e5'
+            'e239da4f3906f1b54265435181cf770bae3d269c8d915df9a73861e6ee71ec70bf2339426e7c81a91e5a567273b3b3742d7a99feefd3398d821b26e1ff3a56d0'
+            '527ab66e5eace777de0043c1ca5787a488f6471450ce67fd6d08137ad0ef56177bc0c17696f30a5fca23fa55d8ca9c3f30cb7b17550dba2dbd8e89ca0b361990')
 
 prepare() {
   cd "$pkgname"
@@ -48,13 +53,15 @@ prepare() {
   git submodule update
   git submodule foreach git checkout v${pkgver}
 
-  patch -p1 < "$srcdir"/blender-openexr3.patch # Fix build with OpenEXR 3
+  patch -p1 -i "$srcdir"/blender-openexr3.patch # Fix build with OpenEXR 3
+  patch -p1 -i "$srcdir"/force-draco1.patch
+  patch -p1 -d release/scripts/addons -i "$srcdir"/force-draco2.patch
 }
 
 build() {
   cd "$pkgname"
 
-  local PYTHON_VER=3.9
+  local PYTHON_VER=3.10
 
   cmake \
     -Bbuild \
@@ -69,7 +76,8 @@ build() {
     -DPYTHON_LIBPATH=/usr/lib \
     -DPYTHON_LIBRARY=python$PYTHON_VER \
     -DPYTHON_INCLUDE_DIRS=/usr/include/python$PYTHON_VER \
-    -DCMAKE_CXX_FLAGS="-I /usr/include/python$PYTHON_VER"
+    -DCMAKE_C_FLAGS="-I /usr/include/ffmpeg4.4" \
+    -DCMAKE_CXX_FLAGS="-I /usr/include/python$PYTHON_VER -I /usr/include/ffmpeg4.4 -L /usr/lib/ffmpeg4.4"
   ninja -C build
 }
 
@@ -84,5 +92,10 @@ package() {
   install -Dm644 release/freedesktop/org.blender.Blender.appdata.xml "${pkgdir}/usr/share/metainfo/org.blender.Blender.appdata.xml"
 
   # Manually install additional scripts (See FS#69351)
-  cp -r release/scripts/addons_contrib/* "${pkgdir}"/usr/share/blender/2*/scripts/addons_contrib/
+  cp -r release/scripts/addons_contrib/* "${pkgdir}"/usr/share/blender/3*/scripts/addons_contrib/
+
+  # Manually install draco bindings (See FS#73415)
+  mkdir -p "${pkgdir}"/usr/lib/python3.10/
+  mv "${pkgdir}"/usr/share/blender/3*/python/lib/* "${pkgdir}"/usr/lib/
+  rm -r "${pkgdir}"/usr/share/blender/3*/python
 }

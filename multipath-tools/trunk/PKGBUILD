@@ -8,8 +8,8 @@
 # Contributor: Matt Heagney <matt@heagney.com>
 
 pkgname=multipath-tools
-_tag='57d974966f4d9da20e865d6b5bbba02295c0a62b' # git rev-parse ${pkgver}
-pkgver=0.8.7
+_tag='5d6fecb2df08c7fb98b40205417f4a45cf30a129' # git rev-parse ${pkgver}
+pkgver=0.8.9
 pkgrel=1
 pkgdesc='Multipath tools for Linux (including kpartx)'
 arch=('x86_64')

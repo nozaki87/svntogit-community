@@ -2,7 +2,7 @@
 # Maintainer: Christian Rebischke <chris.rebischke@archlinux.org>
 
 pkgname=cosign
-pkgver=1.2.1
+pkgver=1.5.1
 pkgrel=1
 pkgdesc="Container Signing with support for ephemeral keys and Sigstore signing"
 arch=('x86_64')
@@ -11,8 +11,8 @@ license=('Apache')
 depends=('pcsclite')
 makedepends=('go' 'git')
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/sigstore/${pkgname}/archive/v${pkgver}.tar.gz")
-sha512sums=('b5a7d7eb77f171993425482da55fe8e53f0b4e267ef34aeadf2b31efbf40a67d86d256fd333a8210fcd01dfb11de1ed217aa4f7d70a2b72d7cbd8c302a482437')
-b2sums=('5b435cb343de466dd218e8dcf66c5169f6be939eef307a3d6c2e4fd1564b6a5671cafd08857f7be780de8c1dcc2d25ff4e608b51462e631d8f5de4fee04278c0')
+sha512sums=('6d46dd2ca59b0ad410d23c002727198bf94c35f6d15983b13a23216510efa555268cf31de84679ce6e9e9db7f82b51787cd923e7c263939d9eb7cabecaf9c428')
+b2sums=('ce8056c3fa49a75e52b001693cc1c76dc152f7ddb1947d6862526e918e9dbbb7d934601ea00c3f47a747b748124846b68dbd4abbce5c332860cbbef52aae1be1')
 
 build(){
   cd "${pkgname}-${pkgver}"
@@ -33,5 +33,31 @@ check() {
 package() {
   cd "${pkgname}-${pkgver}"
   install -Dm755 build/cosign "${pkgdir}/usr/bin/${pkgname}"
-  install -Dm755 build/copasetic "${pkgdir}/usr/bin/copasetic"
+
+  # build bash completions
+  mkdir -p "${pkgdir}/usr/share/bash-completion/completions"
+  "$pkgdir"/usr/bin/cosign completion bash > "${pkgdir}/usr/share/bash-completion/completions/cosign"
+
+  # build zsh completions
+  mkdir -p "${pkgdir}/usr/share/zsh/site-functions"
+  "$pkgdir"/usr/bin/cosign completion zsh > "${pkgdir}/usr/share/zsh/site-functions/_cosign"
+
+  # build fish completions
+  mkdir -p "${pkgdir}/usr/share/fish/vendor_completions.d/"
+  "$pkgdir"/usr/bin/cosign completion fish > "${pkgdir}/usr/share/fish/vendor_completions.d/cosign.fish"
+
+  install -Dm755 build/sget "${pkgdir}/usr/bin/sget"
+
+  # build bash completions
+  mkdir -p "${pkgdir}/usr/share/bash-completion/completions"
+  "$pkgdir"/usr/bin/sget completion bash > "${pkgdir}/usr/share/bash-completion/completions/sget"
+
+  # build zsh completions
+  mkdir -p "${pkgdir}/usr/share/zsh/site-functions"
+  "$pkgdir"/usr/bin/sget completion zsh > "${pkgdir}/usr/share/zsh/site-functions/_sget"
+
+  # build fish completions
+  mkdir -p "${pkgdir}/usr/share/fish/vendor_completions.d/"
+  "$pkgdir"/usr/bin/sget completion fish > "${pkgdir}/usr/share/fish/vendor_completions.d/sget.fish"
 }
+

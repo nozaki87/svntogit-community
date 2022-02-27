@@ -2,7 +2,7 @@
 # Maintainer: Daniel M. Capella <polyzen@archlinux.org>
 
 pkgname=eslint
-pkgver=8.2.0
+pkgver=8.10.0
 pkgrel=1
 pkgdesc='An AST-based pattern checker for JavaScript'
 arch=('any')
@@ -12,7 +12,7 @@ depends=('acorn' 'nodejs')
 makedepends=('npm' 'rsync')
 options=('!emptydirs')
 source=("https://github.com/eslint/eslint/archive/v$pkgver/$pkgname-$pkgver.tar.gz")
-b2sums=('77fd215b2a452bfeddf58b6764c7f7fe411da2b013bf3b2792749555d663963bd539e4d1ff4c5e3f966738703cc6b3738d60ad1608727a0ab9f909143a870b60')
+b2sums=('05361d11fc578579a1d053c2706391d5b1d87ae3b3eedff96f54b36e5b9a997221c9c541a3a239647a2a9325ab2d88945e3fe5e16d8ddf8b280793fd56b6e2ec')
 
 prepare() {
   cd eslint-$pkgver

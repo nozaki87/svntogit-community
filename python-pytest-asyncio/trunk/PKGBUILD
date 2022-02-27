@@ -1,23 +1,19 @@
 # Maintainer: Felix Yan <felixonmars@archlinux.org>
 
 pkgname=python-pytest-asyncio
-pkgver=0.15.1
+pkgver=0.17.0
 pkgrel=1
 pkgdesc="Pytest support for asyncio."
 arch=('any')
 license=('Apache')
 url="https://github.com/pytest-dev/pytest-asyncio/"
 depends=('python-pytest')
-makedepends=('python-setuptools')
-checkdepends=('python-coverage' 'python-async_generator' 'python-hypothesis')
+makedepends=('python-setuptools-scm')
+checkdepends=('python-flaky' 'python-hypothesis')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/pytest-dev/pytest-asyncio/archive/v$pkgver.tar.gz")
-sha512sums=('1813d49e0dd55f563d9bf058e009da61a17f61e081cc53626b5f1db623ba04905b6bea3ecba423dc931668053310176b634339d6526c7ea729d9aad87e4f044d')
+sha512sums=('cfff79cf0632153819c511d3751777858e87081b074bfb49f3fe49417d1be647b4d07a4b64149acec36b4e6b1872ac03f1055703c70cccce18648482c9b727db')
 
-prepare() {
-  cd pytest-asyncio-$pkgver
-  # Don't treat DeprecationWarnings as errors
-  sed -i '/filterwarnings = error/d' setup.cfg
-}
+export SETUPTOOLS_SCM_PRETEND_VERSION=$pkgver
 
 build() {
   cd pytest-asyncio-$pkgver
@@ -29,7 +25,7 @@ check() {
 
   cd pytest-asyncio-$pkgver
   python setup.py install --root="$PWD/tmp_install" --optimize=1
-  PYTHONPATH="$PWD/tmp_install/usr/lib/python3.6/site-packages:$PYTHONPATH:$PWD/tests" py.test
+  PYTHONPATH="$PWD/tmp_install/usr/lib/python3.10/site-packages:$PYTHONPATH:$PWD/tests" py.test
 }
 
 package() {

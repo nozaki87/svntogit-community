@@ -3,18 +3,23 @@
 
 _hkgname=hashable
 pkgname=haskell-hashable
-pkgver=1.3.3.0
+pkgver=1.3.5.0
 pkgrel=11
 pkgdesc="A class for types that can be converted to a hash value"
 url="https://github.com/haskell-unordered-containers/hashable"
 license=('BSD')
 arch=('x86_64')
-depends=('ghc-libs')
-makedepends=('ghc')
+depends=('ghc-libs' 'haskell-ghc-bignum-orphans')
+makedepends=('ghc' 'uusi')
 checkdepends=('haskell-hunit' 'haskell-quickcheck' 'haskell-random' 'haskell-test-framework'
               'haskell-test-framework-hunit' 'haskell-test-framework-quickcheck2')
 source=("https://hackage.haskell.org/packages/archive/${_hkgname}/${pkgver}/${_hkgname}-${pkgver}.tar.gz")
-sha512sums=('0c1bbd1439083f79b84192597c8db72f5ad2847f2956328d50ab8672aa3e35798fd5ef18d825eb6ebd5525ba256c5fae2a61390ab4969c0dd73bc9cbc1179776')
+sha512sums=('95b10f671abbe2baecab84e619d0c88ebb6807f711155fa6cc90e46818e73e44e9cfc585dfac35ad63a73e55f01be60a11db0a012ed20818c30bae042e70d230')
+
+prepare() {
+    cd $_hkgname-$pkgver
+    uusi -r ghc-bignum:ghc-bignum,ghc-bignum-orphans $_hkgname.cabal
+}
 
 build() {
     cd $_hkgname-$pkgver

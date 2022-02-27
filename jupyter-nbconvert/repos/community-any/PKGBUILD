@@ -2,8 +2,8 @@
 
 pkgname=jupyter-nbconvert
 _name=nbconvert
-pkgver=6.1.0
-pkgrel=2
+pkgver=6.4.2
+pkgrel=1
 pkgdesc="Jupyter Notebook Conversion"
 arch=('any')
 url="https://pypi.python.org/pypi/nbconvert"
@@ -28,9 +28,9 @@ makedepends=('python-pyppeteer' 'python-setuptools')
 checkdepends=('chromium' 'python-pytest')
 optdepends=('pandoc: non-html conversion output'
             'python-pyppeteer: for webPDF conversion support')
-source=("$pkgname-$pkgver.tgz::https://github.com/jupyter/nbconvert/archive/$pkgver.tar.gz")
-sha512sums=('beb1d66788871b2d8b1576bf4e615053a870e6959c832294872a84c89b0329a28364f2d88625dedf3947b27d68e2915155cd6d1152610aec50c4bd7226698483')
-b2sums=('9eceb9ed42d63bb495583139400ba1d6d68979379bec7ba408ba6c7e3954604f637a55f5c9e76573d0031f41269516877bfb745f685128d2c6161dff9d352818')
+source=("https://github.com/jupyter/nbconvert/archive/$pkgver/$pkgname-$pkgver.tar.gz")
+sha512sums=('0d9e1d4214fc93b416fec12066b13131452c3412bdc6511b707527cabece6b8bbaa75ccb9ac269125a87940f60e52d4c475c3db4dbc41c25a0f448015d1f0970')
+b2sums=('cb1bc75f2e85cb70d8da1e3f1fc733e550407dde693a3725e7a50bddb8906e44c89b8331867ea2ecdfd9bcffb7793a422226b1b25077b3698f8dda945ee5a688')
 
 build() {
   cd nbconvert-$pkgver

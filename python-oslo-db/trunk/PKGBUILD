@@ -2,7 +2,7 @@
 # Contributor: Daniel Wallace <danielwallace at gtmanfred dot com>
 
 pkgname=python-oslo-db
-pkgver=11.0.0
+pkgver=11.2.0
 pkgrel=1
 pkgdesc="OpenStack Database Pattern Library"
 arch=('any')
@@ -15,7 +15,7 @@ makedepends=('python-setuptools')
 checkdepends=('python-mock' 'python-testresources' 'python-oslotest' 'python-oslo-context')
 options=('!emptydirs')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/openstack/oslo.db/archive/$pkgver.tar.gz")
-sha512sums=('4a6c31b4f804f9a8f6e6d4748491acd52dbe2647c08140b4b2cb0412df5dc933f775ecdb56bd4ed25c05a581d34f0b101cf110196ec82a28342b844ea1a42481')
+sha512sums=('804eed23b2d974411b7a737fc7e08da5efda42ffc1b9b0b7534e3e8a867a70c2044b8fe13b0ea81c9cdc55ca47218718651a3d67b75d905c6025221c096519ac')
 
 export PBR_VERSION=$pkgver
 

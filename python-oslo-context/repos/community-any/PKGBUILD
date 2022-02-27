@@ -2,7 +2,7 @@
 # Contributor: Daniel Wallace <danielwallace at gtmanfred dot com>
 
 pkgname=python-oslo-context
-pkgver=3.3.2
+pkgver=4.1.0
 pkgrel=1
 pkgdesc="OpenStack Context library"
 arch=('any')
@@ -11,9 +11,8 @@ license=('Apache')
 depends=('python-pbr' 'python-debtcollector')
 makedepends=('python-setuptools')
 checkdepends=('python-mock' 'python-oslotest')
-options=('!emptydirs')
-source=("$pkgname-$pkgver.tar.gz::https://github.com/openstack/oslo.context/archive/$pkgver.tar.gz")
-sha512sums=('2247509b570519d2ca403c0f318114249a6db9ff1b44e37f832c4281e0cc2c0f9578b4538a78bf0b12a362daf04b68143ac368e45af65f609dde34f73ba6aae4')
+source=("https://github.com/openstack/oslo.context/archive/$pkgver/$pkgname-$pkgver.tar.gz")
+sha512sums=('e267d4e7f6f4db4a9f1490f3a69d85a250d07130a090d8d7ff131ccf1357874988f8a72f0eee37ffe86ec41c3903a50c4f353c0d8ebe01a1d250e398df732e6c')
 
 export PBR_VERSION=$pkgver
 

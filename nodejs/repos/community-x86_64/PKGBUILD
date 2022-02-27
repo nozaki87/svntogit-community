@@ -8,23 +8,18 @@
 # Contributor: TIanyi Cui <tianyicui@gmail.com>
 
 pkgname=nodejs
-pkgver=16.11.1
+pkgver=17.6.0
 pkgrel=1
 pkgdesc='Evented I/O for V8 javascript'
 arch=('x86_64')
 url='https://nodejs.org/'
 license=('MIT')
-depends=('openssl' 'zlib' 'icu' 'libuv' 'libnghttp2' 'c-ares') # 'http-parser' 'v8')
+options=(!lto)
+depends=('brotli' 'openssl' 'zlib' 'icu' 'libuv' 'libnghttp2' 'c-ares') # 'http-parser' 'v8')
 makedepends=('python' 'procps-ng')
 optdepends=('npm: nodejs package manager')
-source=("https://github.com/nodejs/node/archive/v$pkgver/nodejs-$pkgver.tar.gz"
-        system-c-ares.patch)
-sha512sums=('d508a408b9d783db34f70e67b4c4fa9cb04b84caa0f397086c4691b15b159c0c5d2aa7a33c403f7ac82fb3c23f867c7aaa5f4f9d85f5c5e8b95bda29e0ce8247'
-            'bca85b5a4622b38f20f3787bdb2784db76cd4b213fadf8a5813a375080e7481c4aff7556712d59df3e19849a7eb6b2f048a69b4e2162cb717ab1b3a791d2558e')
-
-prepare() {
-  patch -d node-$pkgver -Rp1 < system-c-ares.patch
-}
+source=("https://github.com/nodejs/node/archive/v$pkgver/nodejs-$pkgver.tar.gz")
+sha512sums=('1b98996a9cadc8a6a7373497cffae2497a26dc4c08bd2d616ba714da66510ff035aa83a57969cd89032620d3af08581816671e37b8cef6d730fab7149030b55b')
 
 build() {
   cd node-$pkgver
@@ -38,7 +33,8 @@ build() {
     --shared-libuv \
     --experimental-http-parser \
     --shared-nghttp2 \
-    --shared-cares
+    --shared-cares \
+    --shared-brotli
     # --shared-v8
     # --shared-http-parser
 

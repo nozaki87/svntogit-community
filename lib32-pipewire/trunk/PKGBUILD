@@ -1,27 +1,34 @@
 # Maintainer: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
+# Maintainer: David Runge <dvzrv@archlinux.org>
 # Contributor: Jan de Groot <jgc@archlinux.org>
 
 pkgbase=lib32-pipewire
 pkgname=(lib32-pipewire lib32-pipewire-jack lib32-pipewire-v4l2)
-pkgver=0.3.39
-pkgrel=1
+pkgver=0.3.47
+pkgrel=2
 epoch=1
 pkgdesc="Low-latency audio/video router and processor - 32-bit client library"
 url="https://pipewire.org"
 license=(MIT)
 arch=(x86_64)
 makedepends=(git meson lib32-alsa-lib lib32-systemd lib32-dbus)
-_commit=5b7ef959d1fed35f6ddfcf94b6f57891fae23b31  # tags/0.3.39
-source=("git+https://gitlab.freedesktop.org/pipewire/pipewire.git#commit=$_commit")
+options=(debug)
+_commit=2af393889358723a2789caa3c856700b1c968ef0  # tags/0.3.47
+source=(
+  "git+https://gitlab.freedesktop.org/pipewire/pipewire.git#commit=$_commit"
+)
 sha256sums=('SKIP')
 
 pkgver() {
   cd pipewire
-  git describe --tags | sed 's/-/+/g'
+  git describe --tags | sed 's/[^-]*-g/r&/;s/-/+/g'
 }
 
 prepare() {
   cd pipewire
+
+  # fix issues with mpd/ libspa-support.so: https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/2147
+  git cherry-pick -n 16f63a3c8fa227625bade5a9edea22354b347d18 d1f7e96f821089224ddcacf8e8f506f99c54eb5c
 }
 
 build() {
@@ -35,8 +42,12 @@ build() {
     -D systemd-user-service=disabled
     -D bluez5=disabled
     -D jack=disabled
+    -D jack-devel=true
+    -D libjack-path=/usr/lib32
     -D v4l2=disabled
     -D libcamera=disabled
+    -D libcanberra=disabled
+    -D x11=disabled
     -D pw-cat=disabled
     -D udevrulesdir=/usr/lib/udev/rules.d
     -D sdl2=disabled
@@ -47,6 +58,8 @@ build() {
     -D echo-cancel-webrtc=disabled
     -D libusb=disabled
     -D session-managers=[]
+    -D raop=disabled
+    -D lv2=disabled
   )
 
   export CC="gcc -m32"
@@ -55,6 +68,10 @@ build() {
 
   arch-meson pipewire build "${meson_options[@]}"
   meson compile -C build
+}
+
+check() {
+  meson test -C build --print-errorlogs
 }
 
 _pick() {
@@ -79,7 +96,8 @@ package_lib32-pipewire() {
 
   ( cd "$pkgdir"
 
-    _pick jack usr/lib32/pipewire-$_ver/jack
+    _pick jack usr/lib32/libjack*
+    _pick jack usr/lib32/pkgconfig/jack.pc
 
     _pick v4l2 usr/lib32/pipewire-$_ver/v4l2
 
@@ -93,6 +111,8 @@ package_lib32-pipewire-jack() {
   pkgdesc+=" - JACK support"
   license+=(GPL2)  # libjackserver
   depends=(pipewire-jack lib32-pipewire libpipewire-$_ver.so)
+  conflicts=(lib32-jack lib32-jack2)
+  provides=(lib32-jack libjack.so libjackserver.so libjacknet.so)
 
   mv jack/* "$pkgdir"
 

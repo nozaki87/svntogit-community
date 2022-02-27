@@ -1,14 +1,14 @@
 # Maintainer: Orhun Parmaksız <orhun@archlinux.org>
 
 pkgname=gpg-tui
-pkgver=0.8.1
+pkgver=0.8.3
 pkgrel=1
 pkgdesc="A terminal user interface for GnuPG"
 arch=('x86_64')
 url="https://github.com/orhun/gpg-tui"
 license=('MIT')
 depends=('libxcb' 'libxkbcommon' 'gpgme')
-makedepends=('rust' 'python')
+makedepends=('cargo' 'python')
 optdepends=(
   'xplr: for file selection support'
   'xclip: for clipboard support on X11 (or xsel)'
@@ -16,12 +16,12 @@ optdepends=(
   'wl-clipboard: for clipboard support on Wayland'
 )
 source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
-sha512sums=('e5c2cb09bb02386591acdff2b9cb6710ca7b28b0e038f6edc9567ad86277a89764a0e0f0a87748c2786c7d9c7a6413a659e1467a8b2c68b400184a3f35a892b1')
+sha512sums=('96b4c2fc78f27ba846e180051f186be6f41e47a2959db2531a7d0e71bd991a3cef6f35e7cd5b04adc34781b3d978c1b3011ac9d34f5a6582fa5641cf081cae7f')
 
 prepare() {
   cd "$pkgname-$pkgver"
   mkdir completions/
-  cargo fetch --locked
+  cargo fetch --locked --target "$CARCH-unknown-linux-gnu"
 }
 
 build() {

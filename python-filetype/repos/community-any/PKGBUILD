@@ -1,7 +1,7 @@
 # Maintainer: Felix Yan <felixonmars@archlinux.org>
 
 pkgname=python-filetype
-pkgver=1.0.8
+pkgver=1.0.10
 pkgrel=1
 pkgdesc="Infer file type and MIME type of any file/buffer"
 url="https://github.com/h2non/filetype.py"
@@ -10,7 +10,7 @@ arch=('any')
 depends=('python')
 makedepends=('python-setuptools')
 source=("https://github.com/h2non/filetype.py/archive/v$pkgver/$pkgname-$pkgver.tar.gz")
-sha512sums=('d461a0bb4de9d1dda29c6269abfa1feb692628029329a1b31ebfc3a02b7c01c16a6f3a0f261fbbee7ce6f78433a556212951fc9bfb9dfd674b86dc1bcc9e7786')
+sha512sums=('0b779f1ca1367626a57bbae531d9152abdc818d322ae5580809cd83344626c8bb43e10b609aa0709f8a03656c262bfceb8e4a6092bee45c49df0c274fb1ee0ed')
 
 build() {
   cd filetype.py-$pkgver

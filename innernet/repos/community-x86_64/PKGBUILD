@@ -1,8 +1,9 @@
 # Maintainer: Orhun Parmaksız <orhun@archlinux.org>
+# Maintainer: Caleb Maclennan <caleb@alerque.com>
 # Contributor: Jake McGinty <jake@tonari.no>
 
 pkgname=innernet
-pkgver=1.5.0
+pkgver=1.5.3
 pkgrel=1
 pkgdesc="A private network system that uses WireGuard under the hood"
 arch=('x86_64')
@@ -10,12 +11,12 @@ url="https://github.com/tonarino/innernet"
 license=('MIT')
 depends=('sqlite')
 makedepends=('rust' 'git' 'clang' 'llvm')
-source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
-sha256sums=('b5e283e1953f9183e2c77814fa6b39f08f4914509ff17f91f94599824693bed2')
+source=("$url/archive/v$pkgver/$pkgname-$pkgver.tar.gz")
+sha256sums=('e540f8fc1d20e74207aad9b783d087d2f69052c6b9a822c15d8dccaa9a1ed912')
 
 prepare() {
   cd "$pkgname-$pkgver"
-  cargo fetch --locked
+  cargo fetch --locked --target "$CARCH-unknown-linux-gnu"
 }
 
 build() {
@@ -33,11 +34,13 @@ package() {
 
   install -Dm 755 "target/release/$pkgname" "$pkgdir/usr/bin/$pkgname"
   install -Dm 755 "target/release/$pkgname-server" "$pkgdir/usr/bin/$pkgname-server"
+
+  # will be removed soon
   ln -s "/usr/bin/$pkgname" "$pkgdir/usr/bin/inn"
 
   install -Dm 644 "client/$pkgname@.service" "$pkgdir/usr/lib/systemd/system/$pkgname@.service"
   install -Dm 644 "client/$pkgname.target" "$pkgdir/usr/lib/systemd/system/$pkgname.target"
-  
+
   install -Dm 644 "server/$pkgname-server@.service" "$pkgdir/usr/lib/systemd/system/$pkgname-server@.service"
 
   for binary in "$pkgname" "$pkgname-server"; do

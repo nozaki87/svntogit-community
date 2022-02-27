@@ -1,7 +1,7 @@
 # Maintainer: Christian Rebischke <chris.rebischke@archlinux.org>
 
 pkgname=operator-sdk
-pkgver=1.14.0
+pkgver=1.17.0
 pkgrel=1
 pkgdesc="SDK for building Kubernetes applications"
 arch=('x86_64')
@@ -10,8 +10,8 @@ license=('Apache')
 makedepends=('go')
 depends=('glibc')
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/operator-framework/operator-sdk/archive/v${pkgver}.tar.gz")
-sha512sums=('8e890571550691ebada5be11a0f28e740d9591ee03fdc4a11246eefe341fa60ccd5adb181e246aef9cee7abb1d5012cc5f11a6f8e3887b4bfadd2d037e24198a')
-b2sums=('50c83207e071779f9116fa56ec71bc999a92557d2084402e8722c2e714a70b1172174b338db5ebfea716c93e80f52255404f02d892b836335e43e421cddb5ffd')
+sha512sums=('fe6186b7179b3ea71c4428e6547030c6c89d2a60887ca37c9ed75f3e687ee8187c78cd84257eaa8d8c95e9ede85f27983886d143b93409bd27d52b1be672d7a0')
+b2sums=('e521e7c32e00f0426c21e7beedb5238a569dee3d616678cc971a8dae0906d40d5d10f4328d879827da0170c014930e2f33c31009e0d0b2ebec38cb7bd4ee1b24')
 
 prepare() {
   export GOPATH="${srcdir}"
@@ -39,6 +39,12 @@ build() {
 package() {
   cd "${PACKAGE_ROOT}"
   install -Dsm755 ./operator-sdk "${pkgdir}/usr/bin/operator-sdk"
+  ./operator-sdk completion bash | install -Dm644 /dev/stdin "$pkgdir/usr/share/bash-completion/completions/operator-sdk"
+  ./operator-sdk completion zsh | install -Dm644 /dev/stdin "$pkgdir/usr/share/zsh/site-functions/_operator-sdk"
   install -Dsm755 ./ansible-operator "${pkgdir}/usr/bin/ansible-operator"
+  ./ansible-operator completion bash | install -Dm644 /dev/stdin "$pkgdir/usr/share/bash-completion/completions/ansible-operator"
+  ./ansible-operator completion zsh | install -Dm644 /dev/stdin "$pkgdir/usr/share/zsh/site-functions/_ansible-operator"
   install -Dsm755 ./helm-operator "${pkgdir}/usr/bin/helm-operator"
+  ./helm-operator completion bash | install -Dm644 /dev/stdin "$pkgdir/usr/share/bash-completion/completions/helm-operator"
+  ./helm-operator completion zsh | install -Dm644 /dev/stdin "$pkgdir/usr/share/zsh/site-functions/_helm-operator"
 }

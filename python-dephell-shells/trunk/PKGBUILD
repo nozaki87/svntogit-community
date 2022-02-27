@@ -1,9 +1,10 @@
-# Maintainer: Eli Schwartz <eschwartz@archlinux.org>
+# Maintainer: Caleb Maclennan <caleb@alerque.com>
+# Contributor: Eli Schwartz <eschwartz@archlinux.org>
 
 _pkgname=dephell_shells
 pkgname=python-dephell-shells
 pkgver=0.1.5
-pkgrel=1
+pkgrel=3
 pkgdesc="Activate virtual environment for current shell"
 arch=('any')
 url="https://github.com/dephell/${_pkgname}"

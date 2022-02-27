@@ -1,0 +1,37 @@
+# Maintainer: kpcyrd <kpcyrd[at]archlinux[dot]org>
+# Maintainer: Caleb Maclennan <caleb@alerque.com>
+# Contributor: Joaquim Monteiro <joaquim.monteiro@protonmail.com>
+
+pkgname=mvt
+pkgver=1.4.10
+pkgrel=1
+pkgdesc="Mobile Verification Toolkit, a forensics tool looking for signs of device compromise"
+arch=(any)
+url="https://github.com/mvt-project/mvt"
+license=(custom:MVT)
+depends=('libusb' 'python' 'python-adb-shell' 'python-click' 'python-iosbackup' 'python-libusb1' 'python-packaging' 'python-rich' 'python-tld' 'python-tqdm' 'python-requests' 'python-simplejson')
+makedepends=('python-setuptools')
+source=("mvt-${pkgver}.tar.gz::https://github.com/mvt-project/mvt/archive/refs/tags/v${pkgver}.tar.gz")
+sha512sums=('2f8290570286f28f6a5a868842b6d72678ccee0cec14a56de88a1b55f445354cd8bc491926d09be924ce5ac60fe4873d7846e0f60e7ec9475bcf5b68aca93b07')
+b2sums=('58842cf7d188bd56335184c75332f83bcf1a260f8712a9a8da65487da9071c7a044509773e8d2f613c4035d23f6fce99ff549d8982c50b3537879edcf17b5be3')
+
+prepare() {
+  cd "mvt-${pkgver}"
+  sed -i 's/packaging>=21.0/packaging>=20.9/' setup.py
+}
+
+build() {
+  cd "mvt-${pkgver}"
+  python setup.py build
+}
+
+package() {
+  cd "mvt-${pkgver}"
+  python setup.py install -O1 --root="$pkgdir" --skip-build
+  install -Dm644 README.md -t "${pkgdir}/usr/share/doc/${pkgname}"
+  install -Dm644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
+  local _py3_ver=$(python --version | cut -d " " -f2)
+  rm -rf "$pkgdir/usr/lib/python${_py3_ver%"."*}/site-packages/tests"
+}
+
+# vim: ts=2 sw=2 et:

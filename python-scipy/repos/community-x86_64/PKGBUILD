@@ -8,7 +8,7 @@
 
 _name=scipy
 pkgname=python-scipy
-pkgver=1.7.2
+pkgver=1.8.0
 pkgrel=1
 pkgdesc='Open-source software for mathematics, science, and engineering'
 arch=(x86_64)
@@ -20,7 +20,7 @@ makedepends=(gcc-fortran python-setuptools cython python-pythran pybind11)
 checkdepends=(python-pytest)
 optdepends=('python-pillow: for image saving module')
 source=(https://pypi.python.org/packages/source/${_name:0:1}/$_name/$_name-$pkgver.tar.gz)
-sha256sums=('fa2dbabaaecdb502641b0b3c00dec05fb475ae48655c66da16c9ed24eda1e711')
+sha256sums=('31d4f2d6b724bc9a98e527b5849b8a7e589bf1ea630c33aa563eda912c9ff0bd')
 
 build() {
   cd scipy-${pkgver}
@@ -31,7 +31,7 @@ check() {
   cd scipy-${pkgver}
   python setup.py config_fc install \
     --prefix=/usr --root="$srcdir"/test --optimize=1
-  export PYTHONPATH="$srcdir"/test/usr/lib/python3.9/site-packages
+  export PYTHONPATH="$srcdir"/test/usr/lib/python3.10/site-packages
   cd ..
   python -c "from scipy import test; test('full')"
 }

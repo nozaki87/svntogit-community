@@ -1,5 +1,5 @@
-# Maintainer: Eli Schwartz <eschwartz@archlinux.org>
-# Contributor: Caleb Maclennan <caleb@alerque.com>
+# Maintainer: Caleb Maclennan <caleb@alerque.com>
+# Contributor: Eli Schwartz <eschwartz@archlinux.org>
 # Contributor: Daniel Perez <tuvistavie@gmail.com>
 # Contributor: AGWA
 # Contributor: Hugo Osvaldo Barrera <hugo@barrera.io>
@@ -8,7 +8,7 @@
 
 pkgname=git-crypt
 pkgver=0.6.0
-pkgrel=4
+pkgrel=5
 pkgdesc="Transparent file encryption in Git"
 arch=('x86_64')
 url="https://www.agwa.name/projects/${pkgname}/"

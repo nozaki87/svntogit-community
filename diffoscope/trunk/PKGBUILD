@@ -1,7 +1,7 @@
 # Maintainer: Levente Polyak <anthraxx[at]archlinux[dot]org>
 
 pkgname=diffoscope
-pkgver=190
+pkgver=206
 pkgrel=1
 pkgdesc='Tool for in-depth comparison of files, archives, and directories'
 url='https://diffoscope.org/'
@@ -27,6 +27,7 @@ optdepends=(
   'fpc: Free Pascal utilities support'
   'java-environment: java utilities support'
   'libcaca: image compare support'
+  'libxmlb: binary XML blobs support'
   'llvm: LLVM bitcode files support'
   'lz4: lz4 compression support'
   'odt2txt: odt comparing support'
@@ -63,12 +64,12 @@ makedepends=('help2man' 'python-docutils' 'git')
 checkdepends=(
   'python-pytest' 'python-jsbeautifier' 'python-h5py' 'acl' 'binutils' 'bzip2' 'cdrtools' 'cpio' 'diffutils' 'e2fsprogs' 'enjarify'
   'hdf5' 'imagemagick' 'java-environment=11' 'fontforge' 'gettext' 'ghc' 'gnupg' 'mono' 'pgpdump' 'poppler' 'sqlite' 'squashfs-tools'
-  'lz4' 'unzip' 'gzip' 'tar' 'tcpdump' 'vim' 'xz' 'llvm' 'colord' 'fpc' 'openssh' 'openssl' 'odt2txt' 'docx2txt' 'r' 'dtc' 'giflib'
-  'gnumeric' 'python-progressbar' 'binwalk' 'python-argcomplete' 'zstd' 'uboot-tools')
+  'libxmlb' 'lz4' 'unzip' 'gzip' 'tar' 'tcpdump' 'vim' 'xz' 'llvm' 'colord' 'fpc' 'openssh' 'openssl' 'odt2txt' 'docx2txt' 'r' 'dtc'
+  'giflib' 'gnumeric' 'python-progressbar' 'binwalk' 'python-argcomplete' 'zstd' 'uboot-tools')
 source=(https://diffoscope.org/archive/diffoscope-${pkgver}.tar.bz2{,.asc})
-sha512sums=('00b2df644cd1e646fbd39397af935f09c8c2fd6849620317787c45947de0b1d4e7df77bc16e04a5fab5976117fb1869cb6b676d6d88cabda819dcd6d50861395'
+sha512sums=('65a1002df7360df046db2b1b8f4e5e80fdca6bd28f9db0f38db8706ba143bda72cd4ec73e23f04afdead481330bcfb4fe80aef768869a59cb975b6ef3f6f4398'
             'SKIP')
-b2sums=('646dda746764ba923fdaae5ff62d112672518aaffd814026b260f2c750b661cf533775a91aee1ecfb9e5538c0c48026f4c5f8255180cfe96fc0f5fc23199a2a8'
+b2sums=('e9a07f4be7c39fa989847fbf17457a7c73361db1c47b6e95e5dc1fd923eb47f499b18a8a8934e10cad31d21e247d2f81af583e737edb9d5e4242a18cc7c0b76f'
         'SKIP')
 validpgpkeys=("C2FE4BD271C139B86C533E461E953E27D4311E58") # "Chris Lamb <chris@chris-lamb.co.uk>"
 

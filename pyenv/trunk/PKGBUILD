@@ -1,20 +1,22 @@
 # Maintainer: David Runge <dvzrv@archlinux.org>
 
 pkgname=pyenv
-pkgver=2.2.0
+pkgver=2.2.4
+# botched 2.2.4 release: https://github.com/pyenv/pyenv/issues/2231
+_ver=2.2.4-1
 pkgrel=1
 pkgdesc="Easily switch between multiple versions of Python"
-arch=('any')
+arch=(any)
 url="https://github.com/pyenv/pyenv"
-license=('MIT')
-depends=('bash')
+license=(MIT)
+depends=(bash)
 optdepends=('git: installing development versions')
-source=("$pkgname-$pkgver.tar.gz::https://github.com/${pkgname}/${pkgname}/archive/v${pkgver}.tar.gz")
-sha512sums=('e819030258c4f67156d84d2ae349bf16303547a05cf37277113737df8352269b3933fd765d8ebb6c187b830023ecc9cf81f168cac413d628c3c3fa4d06f01f74')
-b2sums=('fef784e87075a6772c78a3051331fbd3da1e077507164d8457f7c9303ec97a35687705303ebb37a1074eba95523a88cdbffc5fe0c0397756d3be4d2d1a18d374')
+source=("$pkgname-$pkgver.tar.gz::https://github.com/${pkgname}/${pkgname}/archive/v${_ver}.tar.gz")
+sha512sums=('09f3539f10549a3d940d6d88756a550c8bf2ab50ad0e139f0394f91fe6161233cb9ce1461f7384a46850384f0ac96ad4d4555dfd43534ed517d722669b4cacc6')
+b2sums=('0837f91e63d1c1cd107ece02f7beb25f88131165d00e1795d0552813477fd580160a6afae367790a4c18e11084bb99724e903c34093e02f45effaa11e4dfd54c')
 
 package() {
-  cd "$pkgname-$pkgver"
+  cd "$pkgname-$_ver"
   # application
   install -vDm 755 libexec/* -t "${pkgdir}/usr/share/${pkgname}/libexec"
   install -vdm 755 "${pkgdir}/usr/bin"

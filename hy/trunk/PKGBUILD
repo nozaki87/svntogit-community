@@ -2,8 +2,8 @@
 # Contributor: JP Cimalando <jp-dev@inbox.ru>
 
 pkgname=hy
-pkgver=0.20.0
-pkgrel=1
+pkgver=1.0a4
+pkgrel=2
 pkgdesc="A dialect of Lisp that's embedded in Python"
 arch=('any')
 url="http://hylang.org/"
@@ -12,7 +12,7 @@ depends=('python-rply' 'python-astor' 'python-funcparserlib' 'python-colorama')
 makedepends=('python-setuptools')
 checkdepends=('python-pytest' 'python-pytest-runner')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/hylang/hy/archive/$pkgver.tar.gz")
-sha256sums=('d4a96426e5367e170b3c245e3fa222c99f04d3f646e037c6f45b58376ad88020')
+sha256sums=('3cc60daa17071027248b027de9ab47ba7ec15a1b020651fcc8362a825b52ca1b')
 
 prepare() {
     cd "$pkgname-$pkgver"
@@ -32,17 +32,15 @@ check(){
 
     python setup.py develop --user
     PATH="$HOME/.local/bin:$PATH"
-    python setup.py pytest #--addopts "-k 'not test_bin'"
+    pytest
 
     # Hy does magic to the bytecode, but we need this gone from check.
     # this should be generated as part of the build step
     for file in hy/contrib/__pycache__/__init__.cpython-*.pyc \
-	hy/contrib/__pycache__/hy_repr.cpython-*.pyc \
 	hy/contrib/__pycache__/loop.cpython-*.pyc \
 	hy/contrib/__pycache__/sequences.cpython-*.pyc \
 	hy/contrib/__pycache__/walk.cpython-*.pyc \
 	hy/core/__pycache__/__init__.cpython-*.pyc \
-	hy/core/__pycache__/bootstrap.cpython-*.pyc \
 	hy/core/__pycache__/language.cpython-*.pyc \
 	hy/core/__pycache__/macros.cpython-*.pyc \
 	hy/core/__pycache__/shadow.cpython-*.pyc \
@@ -50,7 +48,7 @@ check(){
 	hy/extra/__pycache__/anaphoric.cpython-*.pyc \
 	hy/extra/__pycache__/reserved.cpython-*.pyc
     do
-        rm "$file"
+        rm "$file" || true
     done
 
 }

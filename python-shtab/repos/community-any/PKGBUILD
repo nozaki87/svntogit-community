@@ -1,0 +1,32 @@
+# Maintainer:
+# Contributor: SZanko, szanko at protonmail dot com
+
+_pkgname=shtab
+pkgname=python-${_pkgname}
+pkgver=1.5.3
+pkgrel=1
+pkgdesc='Automagic shell tab completion for Python CLI applications'
+arch=(any)
+url='https://github.com/iterative/shtab'
+license=(Apache)
+depends=(python)
+makedepends=(python-setuptools-scm python-wheel)
+source=(https://pypi.python.org/packages/source/${_pkgname:0:1}/${_pkgname/-/_}/${_pkgname/-/_}-${pkgver}.tar.gz)
+sha256sums=('4cdb7b9aa6a0eb48de8820a51b8dccb119e9c8c0d8ce2d666b10e4535df5f588')
+
+build() {
+  cd $_pkgname-$pkgver
+  mv LICENCE LICENSE
+  python setup.py build
+}
+
+check() {
+  cd $_pkgname-$pkgver
+  python setup.py check
+}
+
+package() {
+  cd $_pkgname-$pkgver
+  python setup.py install --root="$pkgdir" --optimize=1 --skip-build
+  install -Dm644 LICENSE -t "$pkgdir"/usr/share/licenses/$pkgname
+}

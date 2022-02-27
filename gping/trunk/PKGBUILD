@@ -1,21 +1,21 @@
 # Maintainer: Orhun Parmaksız <orhun@archlinux.org>
 
 pkgname=gping
-pkgver=1.2.6
+pkgver=1.3.0
 pkgrel=1
 pkgdesc="Ping, but with a graph"
 arch=('x86_64')
 url="https://github.com/orf/gping"
 license=('MIT')
 depends=('iputils')
-makedepends=('rust')
+makedepends=('cargo' 'libgit2')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/$pkgname-v$pkgver.tar.gz")
-sha512sums=('29c2c6685efe848ccf1396dd2bd729e54d63b500d3ef32ad9c3b4409538dbc95f739d093b0c3b4d2650eddbba62134383849dc4dae0454fd42d3d2010f93dd1e')
+sha512sums=('da1726d8274e9e29b967f4d041715b699e943b622d7bb6391d20aa8498105d5985ddc4c6f27ae7b6f1158f752ccde71de4dae5706bce378c5e71695db2d100c8')
 
 prepare() {
   mv "$pkgname-$pkgname-v$pkgver" "$pkgname-$pkgver"
   cd "$pkgname-$pkgver"
-  cargo fetch --locked
+  cargo fetch --locked --target "$CARCH-unknown-linux-gnu"
 }
 
 build() {

@@ -4,43 +4,41 @@
 
 _name=FreeRDP
 pkgname=freerdp
-pkgver=2.4.1
+pkgver=2.6.0
 pkgrel=1
 epoch=2
 pkgdesc="Free implementation of the Remote Desktop Protocol (RDP)"
-arch=('x86_64')
+arch=(x86_64)
 url="https://www.freerdp.com/"
-license=('Apache')
-depends=('dbus-glib' 'glibc' 'gstreamer' 'gst-plugins-base-libs' 'libcups'
-'libgssglue' 'libx11' 'libxcursor' 'libxext' 'libxdamage' 'libxfixes'
-'libxkbcommon' 'libxi' 'libxinerama' 'libxkbfile' 'libxrandr' 'libxrender'
-'libxtst' 'openssl' 'pcsclite' 'wayland')
-makedepends=('alsa-lib' 'cmake' 'docbook-xsl' 'ffmpeg' 'icu' 'krb5'
-'libjpeg-turbo' 'libpulse' 'libusb' 'pam' 'systemd-libs' 'xmlto' 'xorgproto')
-provides=('libfreerdp2.so' 'libfreerdp-client2.so' 'libfreerdp-server2'
-'libfreerdp-shadow2.so' 'libfreerdp-shadow-subsystem2.so' 'libwinpr2.so'
-'libwinpr-tools2.so' 'libuwac0.so')
-source=("$pkgname-$pkgver.tar.gz::https://github.com/${pkgname}/${pkgname}/archive/${pkgver}.tar.gz"
-        "$pkgname-2.0.0-manpage_formatting.patch")
-sha512sums=('a02c2fac8f90142b8b7a36e31a720c79d7947c32fc8d4ac1c976e4f01467b3d78c50b00974af1db6e3e61c2c81ac77c1ac9bf889d14e4be084afa18b634e28f0'
+license=(Apache)
+depends=(dbus-glib glibc gstreamer gst-plugins-base-libs libcups libgssglue
+libx11 libxcursor libxext libxdamage libxfixes libxkbcommon libxi libxinerama
+libxkbfile libxrandr libxrender libxtst openssl pcsclite wayland)
+makedepends=(alsa-lib cmake docbook-xsl ffmpeg icu krb5 libjpeg-turbo libpulse
+libusb pam systemd-libs xmlto xorgproto)
+provides=(libfreerdp2.so libfreerdp-client2.so libfreerdp-server2
+libfreerdp-shadow2.so libfreerdp-shadow-subsystem2.so libwinpr2.so
+libwinpr-tools2.so libuwac0.so)
+source=(
+  $pkgname-$pkgver.tar.gz::https://github.com/$pkgname/$pkgname/archive/$pkgver.tar.gz
+  $pkgname-2.0.0-manpage_formatting.patch
+)
+sha512sums=('aec4235297440aa7d77515a06efa156b0c54525e7506038913f85722593f6715fb32e9380553589d826e64f7ef4de49788d90637c87797edda480c2179ec8ca6'
             'd960e042d1527b5d5721136b6b20fc36f65beafd010581ea5b908668537fe9fe622de6689a29c0274b0d6f1e513615f0d02e56c1d1d1e613d093e145d39af8d7')
-b2sums=('19ceb0d7f6b141c9632e1b0ff05fa18772e80d24fb149542f6d365b709f13a8bdd4dee2d647b504f61c9ed4b5806442e8c4ec6f2a876578117fbeb7962b8771d'
+b2sums=('6c2d85a59f8d353f82d7e4f9a7fbfb2011c798c802bee963d101d55525704c5f470c8125f4424f2fe860bf21cb561b8abef61a981b3dee68c9b34fe532d81c2e'
         '8242fe56ba9cf5352d836f656645a46142c1aecea3e8200203117a0cccc226135591c16fa0a24cfa196ade7b703832ff6871a948fd3bbbcc1d9c6df9885dc360')
 
 prepare() {
-  mv -v "${_name}-${pkgver}" "${pkgname}-${pkgver}"
-  cd "${pkgname}-${pkgver}"
   # fix man page formatting:
   # https://bugs.archlinux.org/task/64814
-  patch -Np1 -i "../${pkgname}-2.0.0-manpage_formatting.patch"
+  patch -d $_name-$pkgver -p1 -i ../$pkgname-2.0.0-manpage_formatting.patch
 }
 
 build() {
-  cd "${pkgname}-${pkgver}"
-  cmake -DCMAKE_INSTALL_PREFIX='/usr' \
-        -DCMAKE_INSTALL_LIBDIR='lib' \
-        -DCMAKE_BUILD_TYPE='None' \
-        -DPROXY_PLUGINDIR='/usr/lib/freerdp2/server/proxy/plugins' \
+  cmake -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_INSTALL_LIBDIR=lib \
+        -DCMAKE_BUILD_TYPE=None \
+        -DPROXY_PLUGINDIR=/usr/lib/freerdp2/server/proxy/plugins \
         -DWITH_DSP_FFMPEG=ON \
         -DWITH_FFMPEG=ON \
         -DWITH_PULSE=ON \
@@ -56,16 +54,15 @@ build() {
         -DCHANNEL_URBDRC_CLIENT=ON \
         -Wno-dev \
         -B build \
-        -S .
+        -S $_name-$pkgver
   make VERBOSE=1 -C build
 }
 
 package() {
-  depends+=('libasound.so' 'libavcodec.so' 'libavutil.so' 'libicuuc.so'
-  'libjpeg.so' 'libpam.so' 'libpulse.so' 'libswscale.so' 'libswresample.so'
-  'libsystemd.so' 'libusb-1.0.so')
-  cd "${pkgname}-${pkgver}"
-  make DESTDIR="${pkgdir}" install -C build
-  install -vDm 644 {ChangeLog,README.md} \
-    -t "${pkgdir}/usr/share/doc/${pkgname}"
+  depends+=(libasound.so libavcodec.so libavutil.so libicuuc.so libjpeg.so
+  libpam.so libpulse.so libswscale.so libswresample.so libsystemd.so
+  libusb-1.0.so)
+
+  make DESTDIR="$pkgdir" install -C build
+  install -vDm 644 $_name-$pkgver/{ChangeLog,README.md} -t "$pkgdir/usr/share/doc/$pkgname"
 }

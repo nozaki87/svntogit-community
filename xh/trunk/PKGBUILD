@@ -3,7 +3,7 @@
 # Contributor: Wesley Moore <wes@wezm.net>
 
 pkgname=xh
-pkgver=0.13.0
+pkgver=0.15.0
 pkgrel=1
 pkgdesc="Friendly and fast tool for sending HTTP requests"
 arch=('x86_64')
@@ -13,7 +13,7 @@ depends=('gcc-libs')
 makedepends=('cargo')
 replaces=('ht-rs' 'ht')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
-sha256sums=('d3e46b6db5a131237d5f980ccaae6f04c5ba7b06922d97c7f98f36f03cf581fe')
+sha256sums=('67dcea38d58115fb745eb41142a118110ff070d7d484128cc066d9b4bb01c68d')
 
 prepare() {
   cd "$pkgname-$pkgver"
@@ -22,6 +22,7 @@ prepare() {
 
 build() {
   cd "$pkgname-$pkgver"
+  CFLAGS+=" -ffat-lto-objects"
   cargo build --frozen --release --features native-tls
 }
 

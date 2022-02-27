@@ -1,21 +1,25 @@
 # Maintainer: Filipe Laíns (FFY00) <lains@archlinux.org>
+# Maintainer: Orhun Parmaksız <orhun@archlinux.org>
 # Contributor: Philipp Wolfer <ph.wolfer@gmail.com>
 
 pkgname=gifski
-pkgver=1.5.0
-pkgrel=1
+pkgver=1.6.4
+pkgrel=2
 pkgdesc='GIF encoder based on libimagequant (pngquant). Squeezes maximum possible quality from the awful GIF format.'
 arch=('x86_64')
 url='https://gif.ski'
 license=('AGPL3')
+depends=('ffmpeg4.4')
 makedepends=('rust' 'clang' 'openmp')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/ImageOptim/$pkgname/archive/$pkgver.tar.gz")
-sha512sums=('6108a5a1855c9481b1b3b1deec3e10d2a17741b0ba2e10d3c3f1aec39a9def45d6c3517921e342f39bab8880d79d417d16cfef9c2657565b17b2650646aaa7db')
+sha512sums=('7b98b05e67f92365351973b28150a352dea7cace585bcb097c5de1377cfe5bcb7cac2685ca7489d3136242bda75800b899e94fa94e0a22e83d86f6cac76e9f54')
+options=('!lto')
 
 build() {
   cd $pkgname-$pkgver
 
-  cargo build --release --features=openmp
+  export PKG_CONFIG_PATH='/usr/lib/ffmpeg4.4/pkgconfig'
+  cargo build --release --features=openmp,video
 }
 
 package() {

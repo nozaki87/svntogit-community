@@ -8,32 +8,38 @@ pkgname=('man-pages-cs'
          'man-pages-da'
          'man-pages-de'
          'man-pages-es'
+         'man-pages-fi'
          'man-pages-fr'
          'man-pages-hu'
+         'man-pages-id'
          'man-pages-it'
          'man-pages-mk'
+         'man-pages-nb'
          'man-pages-nl'
          'man-pages-pl'
          'man-pages-pt_br'
-         'man-pages-ro')
-pkgver=4.11.0
+         'man-pages-ro'
+         'man-pages-sv'
+         'man-pages-sr'
+         'man-pages-vi')
+pkgver=4.13
 pkgrel=1
 pkgdesc="Translation of man pages"
 arch=('any')
 url="https://salsa.debian.org/manpages-l10n-team/manpages-l10n"
 license=('GPL3')
-depends=('man-db')
+depends=('man')
 makedepends=('po4a')
 changelog=$pkgbase.changelog
 options=('!emptydirs')
 source=(https://salsa.debian.org/manpages-l10n-team/manpages-l10n/-/archive/v$pkgver/manpages-l10n-v$pkgver.tar.bz2)
-sha256sums=('a96962ece55a0dab7b7ffa641116e4ab4e79feb0b0d8ad6db143aaa40cb2c001')
+sha256sums=('239bd43d740f8a8f2e8ca4d83e5cb7cd8ff7f3368c0f390a961ffe8950dbe28a')
 
 build() {
   cd "${srcdir}"/manpages-l10n-v$pkgver
   ./configure --prefix=/usr --enable-distribution=archlinux --enable-compression=none
 
-  for _lang in cs da de fr nl pl pt_BR ro; do
+  for _lang in cs da de es fi fr hu id it mk nb nl pl pt_BR ro sr sv vi; do
     make -C po/"${_lang}"
   done
 }
@@ -41,14 +47,14 @@ build() {
 check() {
   cd "${srcdir}"/manpages-l10n-v$pkgver
 
-  for _lang in cs da de fr nl pl pt_BR ro; do
+  for _lang in cs da de es fi fr hu id it mk nb nl pl pt_BR ro sr sv vi; do
     make check -k -C po/"${_lang}"
   done
 }
 
 package_man-pages-cs() {
   pkgdesc="Czech man pages"
-  depends=('man-db')
+  depends=('man')
 
   cd "${srcdir}"/manpages-l10n-v$pkgver/po/cs
   make DESTDIR="${pkgdir}" install
@@ -56,7 +62,7 @@ package_man-pages-cs() {
 
 package_man-pages-da() {
   pkgdesc="Danish man pages"
-  depends=('man-db')
+  depends=('man')
 
   cd "${srcdir}"/manpages-l10n-v$pkgver/po/da
   make DESTDIR="${pkgdir}" install
@@ -64,7 +70,7 @@ package_man-pages-da() {
 
 package_man-pages-de() {
   pkgdesc="German man pages"
-  depends=('man-db')
+  depends=('man')
 
   cd "${srcdir}"/manpages-l10n-v$pkgver/po/de
   make DESTDIR="${pkgdir}" install
@@ -72,15 +78,23 @@ package_man-pages-de() {
 
 package_man-pages-es() {
   pkgdesc="Spanish man pages"
-  depends=('man-db')
+  depends=('man')
 
   cd "${srcdir}"/manpages-l10n-v$pkgver/po/es
   make DESTDIR="${pkgdir}" install
 }
 
+package_man-pages-fi() {
+  pkgdesc="Finnish man pages"
+  depends=('man')
+
+  cd "${srcdir}"/manpages-l10n-v$pkgver/po/fi
+  make DESTDIR="${pkgdir}" install
+}
+
 package_man-pages-fr() {
   pkgdesc="French man pages"
-  depends=('man-db')
+  depends=('man')
 
   cd "${srcdir}"/manpages-l10n-v$pkgver/po/fr
   make DESTDIR="${pkgdir}" install
@@ -88,15 +102,23 @@ package_man-pages-fr() {
 
 package_man-pages-hu() {
   pkgdesc="Hungarian man pages"
-  depends=('man-db')
+  depends=('man')
 
   cd "${srcdir}"/manpages-l10n-v$pkgver/po/hu
   make DESTDIR="${pkgdir}" install
 }
 
+package_man-pages-id() {
+  pkgdesc="Indonesian man pages"
+  depends=('man')
+
+  cd "${srcdir}"/manpages-l10n-v$pkgver/po/id
+  make DESTDIR="${pkgdir}" install
+}
+
 package_man-pages-it() {
   pkgdesc="Italian man pages"
-  depends=('man-db')
+  depends=('man')
 
   cd "${srcdir}"/manpages-l10n-v$pkgver/po/it
   make DESTDIR="${pkgdir}" install
@@ -104,15 +126,23 @@ package_man-pages-it() {
 
 package_man-pages-mk() {
   pkgdesc="Macedonian man pages"
-  depends=('man-db')
+  depends=('man')
 
   cd "${srcdir}"/manpages-l10n-v$pkgver/po/mk
   make DESTDIR="${pkgdir}" install
 }
 
+package_man-pages-nb() {
+  pkgdesc="Norwegian bokmål man pages"
+  depends=('man')
+
+  cd "${srcdir}"/manpages-l10n-v$pkgver/po/nb
+  make DESTDIR="${pkgdir}" install
+}
+
 package_man-pages-nl() {
   pkgdesc="Dutch man pages"
-  depends=('man-db')
+  depends=('man')
 
   cd "${srcdir}"/manpages-l10n-v$pkgver/po/nl
   make DESTDIR="${pkgdir}" install
@@ -120,7 +150,7 @@ package_man-pages-nl() {
 
 package_man-pages-pl() {
   pkgdesc="Polish man pages"
-  depends=('man-db')
+  depends=('man')
 
   cd "${srcdir}"/manpages-l10n-v$pkgver/po/pl
   make DESTDIR="${pkgdir}" install
@@ -128,7 +158,7 @@ package_man-pages-pl() {
 
 package_man-pages-pt_br() {
   pkgdesc="Brazilian Portuguese man pages"
-  depends=('man-db')
+  depends=('man')
 
   cd "${srcdir}"/manpages-l10n-v$pkgver/po/pt_BR
   make DESTDIR="${pkgdir}" install
@@ -136,8 +166,32 @@ package_man-pages-pt_br() {
 
 package_man-pages-ro() {
   pkgdesc="Romanian man pages"
-  depends=('man-db')
+  depends=('man')
 
   cd "${srcdir}"/manpages-l10n-v$pkgver/po/ro
+  make DESTDIR="${pkgdir}" install
+}
+
+package_man-pages-sr() {
+  pkgdesc="Serbian man pages"
+  depends=('man')
+
+  cd "${srcdir}"/manpages-l10n-v$pkgver/po/sr
+  make DESTDIR="${pkgdir}" install
+}
+
+package_man-pages-sv() {
+  pkgdesc="Swedish man pages"
+  depends=('man')
+
+  cd "${srcdir}"/manpages-l10n-v$pkgver/po/sv
+  make DESTDIR="${pkgdir}" install
+}
+
+package_man-pages-vi() {
+  pkgdesc="Vietnamese man pages"
+  depends=('man')
+
+  cd "${srcdir}"/manpages-l10n-v$pkgver/po/vi
   make DESTDIR="${pkgdir}" install
 }

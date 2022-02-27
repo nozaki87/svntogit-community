@@ -2,7 +2,7 @@
 # Contributor: Bruce Zhang <zttt183525594@gmail.com>
 
 pkgname=feeluown
-pkgver=3.7.11
+pkgver=3.7.14
 pkgrel=1
 pkgdesc="FeelUOwn Music Player"
 arch=('any')
@@ -11,16 +11,22 @@ license=('GPL3')
 depends=('python-qasync' 'python-pyqt5' 'mpv' 'python-opengl' 'python-janus' 'python-requests'
          'python-tomlkit' 'python-packaging' 'python-pydantic' 'qt5-svg')
 makedepends=('python-setuptools' 'python-pip')
+checkdepends=('python-pytest-benchmark' 'python-pytest-cov')
 optdepends=('feeluown-local' 'feeluown-netease' 'feeluown-kuwo' 'feeluown-qqmusic')
 groups=('feeluown-full')
 source=("https://pypi.io/packages/source/f/feeluown/feeluown-$pkgver.tar.gz"
         "feeluown.desktop")
-sha512sums=('6931dfa37678395c59905e728c233b774ec50ca2f5b0528db22ff0d542691f76995ef5e7a35308e99523ec7298c977d49d8da734689e6b60d030f7074ac0195a'
+sha512sums=('10f3e92f945a794e4f986700e7b1c6fa6b7e4a3f43bc9682b6bf6bc3491770c7bd3ea275fe1b3621ff5133c408c8904536a8dc099ffe6247c819d7c810f4b3e2'
             '48882f7469c22e5db332663bc1aa8b398b0a10a0c929d4d7e3d7b8b91205d7d3070c5fa295cb9a14f8c352bff57978bfaad167343e0ddc51c92417eda07c8087')
 
 build() {
   cd $pkgname-$pkgver
   python setup.py build
+}
+
+check() {
+  cd $pkgname-$pkgver
+  pytest
 }
 
 package() {

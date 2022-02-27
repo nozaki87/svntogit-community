@@ -1,9 +1,10 @@
-# Maintainer: Eli Schwartz <eschwartz@archlinux.org>
+# Maintainer: Caleb Maclennan <caleb@alerque.com>
+# Contributor: Eli Schwartz <eschwartz@archlinux.org>
 
 _pkgname=dephell_versioning
 pkgname=python-dephell-versioning
 pkgver=0.1.2
-pkgrel=3
+pkgrel=5
 pkgdesc="Bump project version like a pro"
 arch=('any')
 url="https://github.com/dephell/${_pkgname}"

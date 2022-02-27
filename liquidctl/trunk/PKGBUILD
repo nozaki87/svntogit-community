@@ -1,7 +1,7 @@
 # Maintainer: Filipe Laíns (FFY00) <lains@archlinux.org>
 
 pkgname=liquidctl
-pkgver=1.7.1
+pkgver=1.8.1
 pkgrel=1
 arch=('any')
 url='https://github.com/liquidctl/liquidctl'
@@ -44,4 +44,3 @@ package() {
   cp -r -a --no-preserve=ownership docs/* "$pkgdir"/usr/share/doc/$pkgname
   install -Dm 644 liquidctl.8.gz "$pkgdir"/usr/share/man/man8/liquidctl.8.gz
 }
-

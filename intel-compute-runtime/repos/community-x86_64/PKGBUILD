@@ -2,7 +2,7 @@
 # Maintainer: Bruno Pagani <archange@archlinux.org>
 
 pkgname=intel-compute-runtime
-pkgver=21.42.21270
+pkgver=21.49.21786
 pkgrel=1
 pkgdesc="Intel(R) Graphics Compute Runtime for oneAPI Level Zero and OpenCL(TM) Driver"
 arch=(x86_64)
@@ -13,15 +13,21 @@ makedepends=(cmake libva level-zero-headers igsc)
 optdepends=('libva: for cl_intel_va_api_media_sharing'
             'libdrm: for cl_intel_va_api_media_sharing')
 provides=(opencl-driver level-zero-driver)
+options=(!lto)
 source=(https://github.com/intel/compute-runtime/archive/${pkgver}/${pkgname}-${pkgver}.tar.gz)
-sha256sums=('cf7340e43a1574ad23a76034ae731b992a9430e09397a3376bb473a13ebdc33e')
+sha256sums=('ddfc9f88cc1bfa18d03b1c1b41f15282af58a921f1bd2992353f02163ab5c826')
 
 build() {
+  # ${${pkgver#*.}%.*} not supported by bash?
   cmake -B build -S compute-runtime-${pkgver} \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_INSTALL_LIBDIR=lib \
+    -DNEO_OCL_VERSION_MAJOR=${pkgver%%.*} \
+    -DNEO_OCL_VERSION_MINOR=$(echo ${pkgver} | cut -d . -f2) \
+    -DNEO_VERSION_BUILD=${pkgver##*.} \
     -DSUPPORT_DG1=ON \
+    -DSKIP_UNIT_TESTS=1 \
     -Wno-dev
   make -C build
 }

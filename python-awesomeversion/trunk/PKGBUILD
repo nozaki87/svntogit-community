@@ -3,23 +3,22 @@
 
 pkgname=python-awesomeversion
 _name=${pkgname#python-}
-pkgver=21.10.1
+pkgver=22.2.0
 pkgrel=1
 pkgdesc="One version package to rule them all."
 arch=('any')
 url="https://github.com/ludeeus/awesomeversion"
 license=('MIT')
 depends=(python)
-makedepends=('python-setuptools')
+makedepends=(python-build python-installer python-poetry)
 checkdepends=('python-pytest')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/ludeeus/$_name/archive/refs/tags/$pkgver.tar.gz")
-sha512sums=('929ece5e701c4e2e827cc12378a7e3174c42af417fab849549836c89dfdba83241d4a9c885809429c7a686f0f2a13e478120c52c435989cb325a3a7046d27e24')
+sha512sums=('ea371000e9c54bd53bf809f7eb9e2b09779c689c3b8a85820caac291b97feb933e5d9fbf384df576267b66e13ec8a1af422d7abdeab4cdfe1be00b88b9474dfe')
 
 prepare() {
     cd $_name-$pkgver
-
-    # replace version "main" with correct version
-    sed -e "s|version=\"main\"|version=\"$pkgver\"|" -i setup.py
+    # version = "0"
+    sed -e "s|version = \"0\"|version = \"$pkgver\"|" -i pyproject.toml
 }
 
 check() {
@@ -30,12 +29,12 @@ check() {
 build() {
     cd $_name-$pkgver
 
-    python setup.py build
+    python -m build --wheel --no-isolation
 }
 
 package() {
     cd $_name-$pkgver
 
-    python setup.py install --root="$pkgdir/" --optimize=1 --skip-build
+    python -m installer --destdir="$pkgdir" dist/*.whl
     install -Dm644 LICENCE.md "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }

@@ -3,7 +3,7 @@
 pkgname=nextcloud-app-calendar
 _name=calendar
 epoch=1
-pkgver=2.3.4
+pkgver=3.0.6
 pkgrel=1
 pkgdesc="Calendar app for nextcloud"
 arch=('any')
@@ -13,8 +13,8 @@ depends=('nextcloud')
 makedepends=('ripgrep' 'yq')
 groups=('nextcloud-apps')
 options=('!strip')
-source=("$pkgname-$pkgver.tar.gz::https://github.com/nextcloud-releases/calendar/releases/download/v$pkgver/calendar.tar.gz")
-sha256sums=('3d6afadeb751bdcb1f5615a1d8683efefda64cc0a51ad9d16fb4d00b22097bde')
+source=("$pkgname-$pkgver.tar.gz::https://github.com/nextcloud-releases/calendar/releases/download/v$pkgver/calendar-v$pkgver.tar.gz")
+sha256sums=('d23dd3154ce77c7f0e97098235c1158a8e7d8f2b72a8d92a32fe077f2e9b0f59')
 
 _get_nextcloud_versions() {
   _app_min_major_version="$(xq '.info.dependencies.nextcloud["@min-version"]' "${_name}/appinfo/info.xml"| sed 's/"//g')"

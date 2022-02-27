@@ -2,7 +2,7 @@
 # Contributor: Kaizhao Zhang <zhangkaizhao@gmail.com>
 
 pkgname=pyright
-pkgver=1.1.185
+pkgver=1.1.224
 pkgrel=1
 pkgdesc='Type checker for the Python language'
 arch=('any')
@@ -11,7 +11,7 @@ license=('MIT')
 depends=('nodejs>=12')
 makedepends=('npm')
 source=("$url/archive/$pkgver/$pkgname-$pkgver.tar.gz")
-b2sums=('4d4533fa5996dd3de8a0c1a9618394b640faf80484e7483a024acae034f72bc7a9dd473c5d97a29efafcc452179cc48dfa1eac94352108e5188ebb5684a0ee0d')
+b2sums=('ae77b5e3412373367c2c6a15b72c49917c56a9a6ceb6964f99f328be3f99142e4954f11c8680819caeaec0944bdeb14bac3467a4d1a40970fa1a24e7517d4bce')
 
 prepare() {
   cd $pkgname-$pkgver
@@ -24,18 +24,16 @@ build() {
 }
 
 package() {
-  install -d "$pkgdir"/usr/bin
+  install -d "$pkgdir"/usr/{bin,lib/node_modules/$pkgname,share/doc/$pkgname}
   ln -s ../lib/node_modules/$pkgname/index.js "$pkgdir"/usr/bin/$pkgname
   ln -s ../lib/node_modules/$pkgname/langserver.index.js \
     "$pkgdir"/usr/bin/$pkgname-langserver
 
   cd $pkgname-$pkgver
-  install -d "$pkgdir"/usr/share/doc/$pkgname
   cp -r {CONTRIBUTING,README}.md docs "$pkgdir"/usr/share/doc/$pkgname
   install -Dm644 -t "$pkgdir"/usr/share/licenses/$pkgname LICENSE.txt
 
   cd packages/$pkgname
-  install -d "$pkgdir"/usr/lib/node_modules/$pkgname
   cp -r dist {,langserver.}index.js "$pkgdir"/usr/lib/node_modules/$pkgname
 }
 

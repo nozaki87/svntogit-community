@@ -1,7 +1,7 @@
 # Maintainer: Anatol Pomozov
 
 pkgname=s2n-tls
-pkgver=1.1.0
+pkgver=1.3.3
 pkgrel=1
 pkgdesc='A C99 implementation of the TLS/SSL protocols that is designed to be simple, small, fast, and with security as a priority'
 arch=(x86_64)
@@ -13,7 +13,7 @@ replaces=(s2n)
 depends=(openssl)
 makedepends=(cmake)
 source=(s2n-tls-$pkgver.zip::https://github.com/aws/s2n-tls/archive/v$pkgver.zip)
-sha256sums=('e336e7754cf35dc7fe6ffa78826587702f49aebf398d7c7e19c038eeb79c176d')
+sha256sums=('9edf8fa0b03fdea4788d4b39de93dd52eb5ead700ece3b10160cff40a70726a3')
 
 build() {
   cd s2n-tls-$pkgver

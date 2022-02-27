@@ -1,21 +1,21 @@
-# Maintainer: Sven-Hendrik Haase <svenstaro@gmail.com>
+# Maintainer: Sven-Hendrik Haase <svenstaro@archlinux.org>
 # Contributor: crab2313 <crab2313@gmail.com>
 
 pkgname=python-gitlab
-pkgver=2.10.1
-pkgrel=2
+pkgver=3.1.1
+pkgrel=1
 pkgdesc="Python wrapper for the GitLab API"
-arch=(any)
+arch=('any')
 url="https://github.com/python-gitlab/python-gitlab"
 license=('LGPL3')
 depends=('python' 'python-requests' 'python-six' 'python-requests-toolbelt')
 makedepends=('python-setuptools')
 source=($pkgname-$pkgver.tar.gz::https://github.com/python-gitlab/python-gitlab/archive/v${pkgver}.tar.gz)
-sha512sums=('7c71c6cae69e1ccc48aaae03364533b4fc047705a219ccb67b3bd7a5d7e5061d39862790e3b354ca5082cfb0b9bf6a380bcf0c767f7c285c9337f8dd22756154')
+sha512sums=('247100c581e43a327fdba52ba4dd27298da9aa03c93fb883510af1335e6d7915566b7d4bf083ffc97e52c8900e81f09028bee687593abb106305b629bb87080d')
 
 package() {
   cd "$srcdir/$pkgname-$pkgver"
   python setup.py install --root="$pkgdir/" --optimize=1
   # Tests get installed into the package for some reason
-  rm -rf "$pkgdir/usr/lib/python3.9/site-packages/tests"
+  rm -rf "$pkgdir/usr/lib/python3.10/site-packages/tests"
 }

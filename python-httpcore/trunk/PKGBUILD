@@ -2,35 +2,34 @@
 
 _pkgname=httpcore
 pkgname=python-httpcore
-pkgver=0.13.7
+pkgver=0.14.7
 pkgrel=1
 pkgdesc="A minimal HTTP client"
 arch=('any')
 url="https://github.com/encode/${_pkgname}"
 license=('BSD')
-depends=('python-anyio' 'python-h11' 'python-sniffio')
-optdepends=('python-h2: for HTTP/2 support')
+depends=('python-anyio' 'python-h11' 'python-sniffio' 'python-certifi')
+optdepends=('python-h2: for HTTP/2 support' 'python-socksio: for SOCKS support')
 makedepends=('python-setuptools' 'python-h2')
-checkdepends=('hypercorn' 'python-curio' 'python-pproxy' 'python-pytest-asyncio' 'python-pytest-trio' 'python-trustme' 'uvicorn')
+checkdepends=('hypercorn' 'python-curio' 'python-pproxy' 'python-pytest-asyncio' 'python-pytest-httpbin' 'python-pytest-trio' 'python-trustme' 'uvicorn' 'python-socksio')
 source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/${pkgver}.tar.gz")
-sha512sums=('0cc48828d0710066b3ef89998ec85975285763ac63a8b59106952ef2dac5a02dac71e7e106c4b6ea1022eb4d06a9cb5ee3e634eb564bad49c5508beff75279d6')
-b2sums=('e6c4b1720ce4bf62689995d3e1c648c4702bb416f3b3586eb8dd2f0cfd2155046e64181c4c04e65f721a5f0fcbc23b5ffd01c2930c7c69d37ee4c36e37b7d0d4')
+sha512sums=('6865e97f9b84846bb4e9304ea358b0a28d66fd2d1e244e8a2a439ee446a294ecbc68ac07d5a718fd1c3eceaa44a391d7a8f7f2ca659f1674eb17a90f39987d48')
 
 prepare() {
-    cd "${srcdir}"/${_pkgname}-${pkgver}
+    cd ${_pkgname}-${pkgver}
 
     # do not run coverage in unittests!
     sed -i '/^addopts/d' setup.cfg
 }
 
 build() {
-    cd "${srcdir}"/${_pkgname}-${pkgver}
+    cd ${_pkgname}-${pkgver}
 
     python setup.py build
 }
 
 check() {
-    cd "${srcdir}"/${_pkgname}-${pkgver}
+    cd ${_pkgname}-${pkgver}
 
     # raise open files limits, many tests will fail otherwise
     ulimit -S -n 4096
@@ -39,7 +38,7 @@ check() {
 }
 
 package() {
-    cd "${srcdir}"/${_pkgname}-${pkgver}
+    cd ${_pkgname}-${pkgver}
 
     python setup.py install --root="${pkgdir}" --optimize=1 --skip-build
     install -Dm644 LICENSE.md "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE.md

@@ -7,12 +7,12 @@
 
 pkgname=vtk
 pkgver=9.1.0
-pkgrel=1
+pkgrel=10
 pkgdesc="Software system for 3D computer graphics, image processing, and visualization"
 arch=(x86_64)
 url="https://www.vtk.org/"
 license=(BSD)
-depends=(gcc-libs double-conversion)
+depends=(gcc-libs double-conversion tbb)
 makedepends=(adios2 cmake boost doxygen ffmpeg gdal git gnuplot java-environment=11
              liblas libxt openimagedenoise openmp openmpi openvdb openvr ospray pdal
              postgresql python-matplotlib qt5-base qt5-tools qt5-webkit
@@ -54,9 +54,13 @@ optdepends=('gnuplot: plotting tools'
             proj
             sqlite
             unixodbc)
-source=(${url}/files/release/${pkgver%.*}/VTK-${pkgver}.tar.gz)
+source=(${url}/files/release/${pkgver%.*}/VTK-${pkgver}.tar.gz
+        vtk-tbb-2021.patch::https://gitlab.kitware.com/vtk/vtk-m/-/merge_requests/2509.patch
+        ffmpeg5.patch)
 options=(staticlibs)
-sha256sums=('8fed42f4f8f1eb8083107b68eaa9ad71da07110161a3116ad807f43e5ca5ce96')
+sha256sums=('8fed42f4f8f1eb8083107b68eaa9ad71da07110161a3116ad807f43e5ca5ce96'
+            '37cff664c4eaacf44ecb995e62e9e54e54880bae0857d598c74660a2159ccb2e'
+            '066ad5eb3f7cd101c4bbbe4d91ba97419f18537f9dadf6654776b7151c7c6a8d')
 
 prepare() {
   cd VTK-${pkgver}
@@ -64,6 +68,10 @@ prepare() {
   sed -i "s|2.4.0|2.3.0|" ThirdParty/libharu/CMakeLists.txt
   # We have a patched fmt
   sed -i "s|8.1.0|8.0.1|" ThirdParty/fmt/CMakeLists.txt
+  # Fix build with TBB 2021
+  patch -d ThirdParty/vtkm/vtkvtkm/vtk-m -p1 -i "$srcdir"/vtk-tbb-2021.patch
+  # Fix build with FFmpeg 5 https://gitlab.kitware.com/vtk/vtk/-/merge_requests/8863
+  patch -p1 -i "$srcdir"/ffmpeg5.patch
 }
 
 build() {
@@ -101,7 +109,6 @@ build() {
     -DVTK_MODULE_USE_EXTERNAL_VTK_pegtl=OFF \
     -DVTK_MODULE_ENABLE_VTK_DomainsMicroscopy=NO \
     -DVTK_MODULE_ENABLE_VTK_FiltersOpenTURNS=NO \
-    -DOpenVDB_CMAKE_PATH=/usr/lib/cmake/OpenVDB \
     -Wno-dev
 #    -DFIDES_USE_EXTERNAL_RAPIDJSON=ON \
   make -C build
@@ -120,5 +127,5 @@ package() {
   # Remove third party CMake patching for older versions than ours
   rm -rv "${pkgdir}"/usr/lib/cmake/vtk/patches/3.{1{3,6,8,9},20}
   # … as well as duplicate copies
-  rm -rv "${pkgdir}"/usr/lib/cmake/vtk/vtkm/cmake/{Find*.cmake,3.15}
+  rm -rv "${pkgdir}"/usr/lib/cmake/vtk/vtkm/{Find*.cmake,cmake/{Find*.cmake,3.15}}
 }

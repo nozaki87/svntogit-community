@@ -6,7 +6,7 @@
 # Contributor: Simon Lackerbauer <calypso "at" strpg.org>
 
 pkgname=phpmyadmin
-pkgver=5.1.1
+pkgver=5.1.3
 pkgrel=1
 pkgdesc='PHP and hence web-based tool to administrate MySQL over the WWW'
 arch=('any')
@@ -15,7 +15,7 @@ license=('GPL')
 depends=('mysql-clients' 'php')
 backup=(etc/webapps/phpmyadmin/config.inc.php)
 source=(https://files.phpmyadmin.net/phpMyAdmin/$pkgver/phpMyAdmin-$pkgver-all-languages.tar.xz)
-sha512sums=('22586bf9e37224f4a307564e8da73384cdc55d705063a487c17b3a02ab0a0454371d1349aad96b136395a72dff38409f8eac21ab9a7f3e5835ad85fc7854d59b')
+sha512sums=('c8894f22a57f859b6744d49222ddf12c5146bd3b4929ae7ffdbb35832c34fd6b431ac6ba47af855335dcc9360c62295992d52ca5106a75d4dbb098368d155e62')
 
 package() {
   _instdir="$pkgdir"/usr/share/webapps/phpMyAdmin

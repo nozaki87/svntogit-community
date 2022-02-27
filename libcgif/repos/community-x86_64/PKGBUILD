@@ -1,0 +1,31 @@
+# Maintainer:
+# Contributor: Daniel Löbl <dloebl.2000@gmail.com>
+
+pkgname=libcgif
+pkgver=0.2.0
+pkgrel=1
+pkgdesc='A fast and lightweight GIF encoding library'
+arch=(x86_64)
+url='https://github.com/dloebl/cgif'
+license=(MIT)
+depends=(glibc)
+makedepends=(meson)
+source=(https://github.com/dloebl/cgif/archive/V$pkgver/$pkgname-$pkgver.tar.gz)
+sha256sums=('d00fd4bf2a7b47bc3b0c3b2c8f2215b1bdfd88f0569388d752909b878db27bfb')
+
+build() {
+  meson build cgif-$pkgver \
+    --prefix=/usr
+  meson compile -C build
+}
+
+check() {
+  meson test -C build
+}
+
+package() {
+ #mkdir -p "$pkgdir/usr/lib/" "$pkgdir/usr/include/" "$pkgdir/usr/share/licenses/$pkgname/"
+  meson install -C build \
+    --destdir "$pkgdir"
+  install -Dm644 cgif-$pkgver/LICENSE -t "$pkgdir"/usr/share/licenses/$pkgname
+}

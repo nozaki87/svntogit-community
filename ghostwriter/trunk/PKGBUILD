@@ -5,7 +5,7 @@
 # Contributor: Philipp 'TamCore' B. <philipp [at] tamcore [dot] eu>
 
 pkgname=ghostwriter
-pkgver=2.0.2
+pkgver=2.1.1
 pkgrel=1
 pkgdesc='Aesthetic, distraction-free Markdown editor'
 arch=('x86_64')
@@ -17,7 +17,7 @@ optdepends=('cmark: processing and rendering CommonMark'
             'mathjax: formula rendering in live preview'
             'pandoc: Pandoc supported Markdown flavors and export to various formats')
 source=("https://github.com/wereturtle/ghostwriter/archive/$pkgver/$pkgname-$pkgver.tar.gz")
-sha256sums=('9b7b02a58d78f5cbc535bdf5821f0012c66d6e92fc39b8b80ca59d23adb4f71c')
+sha256sums=('a9add6202dc1c9bb3f591fd4ec5d70e0fbd49d55f4921dc217923debc4d02f06')
 
 prepare() {
   cd $pkgname-$pkgver

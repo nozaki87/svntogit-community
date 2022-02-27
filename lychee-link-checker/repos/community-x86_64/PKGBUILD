@@ -3,7 +3,7 @@
 
 _name=lychee
 pkgname=lychee-link-checker
-pkgver=0.8.0
+pkgver=0.8.2
 pkgrel=1
 pkgdesc='Fast, async, resource-friendly link checker written in Rust'
 arch=('x86_64')
@@ -12,12 +12,13 @@ license=('Apache' 'MIT')
 replaces=('lychee-rs')
 depends=('gcc-libs' 'openssl')
 makedepends=('rust')
+options=('!lto')
 source=("$url/archive/v$pkgver/$_name-$pkgver.tar.gz")
-b2sums=('783d1a5aba9e5384018896b4a433e19a8a3b16be6b0a5584288fceb40b515ade5fc19501d5b568cfa28b767f83155864026f982af7c3e1516d4a03ee7e103638')
+b2sums=('10a6a403d3b04697a338db377e1f6c9f52791fdf828b4fda1dc341c74c7e8f67857de535423eaa8ba97db2988e397b8a7185924fed1a5a3c6f961a3b2c85f16a')
 
 prepare() {
   cd $_name-$pkgver
-  cargo fetch --locked
+  cargo fetch --locked --target "$CARCH-unknown-linux-gnu"
 }
 
 build() {

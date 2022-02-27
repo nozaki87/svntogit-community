@@ -3,20 +3,20 @@
 _name=redis
 _upstream=phpredis
 pkgbase=php-redis
-pkgname=('php-redis' 'php7-redis')
-pkgver=5.3.4
+pkgname=(php-redis php7-redis)
+pkgver=5.3.7
 pkgrel=1
 pkgdesc="An API for communicating with the Redis key-value store"
-arch=('x86_64')
+arch=(x86_64)
 url="https://github.com/phpredis/phpredis/"
-license=('PHP')
-depends=('glibc')
-makedepends=('liblzf' 'php-igbinary' 'php7-igbinary')
-checkdepends=('lsof' 'redis')
+license=(PHP)
+depends=(glibc)
+makedepends=(liblzf php-igbinary php7-igbinary)
+checkdepends=(lsof redis)
 optdepends=('redis: use a local redis instance')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/${_upstream}/${_upstream}/archive/${pkgver}.tar.gz")
-sha512sums=('7e4410d6124de570db00d90a66a4a288b2f8b386ace0ca37bf14f50de0c54f5dec4257912daac89ffa1a7e1789adf3e4da9fc1120384d7f098437ca30d341796')
-b2sums=('c9537347d1cace4b1151b6bb80165475e444ada92d9f1cde7de1a6b3a0a858b566416f1bf5c874337836f8d10d04b49e153aa70c6bec2f460699db0f5b0a4e31')
+sha512sums=('394ad0d5a45e2f985a1622ab9ceca55fb0b8e5ee0631a8dd763984611260e55de43bea308710569fa360ee88e02791e9b28ecaea26f2b770dc168a82a2afb4b3')
+b2sums=('32fbc8e716078ad8f08f3383042e7877aad50e7232425fb2fdae8e397e8750d2a06cc7311bd7962e6df39f3a5caf5748953dcf70de4f919ec58cd9d3ec4390a3')
 
 prepare() {
   mv -v "${_upstream}-${pkgver}" "$pkgbase-$pkgver"
@@ -82,21 +82,21 @@ check() {
 }
 
 package_php-redis() {
-  depends+=('liblzf.so' 'php-igbinary')
+  depends+=(liblzf.so php-igbinary)
   backup=("etc/php/conf.d/${_name}.ini")
+
   cd "$pkgname-$pkgver"
   make INSTALL_ROOT="$pkgdir/" install
   install -vDm 644 "${_name}.ini" -t "${pkgdir}/etc/php/conf.d/"
-  install -vDm 644 {{README,arrays,cluster}.markdown,CREDITS} \
-    -t "${pkgdir}/usr/share/doc/${pkgname}/"
+  install -vDm 644 {{README,arrays,cluster}.markdown,CREDITS} -t "${pkgdir}/usr/share/doc/${pkgname}/"
 }
 
 package_php7-redis() {
-  depends+=('liblzf.so' 'php7-igbinary')
+  depends+=(liblzf.so php7-igbinary)
   backup=("etc/php7/conf.d/${_name}.ini")
+
   cd "$pkgname-$pkgver"
   make INSTALL_ROOT="$pkgdir/" install
   install -vDm 644 "${_name}.ini" -t "${pkgdir}/etc/php7/conf.d/"
-  install -vDm 644 {{README,arrays,cluster}.markdown,CREDITS} \
-    -t "${pkgdir}/usr/share/doc/${pkgname}/"
+  install -vDm 644 {{README,arrays,cluster}.markdown,CREDITS} -t "${pkgdir}/usr/share/doc/${pkgname}/"
 }

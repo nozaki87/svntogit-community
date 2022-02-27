@@ -1,18 +1,18 @@
 # Maintainer: David Runge <dvzrv@archlinux.org>
 
 pkgname=profile-cleaner
-pkgver=2.42
+pkgver=2.44
 pkgrel=1
 pkgdesc="Simple script to vacuum and reindex sqlite databases used by browsers"
-arch=('any')
+arch=(any)
 url="https://github.com/graysky2/profile-cleaner"
-license=('MIT')
-depends=('bash' 'bc' 'findutils' 'parallel' 'sqlite')
+license=(MIT)
+depends=(bash bc findutils parallel sqlite)
 optdepends=('zsh-completions: for completion when using zsh')
 install="${pkgname}.install"
 source=("$pkgname-$pkgver.tar.gz::https://github.com/graysky2/${pkgname}/archive/v${pkgver}.tar.gz")
-sha512sums=('4f320ebc5d4dc5256c2bb4781d3c0ae36b620fbc28152d54000f6defc28e3de89f7d1a82cc908d8e7edca2083fa302b620fff78948388cc2dac98b8fcbd4d4c7')
-b2sums=('723c25ddf5977001a0f8919a72c783e360359fdd0da1c1f3adc46c15e40855e3569645396126eb2e69555cc0b8b029a3b841fd66b72ee45393ac68ed5dcc3c4b')
+sha512sums=('54e0cc64a5c7c38f0d7abda5774e62ba72a04f408e9787318e2ced57892ad2c79833b335f5e4560c4861a3bd7746f09efe6982a053dee36698a5c4e9f9f71cc8')
+b2sums=('1430b4629bf48be64aa91518bc482517228374be53c123e522bc1b4dbc472333812b6fbc0fe451ee089aeff1ddb3167273c70ca4744e04e97452c6b8ab3422d1')
 
 build() {
   cd "$pkgname-$pkgver"

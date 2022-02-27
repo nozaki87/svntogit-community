@@ -3,17 +3,18 @@
 
 pkgname=findomain
 _pkgname=Findomain
-pkgver=5.0.0
+pkgver=7.0.1
 pkgrel=1
 pkgdesc='The fastest and cross-platform subdomain enumerator, do not waste your time'
-url='https://github.com/Edu4rdSHL/findomain'
+url='https://github.com/Findomain/Findomain'
 arch=('x86_64')
 license=('GPL3')
 depends=('gcc-libs')
 makedepends=('cargo')
 optdepends=('postgresql: for subdomain monitoring')
 source=("https://github.com/${_pkgname}/${_pkgname}/archive/${pkgver}/${pkgname}-${pkgver}.tar.gz")
-b2sums=('9cea6f31b1519c51639624afa80d76c1965fe70dcd82b7f85cf93eebaf3b0e65c5cb3df12a68ecfc0efd3b96c5b0ee9e84c1d52c32e1eb1a57ebf33853a35260')
+b2sums=('d7efac842ca83cfdb329fdb0dafa19b685306d1513137f5bf197f2faf5385d934b71eeaf348c9fcc43feb0ac238c242c075ec1f02a55faf05fd0b8b588dc9c92')
+options=(!lto)
 
 build() {
   cd ${_pkgname}-${pkgver}

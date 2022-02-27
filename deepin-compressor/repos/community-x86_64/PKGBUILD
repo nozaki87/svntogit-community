@@ -1,7 +1,7 @@
 # Maintainer: Felix Yan <felixonmars@archlinux.org>
 
 pkgname=deepin-compressor
-pkgver=5.10.0.17
+pkgver=5.11.7
 pkgrel=1
 pkgdesc='A fast and lightweight application for creating and extracting archives'
 arch=('x86_64')
@@ -11,7 +11,7 @@ depends=('deepin-qt5integration' 'disomaster' 'karchive' 'kcodecs' 'libarchive' 
 makedepends=('cmake' 'gmock' 'gtest' 'ninja' 'qt5-tools')
 groups=('deepin-extra')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/linuxdeepin/deepin-compressor/archive/$pkgver.tar.gz")
-sha512sums=('95f0c3a17bed74c153402cfa7361a6180801d83b2f980cb6e7b3a51dcb4c5f894e2b8d22f95fb7265a7f6ae188997e69e248a7b1167da93d3b2e2729606b537f')
+sha512sums=('772fd7ee3b7696d2fcc8e62a9f418ad23bda19c5dc462f6a04c1b729dae8a68544b17500a5e47af9381122d2ba1259473c08715e09ee612c896c536724f6d849')
 
 build() {
   cd deepin-compressor-$pkgver

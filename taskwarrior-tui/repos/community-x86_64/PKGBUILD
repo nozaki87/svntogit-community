@@ -1,31 +1,27 @@
 # Maintainer: Orhun Parmaksız <orhun@archlinux.org>
 
 pkgname=taskwarrior-tui
-pkgver=0.14.8
+pkgver=0.20.1
 pkgrel=1
 pkgdesc="A terminal user interface for taskwarrior"
 arch=('x86_64')
 url="https://github.com/kdheepak/taskwarrior-tui"
 license=('MIT')
 depends=('task')
-makedepends=('rust' 'git' 'pandoc')
+makedepends=('cargo' 'git')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz"
-        "git+https://github.com/kdheepak/taskwarrior-testdata"
-        "$pkgname-$pkgver-fix-tests.patch::$url/commit/425facb8b0c8e52af0e2b88a3363e71658b47b2f.patch")
-sha256sums=('b04634eb37509443415bb44226dfee46d29c159d5ab99697b3c71e1d2cc72008'
-            'SKIP'
-            'af0b0622512b53ddcf3aa01520d6e9a09959e61c4d2be94ac27466585849ffed')
+        "git+https://github.com/kdheepak/taskwarrior-testdata")
+sha256sums=('a308d44cec4693fa1595b48d938ae7398743b8073de0ffce4ea9214f66c4b1e1'
+            'SKIP')
 
 prepare() {
   cd "$pkgname-$pkgver"
-  cargo fetch --locked
-  patch -Np1 < "../$pkgname-$pkgver-fix-tests.patch"
+  cargo fetch --locked --target "$CARCH-unknown-linux-gnu"
 }
 
 build() {
   cd "$pkgname-$pkgver"
   cargo build --release --frozen --all-features
-  pandoc "docs/$pkgname.1.md" --standalone --to=man -o "docs/$pkgname.1"
 }
 
 check() {

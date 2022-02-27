@@ -1,6 +1,6 @@
 # Maintainer: Justin Kromlinger <hashworks@archlinux.org>
 pkgname=piping-server
-pkgver=0.9.1
+pkgver=0.12.0
 pkgrel=1
 pkgdesc='Infinitely transfer between every device over pure HTTP with pipes or browsers'
 arch=('x86_64')
@@ -8,9 +8,10 @@ url="https://github.com/nwtgck/piping-server-rust"
 license=('MIT')
 depends=('gcc-libs')
 makedepends=('cargo')
+options=(!lto)
 source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz"
         "$pkgname.service")
-sha256sums=('705c8f8e7af2bae1ea14797c4bea869f2ceb7ac332e3d250190dffae1ea0a5b8'
+sha256sums=('c751a034508453ffaace21fc6220e2863954bf43491ded7b2d27afe5fd858ee7'
             '9182467638a583b29bed0ae69ed00013b1721ce8753e5ba90a56cbaac07d768c')
 
 build() {

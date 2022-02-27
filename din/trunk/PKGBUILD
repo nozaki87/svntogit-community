@@ -2,27 +2,28 @@
 # Contributor: muzhed <chustokes@126.com>
 
 pkgname=din
-pkgver=51.1.1
+pkgver=53.1
 pkgrel=1
 pkgdesc="A sound synthesizer and musical instrument."
-arch=('x86_64')
+arch=(x86_64)
 url="https://dinisnoise.org/"
-license=('GPL2')
-groups=('pro-audio')
-depends=('gcc-libs' 'glibc' 'hicolor-icon-theme' 'libglvnd' 'sdl' 'tcl')
-makedepends=('boost' 'glu' 'rtaudio' 'rtmidi')
+license=(GPL2)
+groups=(pro-audio)
+depends=(gcc-libs glibc hicolor-icon-theme libglvnd sdl tcl)
+makedepends=(boost glu rtaudio rtmidi)
+options=(debug)
 source=("https://archive.org/download/dinisnoise_source_code/${pkgname}-${pkgver}.tar.gz"
-        "${pkgname}-51.1.1-devendor_rtaudio_rtmidi.patch"
+        "${pkgname}-52-devendor_rtaudio_rtmidi.patch"
 )
-sha512sums=('ea5e1ab79cbc24abb80a9fd25d8304f36ab2345505ee98132196685cda73b31dd7db3f62cb1821cbdc9694703d3454bd58d733833710d492ecebffee23732a0f'
-            '27369918476a2de2f84559bd295107841bee8ebed91223d13f2fab0662786cb6338717d98efd5d297c0ddcf1d8383016779f0afed50f06164d71fc997a8ab021')
-b2sums=('559a4476188ac6d9da596be011bdaa8b379bb336220b3f94edf04e3eeb9ca0100fbaaa0fc10f9a9f37d3efa436acddac5c06435c6b3ebb4d21afdbd7c65b2dc8'
-        'abeaca3e7b69ae02904e40801e3912ff57ed7cfee4309a205bbafe43bd200351e18869a67ccd057f307c76c60a2d5d0044d8cb8e767c12d03e548cd1a5b3c50e')
+sha512sums=('42058b00402e726869af8a5cb8eb9b34e7b1709185c972d3f3b633a980ad7de57a143ca0ce854ce681ec67b81cd6dd2b2b06023a15d3f1b1bd54c4ac643b6096'
+            '56aaa4f2e39297d3b64d254ddbf53ae7c7d0ea7df462a7f9ab3071ce3a21c997874b8a39065422b012a10e8ecd90b5373c887e924a8843134a6b095f588ffd26')
+b2sums=('882d4ae6cbe24c3d7fc326df3f3630d7ea7cd65b5d53c4751844dc3edcf9d533cd7cfe58fed4c46766fab6b4983e75f75145206b5362bceb27382d02705b9a36'
+        'f38ddc9c92a025fe1e361e8c1e48fd2fced13e19894c117f5e79f00eb5444fd4861562895dbef9884bd9996e2248923b511e3879655bb6cb87a1242b7fbb6042')
 
 prepare() {
   cd "${pkgname}-${pkgver}"
   # use system rtaudio/rtmidi, instead of vendored versions
-  patch -Np1 -i "../${pkgname}-51.1.1-devendor_rtaudio_rtmidi.patch"
+  patch -Np1 -i "../${pkgname}-52-devendor_rtaudio_rtmidi.patch"
   rm -fv src/{RtAudio,RtMidi}.*
   autoreconf -fiv
 }
@@ -37,10 +38,10 @@ build() {
 }
 
 package() {
-  depends+=('librtaudio.so' 'librtmidi.so')
+  depends+=(librtaudio.so librtmidi.so)
+
   cd "${pkgname}-${pkgver}"
   make install DESTDIR="${pkgdir}"
   # docs
-  install -t "${pkgdir}/usr/share/doc/${pkgname}/" \
-    -vDm 644 {AUTHORS,BUGS,CHANGELOG,NEWS,README,TODO}
+  install -vDm 644 {AUTHORS,BUGS,CHANGELOG,NEWS,README,TODO} -t "${pkgdir}/usr/share/doc/${pkgname}/"
 }

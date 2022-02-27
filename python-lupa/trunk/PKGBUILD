@@ -1,9 +1,10 @@
-# Maintainer: Eli Schwartz <eschwartz@archlinux.org>
+# Maintainer: Caleb Maclennan <caleb@alerque.com>
+# Contributor: Eli Schwartz <eschwartz@archlinux.org>
 
 _pkgname=lupa
 pkgname=python-lupa
 pkgver=1.10
-pkgrel=1
+pkgrel=3
 pkgdesc="Python wrapper around Lua and LuaJIT"
 arch=('x86_64')
 url="https://github.com/scoder/lupa"

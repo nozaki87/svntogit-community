@@ -3,7 +3,7 @@
 # Contributor: Alexander Slesarev <slesarew at gmail dot com>
 
 pkgname=python-gmpy2
-pkgver=2.1.0rc1
+pkgver=2.1.2
 pkgrel=1
 pkgdesc='Provides C-coded Python modules for fast multiple-precision arithmetic'
 arch=(x86_64)
@@ -11,16 +11,16 @@ url='https://github.com/aleaxit/gmpy'
 license=(LGPL2.1)
 depends=(python libmpc)
 makedepends=(python-setuptools)
-source=(https://github.com/aleaxit/gmpy/releases/download/gmpy2-$pkgver/gmpy2-$pkgver.tar.gz)
-sha256sums=('86cb6d8e5837560c32c706d48d6ed25676be6b3c79e6aa5d245965b9e99231b9')
+source=(https://github.com/aleaxit/gmpy/archive/refs/tags/gmpy2-$pkgver.tar.gz)
+sha256sums=('d2a7b3620bb0bfc6f3e2249903de8398bdf54446ce2b6bb094432945ebbd1ecb')
 
 build() {
-  cd gmpy2-$pkgver
+  cd gmpy-gmpy2-$pkgver
   python setup.py build
 }
 
 package() {
-  cd gmpy2-$pkgver 
+  cd gmpy-gmpy2-$pkgver 
   python setup.py install --root="$pkgdir" --optimize=1 --skip-build
  
   install -d -m 755 $pkgdir/usr/share/doc/$pkgname

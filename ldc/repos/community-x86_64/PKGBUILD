@@ -1,20 +1,22 @@
-# Maintainer: Dan Printzell <arch@vild.io>
+# Maintainer: Dan Printzell <wild@archlinux.org>
 # Contributor: Mihails Strasuns <public@dicebot.lv>
 # Contributor: Sven-Hendrik Haase <sh@lutzhaase.com>
 
 pkgname=('ldc' 'liblphobos')
 groups=('dlang' 'dlang-ldc')
-pkgver=1.28.0
-_pkgcommit=6a240b66fd5fcaccd85fb50a2717767dd37ef17a
-_dversion=2.098.0
-_clangversion=12.0.1 # related to where ldc2 looks for compiler-rt sanitizers
+pkgver=1.28.1
+_pkgcommit=34afd6a43abf62b2050a5b0b2c20202080b1163b
+_dversion=2.098.1
+_clangversion=13.0.1 # related to where ldc2 looks for compiler-rt sanitizers
 epoch=3
-pkgrel=1
+pkgrel=2
 pkgdesc="A D Compiler based on the LLVM Compiler Infrastructure including D runtime and libphobos2"
 arch=('x86_64')
 url="https://github.com/ldc-developers/ldc"
 license=('BSD')
 makedepends=('git' 'cmake' 'llvm' 'ldc' 'ninja')
+# Disable lto as linking the ldc2 binary fails
+options=(!lto)
 
 source=(
     "git+https://github.com/ldc-developers/ldc#commit=$_pkgcommit"
@@ -54,7 +56,7 @@ build() {
     -DBUILD_SHARED_LIBS=BOTH \
     -DBUILD_LTO_LIBS=ON \
     -DLDC_WITH_LLD=OFF \
-    -DD_COMPILER_FLAGS="-link-defaultlib-shared=false -linker=gold" \
+    -DD_COMPILER_FLAGS="-link-defaultlib-shared=false -linker=gold --flto=thin" \
     -DADDITIONAL_DEFAULT_LDC_SWITCHES="\"-link-defaultlib-shared\"" \
     ..
     ninja

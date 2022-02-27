@@ -1,9 +1,8 @@
 # Maintainer: George Rawlinson <grawlinson@archlinux.org>
 # Contributor: Maciej Sieczka <msieczka at sieczka dot org>
 
-_pkgname=singularity
 pkgname=singularity-container
-pkgver=3.8.3
+pkgver=3.8.6
 pkgrel=1
 pkgdesc='Application containers for secure high performance computing'
 arch=('x86_64')
@@ -26,14 +25,26 @@ backup=(
   etc/singularity/singularity.conf
 )
 depends=('squashfs-tools' 'libseccomp')
-makedepends=('go' 'git' 'cryptsetup')
-source=("$pkgname-$pkgver.tar.gz::https://github.com/hpcng/singularity/archive/v$pkgver.tar.gz"
-        'tmpfiles.conf')
-b2sums=('792659f3455d353038edcede5c70ee26e4d95827f696c178a493f4d572a8753cda05f7189d8f8f43894164fa3d56f7c18cf32a4b66ee10b81e80207ae9f07fe3'
+makedepends=('git' 'go' 'cryptsetup')
+options=('!lto')
+_commit='e6433fa70749b40eadbee29434ec9da0d8985fde'
+source=(
+  "$pkgname::git+https://github.com/hpcng/singularity.git#commit=$_commit"
+  'tmpfiles.conf'
+)
+sha512sums=('SKIP'
+            '54588a0dc709a8bc14adb6b8092da4fc2af5200636d080cdc6179382ff48c9f526ecac7f8e9187cf4faed958588b3d96c09ce4fd89fd714b4d12e816d330c43f')
+b2sums=('SKIP'
         '33b6c0a8698d15155829af047df42ab2c408f7c604490bdb03210bcf2af175c86a5ad1aaba90452062b21f22f8e36b519f1a07c86ce812af89ebb6f31c160074')
 
+pkgver() {
+  cd "$pkgname"
+
+  git describe --tags | sed 's/^v//'
+}
+
 prepare() {
-  cd "$_pkgname-$pkgver"
+  cd "$pkgname"
 
   # provide version to build script
   echo "$pkgver" > VERSION
@@ -45,7 +56,7 @@ prepare() {
 }
 
 build() {
-  cd "$_pkgname-$pkgver"
+  cd "$pkgname"
   export CGO_CPPFLAGS="${CPPFLAGS}"
   export CGO_CFLAGS="${CFLAGS}"
   export CGO_CXXFLAGS="${CXXFLAGS}"
@@ -64,10 +75,10 @@ build() {
 }
 
 package() {
-  cd "$_pkgname-$pkgver"
+  cd "$pkgname"
 
   # binaries & man pages
-  make -C builddir DESTDIR="$pkgdir" install man
+  make -C builddir DESTDIR="$pkgdir" install
 
   # license
   install -vDm644 LICENSE.md -t "$pkgdir/usr/share/licenses/$pkgname"

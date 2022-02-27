@@ -1,7 +1,7 @@
 # Maintainer: Jelle van der Waa <jelle@archlinux.org>
 
 pkgname=python-libcharon
-pkgver=4.11.0
+pkgver=4.13.0
 pkgrel=1
 pkgdesc="Python File metadata and streaming library"
 url="https://github.com/Ultimaker/libCharon"
@@ -11,7 +11,7 @@ depends=('python' 'python-dbus')
 makedepends=('python-setuptools')
 checkdepends=('python-pytest')
 source=(libcharon-$pkgver.tar.gz::https://github.com/Ultimaker/libCharon/archive/${pkgver}.tar.gz)
-sha512sums=('e0541ad0194959e62d766a79433d4cb331f9c3350931fc75168ab3a235b054e1d4087041abf9bd11506e870ee58ac1e8dc9aeaf43480f134313dda62821c8915')
+sha512sums=('cd6e4cd696bcbebe5aa6a53f5222fbb8f982ff21d165adcd8854769b19df2d15ea6287100ba09ddd85ac80d3f86dbfae9ac050ee50f082223bf0acb542413d8c')
 
 build() {
   cd libCharon-$pkgver

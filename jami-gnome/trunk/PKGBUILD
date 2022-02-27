@@ -2,19 +2,25 @@
 # Contributor: Baptiste Jonglez <baptiste--aur at jonglez dot org>
 
 pkgname=jami-gnome
-pkgver=20211004
+pkgver=20220207
 pkgrel=1
 pkgdesc="Free and universal communication platform which preserves the users’ privacy and freedoms (GNOME client)"
 arch=(x86_64)
 url="https://jami.net"
 license=(GPL3)
 groups=(jami)
-depends=(libjamiclient jami-daemon
-         gtk3 dconf clutter clutter-gtk webkit2gtk qrencode qt5-base libnotify libcanberra libnm)
+depends=(jami-libclient jami-daemon
+         gtk3 dconf clutter clutter-gtk webkit2gtk qrencode qt6-5compat
+         libnotify libcanberra libnm)
 makedepends=(git cmake)
-_commit=e9bc95724de31484a20d15c1a5acffb159a525a7
+_commit=ec8eef7dd3ac175ca923ee42f2b3cc911dd78919
 source=(git+https://git.jami.net/savoirfairelinux/jami-client-gnome.git#commit=${_commit})
 md5sums=(SKIP)
+
+pkgver() {
+  cd jami-client-gnome
+  TZ=UTC git show -s --pretty=%cd --date=format-local:%Y%m%d HEAD
+}
 
 prepare() {
   cd jami-client-gnome
@@ -26,7 +32,8 @@ prepare() {
 build() {
   cmake -B build -S jami-client-gnome \
     -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_BUILD_TYPE=None
+    -DCMAKE_BUILD_TYPE=None \
+    -Wno-dev
   make -C build
 }
 

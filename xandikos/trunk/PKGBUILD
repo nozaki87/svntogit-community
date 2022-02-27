@@ -1,20 +1,20 @@
 # Maintainer: Daniel M. Capella <polyzen@archlinux.org>
 
 pkgname=xandikos
-pkgver=0.2.6
+pkgver=0.2.8
 pkgrel=1
 pkgdesc='Lightweight yet complete CardDAV/CalDAV server that backs onto a Git repository'
 arch=('any')
-url=https://www.xandikos.org/
+url=https://www.xandikos.org
 license=('GPL3')
 depends=('python-aiohttp' 'python-defusedxml' 'python-dulwich'
          'python-icalendar' 'python-jinja' 'python-multidict')
 makedepends=('python-setuptools')
-optdepends=('python-prometheus_client: for metrics with the standalone server'
+optdepends=('python-aiohttp-openmetrics: for metrics with the standalone server'
             'uwsgi-plugin-python: for the WSGI interface')
 source=("https://files.pythonhosted.org/packages/source/x/xandikos/xandikos-$pkgver.tar.gz")
-sha256sums=('6b58fbcb2f8c2a0fc2e1f8508160443a46b3db9bf577d0ce5548689138816e23')
-b2sums=('ff7ffe1b5816719eebaaff46ea831a65ffc4342e26df3f3a80aa65eed4f29b57b69411a06f7f9938cf1bb5bc763830dea5e72878449fae5014f14e36068c0fe6')
+sha256sums=('16f174f75d0b4a766f9a41e2fe2700e5d77e77d9a9990cee3d619dc1d8aff001')
+b2sums=('9e4ac9eb668bddcf186c35e2927f079887388e42dc269d9be4999a479fe8f4bcf42b383e2d155cd5b70e0f5b2c7c08cb4d8313ee0583eca7297661a89462f82e')
 
 build() {
   cd xandikos-$pkgver
@@ -31,6 +31,7 @@ package() {
   python setup.py install --root="$pkgdir" --optimize=1 --skip-build
   install -Dm644 -t "$pkgdir"/usr/share/doc/xandikos README.rst
   install -Dm644 -t "$pkgdir"/usr/share/doc/xandikos/examples examples/*
+  #install -Dm644 -t "$pkgdir"/usr/share/man/man8 man/xandikos.8
 }
 
 # vim:set ts=2 sw=2 et:

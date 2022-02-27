@@ -1,0 +1,32 @@
+# Maintainer: Levente Polyak <anthraxx[at]archlinux[dot]org>
+
+pkgname=ropr
+pkgver=0.2.20
+pkgrel=1
+pkgdesc='Blazing fast multithreaded ROP Gadget finder'
+url='https://github.com/Ben-Lichtman/ropr'
+arch=('x86_64')
+license=('Apache')
+depends=('glibc' 'gcc-libs')
+makedepends=('cargo')
+source=("${url}/archive/${pkgver}/${pkgname}-${pkgver}.tar.gz")
+sha512sums=('b7341ada7bd77f79645702c260aeb699ecce65ee6daf5f8cfe5011ed32f2670b8aba8fa5d603d7843a353180920747ebbeecc36d31b9ca02c8f9a551b36280ce')
+b2sums=('b42bfc9f5d71d6e3a212378d14e3a43e9e5d19abc0f4e11a046a49373f7376a71271d5755cab8285515be419433aab38c202b891d60f74b43987acbb421207cf')
+
+build() {
+  cd ${pkgname}-${pkgver}
+  cargo build --release --locked
+}
+
+check() {
+  cd ${pkgname}-${pkgver}
+  cargo test --release --locked
+}
+
+package() {
+  cd ${pkgname}-${pkgver}
+  install -Dm 755 target/release/ropr -t "${pkgdir}/usr/bin"
+  install -Dm 644 README.md -t "${pkgdir}/usr/share/doc/${pkgname}"
+}
+
+# vim: ts=2 sw=2 et:

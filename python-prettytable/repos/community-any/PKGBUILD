@@ -4,32 +4,33 @@
 
 _pkgname=prettytable
 pkgname=python-prettytable
-pkgver=0.7.2
-pkgrel=14
+pkgver=2.2.0
+pkgrel=1
 pkgdesc="A simple Python library for easily displaying tabular data"
-url="https://pypi.python.org/pypi/PrettyTable"
+url="https://github.com/jazzband/prettytable"
 arch=('any')
 license=('BSD')
-depends=(python)
-makedepends=(python-setuptools)
-source=("https://files.pythonhosted.org/packages/source/P/PrettyTable/prettytable-${pkgver}.tar.gz"
-        '0001-Fix-column-spacing-with-xterm-reset-escape-sequence.patch')
-md5sums=('a6b80afeef286ce66733d54a0296b13b'
-         '62c2acf4a81ba9e6ac60ba06ff282068')
+depends=('python-wcwidth')
+makedepends=('python-setuptools-scm')
+checkdepends=('python-pytest')
+conflicts=('python-ptable')
+source=("https://files.pythonhosted.org/packages/source/p/prettyTable/prettytable-${pkgver}.tar.gz")
+sha512sums=('df8ae2a1103a4965a351ba16a95ef9659107075bb023090bd9bffd69805ce647dcb26f49164f07f5af0c0b03503373c0353935b32a0fb18edf969dc984aecda7')
 
-prepare() {
-  pushd $_pkgname-$pkgver
-  patch -p1 -i "$srcdir"/0001-Fix-column-spacing-with-xterm-reset-escape-sequence.patch
-  popd
-}
+export SETUPTOOLSA_SCM_PRETEND_VERSION=$pkgver
 
 build() {
-  cd "$_pkgname-$pkgver"
+  cd prettytable-$pkgver
   python setup.py build
 }
 
+check() {
+  cd prettytable-$pkgver
+  python setup.py egg_info
+  PYTHONPATH="$PWD/src" pytest
+}
+
 package() {
-  cd "$_pkgname-$pkgver"
-  chmod 644 -R prettytable.egg-info
+  cd prettytable-$pkgver
   python setup.py install --root="$pkgdir/"
 }

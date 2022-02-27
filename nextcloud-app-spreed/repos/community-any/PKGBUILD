@@ -2,19 +2,19 @@
 
 _name=spreed
 pkgname=nextcloud-app-spreed
-pkgver=12.2.1
+pkgver=13.0.3
 pkgrel=1
 epoch=1
 pkgdesc="Video & audio-conferencing using WebRTC"
-arch=('any')
+arch=(any)
 url="https://apps.nextcloud.com/apps/spreed"
-license=('AGPL3')
-groups=('nextcloud-apps')
-makedepends=('nextcloud')
-checkdepends=('ripgrep' 'yq')
-source=("https://github.com/nextcloud-releases/${_name}/releases/download/v${pkgver}/${_name}-${pkgver}.tar.gz")
-sha512sums=('b66d5faa89edcd8c27061a1bc4f46782a702f44ae8ce88e9c3b5fd8569e2e86a85993f575daf850497114830b1a90cb1f63ebdc2deef03d2191d6b58062dd93e')
-b2sums=('27fa354726a321e9a173cf50a986806dc14f56aa0d069d92c7d59eccd216d4b315ddd6785365a60ec8630e2d8468a0f8f81e1667b718216d87ff262283825964')
+license=(AGPL3)
+groups=(nextcloud-apps)
+makedepends=(nextcloud)
+checkdepends=(ripgrep yq)
+source=("https://github.com/nextcloud-releases/${_name}/releases/download/v${pkgver}/${_name}-v${pkgver}.tar.gz")
+sha512sums=('4cc580ed2968f38632cbbc230218261a65225b6a6c04dda1d436665cacbfe2b9fa653f254e258c163966705e37e52b9a8457cc487ce10624f1c3e89eb5ad3246')
+b2sums=('8e79da9567b82ef202240ee6d50bec202ae0729a7cc01164485925b68cf3a71ea4541c238f77da4f299c54618c683a4d425a1769e0db84c75b66d59d97f2354f')
 
 _get_nextcloud_versions() {
   _app_min_major_version="$(xq '.info.dependencies.nextcloud["@min-version"]' "${_name}/appinfo/info.xml"| sed 's/"//g')"

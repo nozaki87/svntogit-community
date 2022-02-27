@@ -1,7 +1,7 @@
 # Maintainer: Felix Yan <felixonmars@archlinux.org>
 
 pkgname=python-pytest-mypy
-pkgver=0.8.1
+pkgver=0.9.0
 pkgrel=1
 pkgdesc='Mypy static type checker plugin for Pytest'
 arch=('any')
@@ -10,8 +10,8 @@ url='https://github.com/dbader/pytest-mypy'
 depends=('mypy' 'python-filelock' 'python-pytest')
 makedepends=('python-setuptools-scm')
 checkdepends=('python-pytest-xdist' 'python-pexpect')
-source=("$pkgname-$pkgver.tar.gz::https://github.com/dbader/pytest-mypy/archive/v$pkgver.tar.gz")
-sha512sums=('69f6ddf605bfcd075d6780f516f2f9821675762f8fee6a3d042f450f3544d8565ea0a3a905b5dd5d560278bffc28773faba9a09554ac9758ffcc24d13e3f316e')
+source=("https://github.com/dbader/pytest-mypy/archive/v$pkgver/$pkgname-$pkgver.tar.gz")
+sha512sums=('4417d585b3e50f9c32a6b8e12f32737f3483b6a9d90df978f4fdfef7d7b4355a244e9ec6d4d25488d35651e2745173d64b7ceae313b09f9c3b2af916f097baf0')
 
 export SETUPTOOLS_SCM_PRETEND_VERSION=$pkgver
 
@@ -25,7 +25,7 @@ check() {
 
   cd pytest-mypy-$pkgver
   python setup.py install --root="$PWD/tmp_install" --optimize=1
-  PYTHONPATH="$PWD/tmp_install/usr/lib/python3.9/site-packages:$PYTHONPATH" pytest
+  PYTHONPATH="$PWD/tmp_install/usr/lib/python3.10/site-packages:$PYTHONPATH" pytest
 }
 
 package() {

@@ -2,44 +2,41 @@
 
 _name=doit
 pkgname=python-doit
-pkgver=0.33.1
-pkgrel=4
+pkgver=0.34.2
+pkgrel=1
 pkgdesc="A task management and automation tool"
-arch=('any')
+arch=(any)
 url="https://pydoit.org/"
-license=('MIT')
-# python-setuptools (pkg_resources) is used for plugin package discovery
-depends=('python-cloudpickle' 'python-pyinotify' 'python-setuptools')
-checkdepends=('python-doit-py' 'python-pyflakes' 'python-pytest')
-optdepends=('bash-completion: autocomplete for bash'
-            'zsh-completions: autocomplete for ZSH')
-source=("https://files.pythonhosted.org/packages/source/${_name::1}/${_name}/${_name}-${pkgver}.tar.gz")
-sha512sums=('852efa3b770ec5de7def1fad1167b8cdce1de7435b2ba5e4af43a84c84df0cbf960d8d5c4c9f526f303d19c7536f745c2c7700daaced984ec86fb4202f894170')
-b2sums=('be294246447d36011274d57b5300b4451847751f228622bcd5a45f91367371ed5dd9c40a2476e558be8137b16fefda4bf6f1795108d0c982990abc62db5560e6')
-
-prepare() {
-  mv -v "$_name-$pkgver" "$pkgname-$pkgver"
-}
+license=(MIT)
+depends=(python-cloudpickle python-pyinotify)
+makedepends=(python-setuptools)
+checkdepends=(python-doit-py python-pyflakes python-pytest)
+optdepends=(
+  'python-toml: for TOML support'
+  'python-setuptools: for plugin support'
+  'bash-completion: autocomplete for bash'
+  'zsh-completions: autocomplete for ZSH'
+)
+source=("https://files.pythonhosted.org/packages/source/${_name::1}/$_name/$_name-$pkgver.tar.gz")
+sha512sums=('24afc8078fef42a446733554c6ab63298ee5bb734381fc2bfc9d623dc98394916a1f89a18bb28e7ef862da8c0449b5cf16d605295e8948a0ea6968a231a1c8e2')
+b2sums=('c7d81144da99147dbc6bf7d670b6f411879a8080e405866866bc97ae4701d9a47a3d4882db9672e2e36bc8af577ba9632da1fb4ed2c9f87717f719ac1cd53d34')
 
 build() {
-  cd "$pkgname-$pkgver"
+  cd $_name-$pkgver
   python setup.py build
 }
 
 check() {
-  cd "$pkgname-$pkgver"
-  export PYTHONPATH="build/lib:${PYTHONPATH}"
+  cd $_name-$pkgver
+  export PYTHONPATH="build/lib:$PYTHONPATH"
   pytest -v
 }
 
 package() {
-  cd "$pkgname-$pkgver"
-  python setup.py install --optimize=1 --root="${pkgdir}"
-  install -vDm 644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
-  install -vDm 644 {AUTHORS,CHANGES,CONTRIBUTING.md,README.rst} \
-    -t "${pkgdir}/usr/share/doc/${pkgname}"
-  install -vDm 644 "bash_completion_${_name}" \
-    "${pkgdir}/usr/share/bash-completion/completions/${_name}"
-  install -vDm 644 "zsh_completion_${_name}" \
-    "${pkgdir}/usr/share/zsh/site-functions/_${_name}"
+  cd $_name-$pkgver
+  python setup.py install --optimize=1 --root="$pkgdir"
+  install -vDm 644 LICENSE -t "$pkgdir/usr/share/licenses/$pkgname"
+  install -vDm 644 {AUTHORS,CHANGES,CONTRIBUTING.md,README.rst} -t "$pkgdir/usr/share/doc/$pkgname"
+  install -vDm 644 bash_completion_$_name "$pkgdir/usr/share/bash-completion/completions/$_name"
+  install -vDm 644 zsh_completion_$_name "$pkgdir/usr/share/zsh/site-functions/_$_name"
 }

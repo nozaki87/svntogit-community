@@ -2,22 +2,24 @@
 pkgname=weechat-matrix
 pkgver=0.3.0
 _tag=ebf792a233a50d639b13e5f7c9a1c1fe988e7476 # git rev-parse "$pkgver"
-pkgrel=3
+pkgrel=6
 pkgdesc='WeeChat Matrix protocol script written in Python'
 arch=('any')
 url='https://github.com/poljar/weechat-matrix'
 license=('ISC')
 depends=('python' 'python-atomicwrites' 'python-attrs' 'python-logbook' 'python-matrix-nio'
          'python-pygments' 'python-pyopenssl' 'python-webcolors' 'weechat')
-makedepends=('git' 'python-dephell' 'python-setuptools')
+makedepends=('git' 'python-build' 'python-installer' 'python-poetry')
 checkdepends=('python-hypothesis' 'python-pytest')
 optdepends=('python-aiohttp: matrix_sso_helper support'
             'python-magic: matrix_upload support'
             'python-requests: matrix_decrypt and matrix_upload support'
             'xdg-utils: default plumber for matrix_decrypt')
 install='weechat-matrix.install'
-source=("git+$url.git?signed#tag=$_tag")
-sha512sums=('SKIP')
+source=("git+$url.git?signed#tag=$_tag"
+        "weechat-matrix-0.3.0_remove-set_npn_protocols.patch::$url/commit/4e585d5f4628e6fbeba9ec4560b440d731e076f5.patch")
+sha512sums=('SKIP'
+            'a374aae0e3df0c47476ea100bd7bb570a46530a6daa5318a445e1c0becff64cdb0a62368e18c076bdb7a06a05e7ba8f02f806f0aa0062b4dacc98af3a26d978f')
 validpgpkeys=('689A3B5BC6560AB4C99A2A0581314DA807EF4E22') # Damir Jelić (poljar) <poljar@termina.org.uk>
 
 pkgver() {
@@ -28,12 +30,15 @@ pkgver() {
 prepare() {
 	cd "$pkgname"
 	sed -ri 's|#!/usr/bin/env( -S)? python3|#!/usr/bin/python3|' contrib/*.py
-	dephell deps convert --from pyproject.toml --to setup.py
+
+	# SSLContext.set_npn_protocols broken in Python 3.10
+	# (https://github.com/poljar/weechat-matrix/issues/308)
+	patch --forward --strip=1 --input="$srcdir/weechat-matrix-0.3.0_remove-set_npn_protocols.patch"
 }
 
 build() {
 	cd "$pkgname"
-	python setup.py build
+	python -m build --wheel --no-isolation --skip-dependency-check
 }
 
 check() {
@@ -43,7 +48,7 @@ check() {
 
 package() {
 	cd "$pkgname"
-	python setup.py install --root="$pkgdir" --optimize=1 --skip-build
+	python -m installer --destdir="$pkgdir" dist/*.whl
 	install -Dm755 main.py "$pkgdir/usr/share/weechat/python/weechat-matrix.py"
 	for _script in matrix_decrypt matrix_sso_helper matrix_upload
 	do

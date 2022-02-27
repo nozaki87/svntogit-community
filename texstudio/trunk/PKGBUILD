@@ -1,21 +1,22 @@
-# Maintainer: Sven-Hendrik Haase <svenstaro@gmail.com>
+# Maintainer: Sven-Hendrik Haase <svenstaro@archlinux.org>
 # Contributor: Clément DEMOULINS <clement@archivel.fr>
 pkgname=texstudio
-pkgver=4.0.3
+pkgver=4.2.2
 pkgrel=1
 pkgdesc="Integrated writing environment for creating LaTeX documents"
 arch=('x86_64')
 url="http://texstudio.sourceforge.net/"
 license=('GPL')
-depends=('poppler-qt5' 'qt5-svg' 'qt5-script' 'libxkbcommon-x11' 'hicolor-icon-theme' 'hunspell' 'quazip' 'desktop-file-utils' 'qt5-declarative')
-makedepends=('qt5-tools' 'mercurial' 'imagemagick' 'librsvg')
+depends=('poppler-qt6' 'qt6-svg' 'libxkbcommon-x11' 'hicolor-icon-theme' 'hunspell' 'quazip-qt6' 'desktop-file-utils'
+         'qt6-declarative' 'qt6-5compat')
+makedepends=('qt6-tools' 'mercurial' 'imagemagick' 'librsvg')
 optdepends=('evince: pdf reader'
             'okular: alternate pdf reader')
 replaces=('texmakerx')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/texstudio-org/texstudio/archive/${pkgver}.tar.gz"
         fs54269.patch
         fs72345.patch)
-sha512sums=('e0be8e928028d2ac399e347f3dd09eb8904617f573208daf155dc941f8bc7d158dc0921a9b26a63d47a7052c7e805760ca2938c65ea658689d140dd101511f57'
+sha512sums=('b07dbe03b9b825fd2c6c057d996dad1247151d0034503d6e62426f0c4ff1e982da8eddf801e497bf9743349d41401ac9946f828c276f164aec0955c8324f5dea'
             '247e85f668b06c8a2def4e7456f0ddc8d35c7990484c1c037f7cf43fdee91419b5df66e968ef1e0c637fe685722bbad9171bdd79fad7a10912ae329aff088b68'
             '6975eebd43b32fb7aa04f973562e66f6a83df0fb6a0b4d8221e124c9cc6959df11ec517e4c862921619c8b1c55800257017e26001c03186b84c567fc19c98726')
 
@@ -27,8 +28,8 @@ prepare() {
 
 build() {
     cd texstudio-${pkgver}
-    qmake-qt5 CONFIG-="debug" USE_SYSTEM_QUAZIP=1 USE_SYSTEM_HUNSPELL=1 QUAZIP_LIB=-lquazip1-qt5 \
-        QUAZIP_INCLUDE="/usr/include/QuaZip-Qt5-1.1/quazip" texstudio.pro
+    qmake6 CONFIG-="debug" USE_SYSTEM_QUAZIP=1 USE_SYSTEM_HUNSPELL=1 QUAZIP_LIB=-lquazip1-qt6 \
+        QUAZIP_INCLUDE="/usr/include/QuaZip-Qt6-1.2/quazip" texstudio.pro
     make
 }
 

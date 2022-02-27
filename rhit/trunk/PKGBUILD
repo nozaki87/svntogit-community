@@ -1,25 +1,30 @@
 # Maintainer: Orhun Parmaksız <orhun@archlinux.org>
 
 pkgname=rhit
-pkgver=1.5.3
+pkgver=1.7.0
 pkgrel=1
 pkgdesc="A nginx log explorer"
 arch=('x86_64')
 url="https://github.com/Canop/rhit"
 license=('MIT')
 depends=('gcc-libs')
-makedepends=('rust')
+makedepends=('cargo')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
-sha512sums=('006707fd367517626354b60cff09ea285d87d522156ea86c5ca2af56ee3101e0a136b9ba8f420fb81257d6efc3831e6b309987dacf7130b2963a000a7afb2f54')
+sha512sums=('91a8e9d2218b731db5bb15a0d322adbea4cd23f5af54da959bcd0cd2d3d973e7e771af2336bf0b6ffc01f9654b28eb4432b70b222ed56ffd7df9516e89c9fb6a')
+
+prepare() {
+  cd "$pkgname-$pkgver"
+  cargo fetch --locked --target "$CARCH-unknown-linux-gnu"
+}
 
 build() {
   cd "$pkgname-$pkgver"
-  cargo build --release --locked
+  cargo build --release --frozen
 }
 
 check() {
   cd "$pkgname-$pkgver"
-  cargo test --release --locked
+  cargo test --frozen
 }
 
 package() {

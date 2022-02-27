@@ -4,25 +4,20 @@
 
 pkgdesc="A module with some convenient utilities not included with the standard Python install"
 pkgname=python-utils
-pkgver=2.5.6
+pkgver=3.1.0
 pkgrel=1
+arch=(any)
 url="https://github.com/WoLpH/python-utils"
-license=('BSD')
-arch=('any')
-depends=('python-six')
-makedepends=('python-setuptools')
-checkdepends=('python-pytest-runner')
+license=(BSD)
+depends=(python-six)
+makedepends=(python-setuptools)
+checkdepends=(python-pytest-runner)
 source=("https://pypi.org/packages/source/p/${pkgname}/${pkgname}-${pkgver}.tar.gz"{,.asc})
-sha512sums=('35299880afdecd4a44144b95e6b2073e51680dfd2b00f31fb333d578cfa2c2f8bf5f58128cab88a7b81e658e6d5dca303f1c9f5be3870160679e1defbf94859e'
+sha512sums=('e22ea0dc7aa0e6c5b45c55843011971c5075639424d38a712703b0d5ef8af32e3661d39af63b6015c4edfe11fca7a256f4f02c3705e1724fe8b9015931d85cbf'
             'SKIP')
-b2sums=('2f66ab26cd6cda25f73c9f40081048404cde819e3e3c2fd11d134244ab2b80a05ab2b943e56a45bd8656bf3ba231853e3bfa9efbab9cb70515daaec70f6e0715'
+b2sums=('c00f4c45480f0948cddfa65d4f1ce17ac6831e29b24913d225544619ebedaca67c0f143b55698f8e2edd658e5f90ac39e005a5c29e09d75b5643f79992ba878a'
         'SKIP')
 validpgpkeys=('149325FD15904E9C4EB89E95E81444E9CE1F695D') # Rick van Hattem <wolph@wol.ph>
-
-prepare() {
-  cd "${pkgname}-${pkgver}"
-  rm -v pytest.ini
-}
 
 build() {
   cd "${pkgname}-${pkgver}"
@@ -32,14 +27,12 @@ build() {
 check() {
   cd "${pkgname}-${pkgver}"
   export PYTHONPATH="${PWD}/build:${PYTHONPATH}"
-  pytest -v
+  pytest -v -c /dev/null
 }
 
 package() {
   cd "${pkgname}-${pkgver}"
-  python setup.py install --skip-build \
-                          --optimize=1 \
-                          --root="${pkgdir}"
+  python setup.py install --optimize=1 --root="${pkgdir}"
   install -vDm 644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
   install -vDm 644 README.rst -t "${pkgdir}/usr/share/doc/${pkgname}"
 }

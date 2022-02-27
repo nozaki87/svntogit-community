@@ -3,15 +3,16 @@
 # Contributor: Patrick Burroughs (Celti) <celti@celti.name>
 
 pkgname=html-xml-utils
-pkgver=8.0
-pkgrel=2
+pkgver=8.3
+pkgrel=1
 pkgdesc='Utilities for manipulating HTML and XML files'
 arch=('x86_64')
 url='https://www.w3.org/Tools/HTML-XML-utils/'
 license=('W3C')
 depends=('curl' 'libidn2')
 source=("$url/$pkgname-$pkgver.tar.gz")
-b2sums=('09667b3ce893d43126fe47bc3caf5fd4df85e12e2ab29afc93d164e16edcce53d8219101817c47545caea957f63634e811d3c24dea0c2ee44807edcfb94bf4de')
+sha512sums=('b98179c945a75ad37739a9d4199c3e884cee7bdf614b849f8738b8010bb4b415031f4a944c3670d48e4b1cbd87954f98d6dc0cb6d5f15aa4a0cbcf3598b43e39')
+b2sums=('76e71e646d5b9a8bcd203474503c6b020256e9e1d64b28a37a045260510a09155df55369edbebf1097393bf683d998933f16ba0115ef316fffa329fbe8e3556a')
 
 build() {
   cd "$pkgname-$pkgver"
