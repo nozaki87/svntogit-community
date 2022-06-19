@@ -3,8 +3,8 @@
 
 _hkgname=unliftio
 pkgname=haskell-unliftio
-pkgver=0.2.20.1
-pkgrel=3
+pkgver=0.2.22.0
+pkgrel=9
 pkgdesc="The MonadUnliftIO typeclass for unlifting monads to IO (batteries included)"
 url="https://github.com/fpco/monad-unlift"
 license=("MIT")
@@ -13,7 +13,7 @@ depends=('ghc-libs' 'haskell-async' 'haskell-unliftio-core')
 makedepends=('ghc')
 checkdepends=('haskell-hspec' 'haskell-quickcheck')
 source=("https://hackage.haskell.org/packages/archive/${_hkgname}/${pkgver}/${_hkgname}-${pkgver}.tar.gz")
-sha512sums=('58870eb393536bd5ec2aa9f6c7663df1bb119a7ba472e7ccf577043122665a3d9725f2209866c92c6c4c1b5cd59cf05029e85827a53cd2b59b27fa16e6288176')
+sha512sums=('4788da43828846c76019a27fea2a592070347afd58e5bb271fd170f2dff4097f3a8fdcc11e16293da0139b0557bae8e58738817dd5fd68717ab7c42f83dc3ce9')
 
 build() {
     cd $_hkgname-$pkgver
@@ -25,7 +25,7 @@ build() {
     fi
 
     runhaskell Setup configure -O --enable-shared --enable-executable-dynamic --disable-library-vanilla \
-        --prefix=/usr --docdir=/usr/share/doc/$pkgname "${_opts[@]}" \
+        --prefix=/usr --docdir=/usr/share/doc/$pkgname --datasubdir=$pkgname "${_opts[@]}" \
         --dynlibdir=/usr/lib --libsubdir=\$compiler/site-local/\$pkgid --ghc-option=-fllvm
     runhaskell Setup build $MAKEFLAGS
     runhaskell Setup register --gen-script

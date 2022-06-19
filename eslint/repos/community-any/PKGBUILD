@@ -2,7 +2,7 @@
 # Maintainer: Daniel M. Capella <polyzen@archlinux.org>
 
 pkgname=eslint
-pkgver=8.10.0
+pkgver=8.18.0
 pkgrel=1
 pkgdesc='An AST-based pattern checker for JavaScript'
 arch=('any')
@@ -11,33 +11,33 @@ license=('MIT')
 depends=('acorn' 'nodejs')
 makedepends=('npm' 'rsync')
 options=('!emptydirs')
-source=("https://github.com/eslint/eslint/archive/v$pkgver/$pkgname-$pkgver.tar.gz")
-b2sums=('05361d11fc578579a1d053c2706391d5b1d87ae3b3eedff96f54b36e5b9a997221c9c541a3a239647a2a9325ab2d88945e3fe5e16d8ddf8b280793fd56b6e2ec')
+source=("https://github.com/$pkgname/$pkgname/archive/v$pkgver/$pkgname-$pkgver.tar.gz")
+b2sums=('50f2ceea00749c85ff8d2bcfba23e2b0f35806cd89f988c61a57d9080197fb2cfc82a3459070828bd575319c380920b7b8f43dae302a3903011e11a2776073ea')
 
 prepare() {
-  cd eslint-$pkgver
-  # Dependencies still pin older ESLint
-  npm install --force
+  cd $pkgname-$pkgver
+  npm install
 }
 
 check() {
-  cd eslint-$pkgver
+  cd $pkgname-$pkgver
   node Makefile mocha
 }
 
 package() {
-  cd eslint-$pkgver
+  cd $pkgname-$pkgver
 
   npm prune --production
 
+  _npmdir=/usr/lib/node_modules/$pkgname
   install -d "$pkgdir"/usr/bin
-  ln -s ../lib/node_modules/$pkgname/bin/$pkgname.js "$pkgdir"/usr/bin/$pkgname
-  install -Dt "$pkgdir"/usr/lib/node_modules/$pkgname/bin bin/$pkgname.js
-  rsync -r --exclude .cache conf lib messages node_modules package.json \
-    "$pkgdir"/usr/lib/node_modules/$pkgname
+  ln -s $_npmdir/bin/$pkgname.js "$pkgdir"/usr/bin/$pkgname
+  install -Dt "$pkgdir"/$_npmdir/bin bin/$pkgname.js
+  rsync -r --exclude .cache --exclude .package-lock.json conf lib messages \
+    node_modules package.json "$pkgdir"/$_npmdir
   install -Dm644 -t "$pkgdir"/usr/share/doc/$pkgname README.md
   install -Dm644 -t "$pkgdir"/usr/share/licenses/$pkgname LICENSE
 
   # Experimental dedup
-  rm -r "$pkgdir"/usr/lib/node_modules/$pkgname/node_modules/acorn
+  rm -r "$pkgdir"/$_npmdir/node_modules/acorn
 }

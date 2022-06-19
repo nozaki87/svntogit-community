@@ -1,22 +1,23 @@
 # Maintainer: George Rawlinson <grawlinson@archlinux.org>
 
 pkgname=miller
-pkgver=6.0.0
-pkgrel=1
-pkgdesc="Name-indexed data processing tool"
+pkgver=6.2.0
+pkgrel=2
+pkgdesc='Name-indexed data processing tool'
 arch=('x86_64')
-url="https://github.com/johnkerl/miller"
+url='https://github.com/johnkerl/miller'
 license=('BSD')
 depends=('glibc')
 makedepends=('go' 'git')
 options=('!lto')
-_commit='8346d332a216f377731e2dcaa2c7902c391dd91b' # v6.0.0
+_commit='f9e325636796e05aad1170fb3014715fc75ce040'
 source=("$pkgname::git+$url#commit=$_commit")
 md5sums=('SKIP')
 
 pkgver() {
   cd "$pkgname"
-  git describe --tags | sed "s/^v//"
+
+  git describe --tags | sed 's/^v//'
 }
 
 prepare() {

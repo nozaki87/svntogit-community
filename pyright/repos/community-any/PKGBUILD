@@ -2,7 +2,7 @@
 # Contributor: Kaizhao Zhang <zhangkaizhao@gmail.com>
 
 pkgname=pyright
-pkgver=1.1.224
+pkgver=1.1.254
 pkgrel=1
 pkgdesc='Type checker for the Python language'
 arch=('any')
@@ -11,7 +11,7 @@ license=('MIT')
 depends=('nodejs>=12')
 makedepends=('npm')
 source=("$url/archive/$pkgver/$pkgname-$pkgver.tar.gz")
-b2sums=('ae77b5e3412373367c2c6a15b72c49917c56a9a6ceb6964f99f328be3f99142e4954f11c8680819caeaec0944bdeb14bac3467a4d1a40970fa1a24e7517d4bce')
+b2sums=('61f59f7181234e3423fc5a40e30301e93349e9356863264a34a744e7580bda7edeef594465616f6615f80f7e7fcfe011c6b03b7de819a146c96bb613de39c5bf')
 
 prepare() {
   cd $pkgname-$pkgver
@@ -24,9 +24,10 @@ build() {
 }
 
 package() {
-  install -d "$pkgdir"/usr/{bin,lib/node_modules/$pkgname,share/doc/$pkgname}
-  ln -s ../lib/node_modules/$pkgname/index.js "$pkgdir"/usr/bin/$pkgname
-  ln -s ../lib/node_modules/$pkgname/langserver.index.js \
+  local _npmdir=/usr/lib/node_modules/$pkgname
+  install -d "$pkgdir"/{usr/bin,$_npmdir,usr/share/doc/$pkgname}
+  ln -s $_npmdir/index.js "$pkgdir"/usr/bin/$pkgname
+  ln -s $_npmdir/langserver.index.js \
     "$pkgdir"/usr/bin/$pkgname-langserver
 
   cd $pkgname-$pkgver
@@ -34,7 +35,7 @@ package() {
   install -Dm644 -t "$pkgdir"/usr/share/licenses/$pkgname LICENSE.txt
 
   cd packages/$pkgname
-  cp -r dist {,langserver.}index.js "$pkgdir"/usr/lib/node_modules/$pkgname
+  cp -r dist {,langserver.}index.js "$pkgdir"/$_npmdir
 }
 
 # vim:set ts=2 sw=2 et:

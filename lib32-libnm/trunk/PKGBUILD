@@ -8,7 +8,7 @@
 # Contributor: Ryszard Knop <dragoon@dragonic.eu>
 
 pkgname=lib32-libnm
-pkgver=1.34.0
+pkgver=1.38.2
 pkgrel=1
 pkgdesc="NetworkManager client library (32-bit)"
 url="https://networkmanager.dev/"
@@ -34,8 +34,9 @@ makedepends=(
   meson
 )
 provides=(libnm.so)
-_tag=f0adfd91d63f8d14efc88a673377c935da2eb65a
-source=(git+https://gitlab.freedesktop.org/NetworkManager/NetworkManager.git#tag=${_tag})
+options=(debug)
+_commit=abfd2d6ea729926bff0ddafa1367a54f6d6f4230  # tags/1.38.2^0
+source=("git+https://gitlab.freedesktop.org/NetworkManager/NetworkManager.git#commit=$_commit")
 b2sums=('SKIP')
 
 pkgver() {

@@ -4,7 +4,7 @@
 
 _projectname='base'
 pkgname="ocaml-$_projectname"
-pkgver=0.14.2
+pkgver=0.15.0
 pkgrel=1
 pkgdesc='Full standard library replacement for OCaml'
 arch=('x86_64')
@@ -14,18 +14,18 @@ depends=('ocaml>=4.13.1' 'ocaml-sexplib0')
 makedepends=('dune')
 options=('!strip')
 source=("$pkgname-$pkgver-$pkgrel.tar.gz::$url/archive/v$pkgver.tar.gz")
-sha256sums=('f1c8db682e996a92382ff932c702bc33a18b67280b7a290c7fb066bcc05fbf24')
+sha256sums=('56da1a3089ba94eb68aaa38a9c7ebc8ba4dcb290bbf8906bf68c463163560545')
 
 _sourcedirectory="$_projectname-$pkgver"
 
 build() {
 	cd "$srcdir/$_sourcedirectory/"
-	dune build --release --verbose
+	OCAMLPATH=/usr/lib/ocaml dune build --release --verbose
 }
 
 package() {
 	cd "$srcdir/$_sourcedirectory/"
-	DESTDIR="$pkgdir" dune install --prefix '/usr' --libdir 'lib/ocaml' --release --verbose
+	DESTDIR="$pkgdir" dune install --prefix '/usr' --libdir '/usr/lib/ocaml' --release --verbose
 
 	install -dm755 "$pkgdir/usr/share/doc/$pkgname"
 	mv "$pkgdir/usr/doc/$_projectname/"* "$pkgdir/usr/share/doc/$pkgname/"

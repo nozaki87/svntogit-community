@@ -1,18 +1,23 @@
 # Maintainer: Jelle van der Waa <jelle@archlinux.org>
+# Contributor: Achilleas Koutsou <achilleas@koutsou.net>
 
 pkgname=osbuild
 pkgdesc='Build Pipelines for Operating System Artifacts'
-pkgver=49
+pkgver=58
 pkgrel=1
 url="https://www.osbuild.org"
 arch=(any)
 license=(Apache)
-depends=(bubblewrap curl e2fsprogs qemu python util-linux python-yaml)
+depends=(bubblewrap curl e2fsprogs qemu-img python util-linux python-yaml python-jsonschema)
 makedepends=(make python-docutils python-setuptools)
 optdepends=('dnf: build rpm/dnf images'
             'pacman: build pacman images')
 source=($pkgname-$pkgver.tar.gz::https://github.com/osbuild/osbuild/archive/refs/tags/v${pkgver}.tar.gz)
-sha256sums=('ab4133f02f58c0ef07ccc1bc98dc2afd14dd7716f5e001cee5922f4718bdc012')
+sha256sums=('4d32f618f6de163931b6cdb3400514c4b0e2812d78aea9c30776cd47f1207707')
+
+prepare() {
+  cd $pkgname-$pkgver
+}
 
 build() {
   cd $pkgname-$pkgver
@@ -24,9 +29,12 @@ package() {
   make man
   python setup.py install --skip-build --root="$pkgdir"
 
-  install -m 0755 -d "$pkgdir/usr/lib/osbuild"
+  install -m 0755 -d "$pkgdir/usr/lib/osbuild/osbuild"
 
-  for group in assemblers devices inputs runners schemas sources stages ; do
+  for group in assemblers devices inputs runners schemas sources stages mounts ; do
     cp -vdr --no-preserve=ownership "$group" "$pkgdir/usr/lib/osbuild/"
   done
+
+  # udev rules
+  install -Dm644 data/10-osbuild-inhibitor.rules "$pkgdir"/usr/lib/udev/rules.d/10-osbuild-inhibitor.rules
 }

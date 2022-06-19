@@ -3,22 +3,22 @@
 
 _hkgname=ansi-terminal
 pkgname=haskell-ansi-terminal
-pkgver=0.11
-pkgrel=214
+pkgver=0.11.2
+pkgrel=5
 pkgdesc="Simple ANSI terminal support, with Windows compatibility"
-url="https://github.com/feuerbach/ansi-terminal"
+url="https://github.com/UnkindPartition/ansi-terminal"
 license=("BSD")
 arch=('x86_64')
 depends=('ghc-libs' 'haskell-colour')
 makedepends=('ghc')
 source=("https://hackage.haskell.org/packages/archive/${_hkgname}/${pkgver}/${_hkgname}-${pkgver}.tar.gz")
-sha512sums=('2a608da18bbb3d11373dc0c6ee1bf4c890d5d4e39a2b13e547c7a3a4060eb86789d6afa04d1bd9e5df91f3745ea33adea8b15df213d39e75eca296275a74700d')
+sha512sums=('b224707d5baf96ebaea23e530bf1b2040a1b7a1c27b9eb46cad3216495abd30593f93dafdaf52e6f806f76b4dd6829a4b245fffad636cf2429ae401594d21382')
 
 build() {
     cd $_hkgname-$pkgver
 
     runhaskell Setup configure -O --enable-shared --enable-executable-dynamic --disable-library-vanilla \
-        --prefix=/usr --docdir=/usr/share/doc/$pkgname \
+        --prefix=/usr --docdir=/usr/share/doc/$pkgname --datasubdir=$pkgname \
         --dynlibdir=/usr/lib --libsubdir=\$compiler/site-local/\$pkgid --ghc-option=-fllvm \
             -f-example
     runhaskell Setup build $MAKEFLAGS

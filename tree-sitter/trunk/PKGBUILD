@@ -2,7 +2,7 @@
 # Maintainer: Daniel M. Capella <polyzen@archlinux.org>
 
 pkgname=tree-sitter
-pkgver=0.20.4
+pkgver=0.20.6
 pkgrel=1
 pkgdesc='An incremental parsing system for programming tools'
 arch=('x86_64')
@@ -13,7 +13,7 @@ depends=('gcc-libs')
 makedepends=('git' 'rust')
 options=('!lto')
 source=("$url/archive/v$pkgver/$pkgname-$pkgver.tar.gz")
-sha512sums=('24554dd048c443a18b3a5372ca94d942cf7ade8835afd8837c874c65c5b15117a87430eb00a0880e220f64a421a290fe2a5aa63ca54487d9ca0507fa264a2718')
+sha512sums=('f0fb1e0073867c2a6e69b230e07e5eec32a2b30d3c711ec188526e287d6a1ef06de266d476482f900ec7c9ff6c11909899fd35a802e96f0befc6e99815502377')
 
 prepare() {
   cd $pkgname-$pkgver

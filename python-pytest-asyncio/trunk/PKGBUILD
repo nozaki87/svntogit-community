@@ -1,7 +1,7 @@
 # Maintainer: Felix Yan <felixonmars@archlinux.org>
 
 pkgname=python-pytest-asyncio
-pkgver=0.17.0
+pkgver=0.18.1
 pkgrel=1
 pkgdesc="Pytest support for asyncio."
 arch=('any')
@@ -10,8 +10,8 @@ url="https://github.com/pytest-dev/pytest-asyncio/"
 depends=('python-pytest')
 makedepends=('python-setuptools-scm')
 checkdepends=('python-flaky' 'python-hypothesis')
-source=("$pkgname-$pkgver.tar.gz::https://github.com/pytest-dev/pytest-asyncio/archive/v$pkgver.tar.gz")
-sha512sums=('cfff79cf0632153819c511d3751777858e87081b074bfb49f3fe49417d1be647b4d07a4b64149acec36b4e6b1872ac03f1055703c70cccce18648482c9b727db')
+source=("https://github.com/pytest-dev/pytest-asyncio/archive/v$pkgver/$pkgname-$pkgver.tar.gz")
+sha512sums=('94514bd064c703ab056e2bd0009c2c1c9590f07daccc7bf3d58a4b88e6af102a9d1b0ccbe3bc2be36def706ffe2c8082c5f470dd12bedff2c2afe801dfacbc53')
 
 export SETUPTOOLS_SCM_PRETEND_VERSION=$pkgver
 

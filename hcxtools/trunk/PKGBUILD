@@ -1,16 +1,16 @@
 # Maintainer: Levente Polyak <anthraxx[at]archlinux[dot]org>
 
 pkgname=hcxtools
-pkgver=6.2.5
+pkgver=6.2.7
 pkgrel=1
 pkgdesc='Portable solution for capturing wlan traffic and conversion to hashcat and John the Ripper formats'
 url='https://github.com/ZerBea/hcxtools'
 arch=('x86_64')
 license=('MIT')
-depends=('curl' 'libcurl.so' 'libpcap' 'zlib' 'openssl')
+depends=('curl' 'libcurl.so' 'zlib' 'openssl')
 source=(https://github.com/ZerBea/hcxtools/archive/${pkgver}/${pkgname}-${pkgver}.tar.gz
         https://github.com/ZerBea/hcxtools/releases/download/${pkgver}/${pkgname}-${pkgver}.tar.gz.asc)
-sha512sums=('c6329e595a8c6c9373724d12e068be2f8ae29e5c678f5fb50087f49104d50e8ca9f70be3184d77f43715b3156b54d4861e29ec8d8487b639ef8ea454afeee125'
+sha512sums=('03d3eb0feaf8a0f0053e0d417ba4728f4ca87834e2c44ffa9bd54a3ea169c33066e237454b963d216770a2ebd8bf9bada2efc9ca9392fa6a867728f603caa262'
             'SKIP')
 validpgpkeys=('5920CE1C567948AFD2C0A9B7375516A45DB88630') # ZeroBeat <ZeroBeat@gmx.de>
 

@@ -8,8 +8,8 @@
 # Contributor: jebaum <jebaum at ucla dot edu>
 
 pkgname=fzf
-pkgver=0.29.0
-pkgrel=1
+pkgver=0.30.0
+pkgrel=3
 pkgdesc='Command-line fuzzy finder'
 arch=('x86_64')
 url='https://github.com/junegunn/fzf'

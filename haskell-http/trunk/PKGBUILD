@@ -3,8 +3,8 @@
 
 _hkgname=HTTP
 pkgname=haskell-http
-pkgver=4000.3.16
-pkgrel=132
+pkgver=4000.4.1
+pkgrel=8
 pkgdesc="A library for client-side HTTP"
 url="https://hackage.haskell.org/package/${_hkgname}"
 license=('BSD')
@@ -15,7 +15,7 @@ makedepends=('ghc' 'haskell-hunit' 'haskell-httpd-shed' 'haskell-puremd5' 'haske
              'haskell-http-types' 'haskell-wai' 'haskell-warp' 'haskell-conduit'
              'haskell-conduit-extra')
 source=("https://hackage.haskell.org/packages/archive/${_hkgname}/${pkgver}/${_hkgname}-${pkgver}.tar.gz")
-sha512sums=('b5136b55967d4db7569a0269b429c8e419878acc548d962af94efa5aa0ddbb8a6ab22bc3096ce3d78b61dc708996c408d4bfa55c6c7fb6c0d915389503cbd755')
+sha512sums=('c1edc529032013391263bcc0f8abd9534fc53a617b5033dfdc478318465cd988732b2644c7144979156c62bd1a08b1ace507b4fb4e2806f22ec7696cbdfd0147')
 
 build() {
     cd $_hkgname-$pkgver
@@ -27,7 +27,7 @@ build() {
     fi
 
     runhaskell Setup configure -O --enable-shared --enable-executable-dynamic --disable-library-vanilla \
-        --prefix=/usr --docdir=/usr/share/doc/$pkgname "${_opts[@]}" \
+        --prefix=/usr --docdir=/usr/share/doc/$pkgname --datasubdir=$pkgname "${_opts[@]}" \
         --dynlibdir=/usr/lib --libsubdir=\$compiler/site-local/\$pkgid --ghc-option=-fllvm \
             -f-mtl1 -f-warn-as-error -f-conduit10 -fwarp-tests -fnetwork-uri
     runhaskell Setup build $MAKEFLAGS

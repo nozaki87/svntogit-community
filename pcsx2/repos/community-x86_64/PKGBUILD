@@ -3,7 +3,7 @@
 # Contributor: vEX <vex@niechift.com>
 
 pkgname=pcsx2
-pkgver=1.7.2277
+pkgver=1.7.2678
 pkgrel=1
 pkgdesc='A Sony PlayStation 2 emulator'
 arch=(x86_64)
@@ -15,6 +15,7 @@ license=(
   LGPL3
 )
 depends=(
+  alsa-lib
   gcc-libs
   glibc
   libaio
@@ -51,16 +52,20 @@ makedepends=(
   png++
   vulkan-headers
 )
-_tag=ca55d861874b95959bd84a2f14b7e86303d63794
+_tag=63ecdfefe3f94bec5975723519b2360537f4f468
 source=(
   git+https://github.com/PCSX2/pcsx2.git#tag=${_tag}
   git+https://github.com/mozilla/cubeb.git
   git+https://github.com/KhronosGroup/glslang.git
   git+https://github.com/ocornut/imgui.git
   git+https://github.com/rtissera/libchdr.git
+  git+https://github.com/nih-at/libzip.git
+  git+https://github.com/facebook/zstd.git
   pcsx2-system-libs.patch
 )
 b2sums=(
+  SKIP
+  SKIP
   SKIP
   SKIP
   SKIP
@@ -79,7 +84,9 @@ prepare() {
     3rdparty/cubeb/cubeb \
     3rdparty/glslang/glslang \
     3rdparty/imgui/imgui \
-    3rdparty/libchdr/libchdr
+    3rdparty/libchdr/libchdr \
+    3rdparty/libzip/libzip \
+    3rdparty/zstd/zstd
   do
     git submodule init ${submodule}
     git submodule set-url ${submodule} "$srcdir/${submodule##*/}"

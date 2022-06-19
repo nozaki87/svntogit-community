@@ -4,9 +4,9 @@
 
 pkgname=starship
 pkgdesc='The cross-shell prompt for astronauts'
-_tag=e6a921b5b2a54ffd81368f9b3a573e49b5af1c9a
-pkgver=1.3.0
-pkgrel=2
+_tag=c9f74f7f42fe20afca7dd6da90437877481366fb
+pkgver=1.8.0
+pkgrel=1
 arch=(x86_64)
 url=https://starship.rs/
 license=(ISC)

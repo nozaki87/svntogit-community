@@ -3,23 +3,18 @@
 
 _hkgname=hashable
 pkgname=haskell-hashable
-pkgver=1.4.0.0
-pkgrel=4
+pkgver=1.4.0.2
+pkgrel=19
 pkgdesc="A class for types that can be converted to a hash value"
 url="https://github.com/haskell-unordered-containers/hashable"
 license=('BSD')
 arch=('x86_64')
 depends=('ghc-libs' 'haskell-base-orphans' 'haskell-ghc-bignum-orphans')
-makedepends=('ghc' 'uusi')
+makedepends=('ghc')
 checkdepends=('haskell-hunit' 'haskell-quickcheck' 'haskell-random' 'haskell-test-framework'
               'haskell-test-framework-hunit' 'haskell-test-framework-quickcheck2')
 source=("https://hackage.haskell.org/packages/archive/${_hkgname}/${pkgver}/${_hkgname}-${pkgver}.tar.gz")
-sha512sums=('3f1cdbb5658c3f00ea6d127a33c9447504d28535b366f7139e16c895aaa0d4376de9681d092b1b145896da80da763177c575745c30a95b5d9a1b59633354b4cd')
-
-prepare() {
-    cd $_hkgname-$pkgver
-    uusi -u ghc-bignum $_hkgname.cabal
-}
+sha512sums=('a8cc2b7cafa8f18d9a74490d2dff7edf12901b7c40ca0c1881af579695135c1ca7629347d34d0c7dc662078d7669d5d6234bd889c1f77f344297942243fe7dda')
 
 build() {
     cd $_hkgname-$pkgver
@@ -31,7 +26,7 @@ build() {
     fi
     
     runhaskell Setup configure -O --enable-shared --enable-executable-dynamic --disable-library-vanilla \
-        --prefix=/usr --docdir=/usr/share/doc/$pkgname "${_opts[@]}" \
+        --prefix=/usr --docdir=/usr/share/doc/$pkgname --datasubdir=$pkgname "${_opts[@]}" \
         --dynlibdir=/usr/lib --libsubdir=\$compiler/site-local/\$pkgid --ghc-option=-fllvm \
             -f-examples
     runhaskell Setup build $MAKEFLAGS

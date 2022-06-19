@@ -1,12 +1,12 @@
 # Maintainer: Johannes Löthberg <johannes@kyriasis.com>
-# Contributor: George Rawlinson <grawlinson@archlinux.org>
+# Maintainer: George Rawlinson <grawlinson@archlinux.org>
 # Contributor: Timothy Redaelli <timothy.redaelli@gmail.com>
 # Contributor: Vianney le Clément <vleclement AT gmail·com>
 # Contributor: Peter Simons <simons@cryp.to>
 
 pkgbase=parallel
 pkgname=('parallel' 'parallel-docs')
-pkgver=20220222
+pkgver=20220522
 pkgrel=1
 pkgdesc='A shell tool for executing jobs in parallel'
 arch=('any')
@@ -16,12 +16,12 @@ source=(
   "https://ftp.gnu.org/gnu/$pkgbase/$pkgbase-$pkgver.tar.bz2"{,.sig}
   '0001-Remove-citation-things.patch'
 )
-sha512sums=('3a5bb880fb4c4e2fa9ccda95359da36e16af5cdfc26095471613b03b994bf6fa2a8370933cc3a570069f5cb733475948b66f3d93cd78dfe20df5f0278148ba1e'
+sha512sums=('45dd1abe8652d29cd054505263b4ed792f42d7d6799ebdbfec07c21d54437d7243a054adff1d6c987eb85260d7ead2a9bb4dacb9d54a8a5b332218e27cf4f62c'
             'SKIP'
-            'd0841cb0654ce7797874f9118cb44a57f84274b33e0984af29a67fd498b3f90f2a17450130490051d3f2191b533854989a27919b91c1f9af8ec0d6ba1d34fc99')
-b2sums=('55cc38cc93007be6c31a7a24df5fa2411aea07fe148caeb87de7756e6c8fcd47e47af72e90cd6d142469abdc653cd4de67e5994932f6db6bb123701cee72f88b'
+            '0222471b1e59a8864d79674e147df0a9452f24f9fdefad336eada8f50da3bd21caefdc98705cdf6ab0b3194962f032f63be118c3ae2eec7b1239023012281eab')
+b2sums=('e32f62930a4147dc950f5bdab1da58bef19c83b75e7257511d44257ef1569b40a34c670c63831f46daabcb390a197b7293aabb66f2dacd9848dd64910fd3b912'
         'SKIP'
-        '41a5a1a002e618fa903046580ea9ba7902e174b901a3d0d590eba38615a064fcdba85272f308285e536a56ef60aa71e4e32d5ec697d99825fea1074fd39d0121')
+        '26509c87a6b45aa4659e5cad9b3251e0fcdb44634ddecb29789e25b303d17fb9805967c5fafdcba7720015c2e6c445dfe771bd7538c5800cc6534bddd95dc4a6')
 validpgpkeys=('CDA01A4208C4F74506107E7BD1AB451688888888')
 
 prepare() {

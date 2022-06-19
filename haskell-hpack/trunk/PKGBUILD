@@ -4,8 +4,8 @@
 
 pkgname=haskell-hpack
 _hkgname=hpack
-pkgver=0.34.4
-pkgrel=132
+pkgver=0.34.6
+pkgrel=8
 pkgdesc="A modern format for Haskell packages"
 url="https://github.com/sol/hpack#readme"
 license=("MIT")
@@ -17,12 +17,12 @@ depends=('ghc-libs' 'haskell-aeson' 'haskell-bifunctors' 'haskell-cryptonite' 'h
 makedepends=('ghc' 'haskell-hunit' 'haskell-quickcheck' 'haskell-hspec' 'haskell-interpolate'
              'haskell-mockery' 'haskell-temporary')
 source=("https://hackage.haskell.org/packages/archive/$_hkgname/$pkgver/$_hkgname-${pkgver}.tar.gz")
-sha512sums=('90dee8766955e44fd760ac9bead2f68de23763f56778dd7691d30a71cb37e5834093f3c9b382ffaa677bbbef0a3c0c9f7abeeb34343906e6d6b692481eacd7c9')
+sha512sums=('a7fb819b06ccb8019b7a6fb26526190d8856c113cdee12e6db58372cbc9c57a3584202bb44d23a3f12076f784d27f5ca1c401ec68fd0ae11ab5caa52a472c43e')
 
 build() {
   cd $_hkgname-$pkgver
   runhaskell Setup configure -O --enable-shared --enable-executable-dynamic --disable-library-vanilla \
-        --prefix=/usr --docdir=/usr/share/doc/$pkgname --enable-tests \
+        --prefix=/usr --docdir=/usr/share/doc/$pkgname --datasubdir=$pkgname --enable-tests \
         --dynlibdir=/usr/lib --libsubdir=\$compiler/site-local/\$pkgid --ghc-option=-fllvm
   runhaskell Setup build $MAKEFLAGS
   runhaskell Setup register --gen-script

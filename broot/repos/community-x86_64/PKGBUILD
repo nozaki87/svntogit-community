@@ -4,8 +4,8 @@
 # Contributor: Daniel M. Capella <polyzen@archlinux.org>
 
 pkgname=broot
-pkgver=1.9.3
-pkgrel=2
+pkgver=1.13.2
+pkgrel=1
 pkgdesc='Fuzzy Search + tree + cd'
 arch=('x86_64')
 url=https://github.com/Canop/broot
@@ -14,7 +14,7 @@ depends=('gcc-libs' 'zlib' 'libgit2')
 makedepends=('rust')
 options=('!lto')
 source=("https://github.com/Canop/broot/archive/v$pkgver/$pkgname-v$pkgver.tar.gz")
-sha256sums=('1034905ba031cd2b77f32e42835e228ae76f10005829e24ed0ad1035d12a6c4b')
+sha256sums=('51f669a035fea435edabae89a4d89c7555681ccb5d440b9c8d6f2eba41b51dec')
 
 prepare() {
   cd $pkgname-$pkgver
@@ -41,6 +41,7 @@ package() {
   sed -i "s/#date//" man/page
   install -Dm644 man/page "$pkgdir/usr/share/man/man1/$pkgname.1"
   install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  install -Dm644 resources/icons/vscode/vscode.ttf "$pkgdir/usr/share/fonts/TTF/vscode.ttf"
 }
 
 # vim:set ts=2 sw=2 et:

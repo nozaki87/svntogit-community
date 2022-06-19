@@ -1,24 +1,34 @@
 # Maintainer: Bruno Pagani <archange@archlinux.org>
 
 pkgname=jami-qt
-pkgver=20220211
-pkgrel=1
+pkgver=20220511
+pkgrel=3
 pkgdesc="Free and universal communication platform which preserves the users’ privacy and freedoms (Qt client)"
 arch=(x86_64)
 url="https://jami.net"
 license=(GPL3)
 groups=(jami)
 depends=(jami-libclient glib2 gdk-pixbuf2 libnm libnotify qrencode
-         qt6-declarative qt6-networkauth qt6-svg qt6-5compat
-         qt6-webengine qt6-webchannel)
-makedepends=(git cmake python)
-_commit=122777518ae6b09c85b877a1abbdcf35e6795fda
-source=(git+https://git.jami.net/savoirfairelinux/jami-client-qt.git#commit=${_commit})
-md5sums=(SKIP)
+         qt6-declarative qt6-multimedia qt6-svg qt6-5compat qt6-webengine
+         qt6-webchannel)
+makedepends=(git cmake python qt6-networkauth qt6-tools)
+replaces=(jami-gnome)
+conflicts=(jami-gnome)
+_commit=820ef3092c65076900f2acb08204a712816f8ad5
+source=(git+https://git.jami.net/savoirfairelinux/jami-client-qt.git#commit=${_commit}
+        drop-qt-version-check.patch)
+md5sums=('SKIP'
+         'dca36b057d34c8b965d2d06dfb09afd9')
 
 pkgver() {
   cd jami-client-qt
   TZ=UTC git show -s --pretty=%cd --date=format-local:%Y%m%d HEAD
+}
+
+prepare() {
+  cd jami-client-qt
+# Drop strict Qt version check. Qt is ABI stable and jami is not using any private API
+  patch -p1 -i ../drop-qt-version-check.patch
 }
 
 build() {

@@ -2,9 +2,9 @@
 # Contributor: Lubomir 'Kuci' Kucera <kuci24-at-gmail-dot-com>
 
 pkgname=gitlab-runner
-pkgver=14.7.0
-_commit=98daeee0
-pkgrel=1
+pkgver=15.0.0
+_commit=febb2a09
+pkgrel=2
 pkgdesc="The official GitLab CI runner written in Go"
 arch=('x86_64')
 url='https://gitlab.com/gitlab-org/gitlab-runner'
@@ -38,23 +38,21 @@ source=("git+https://gitlab.com/gitlab-org/gitlab-runner.git#tag=${_commit}"
         "gitlab-runner.service"
         "gitlab-runner.sysusers"
         "gitlab-runner.tmpfiles"
-        "remove-syscall-test.patch"
         "config.toml")
 sha512sums=('SKIP'
-            '415da4dabfc266d6a785fff1fc7a3eaafe4c6ec6204a4cbd2ffe99d8939bdafea97e7f0fc57f3ed7fc3d2bbdef891898af1268496fded56eba3a262946b66449'
-            '832b788c3a1af9ed7796a96510158570ccbe58fa5b497bc3863bcf2b38c2755753a866a01d77599b261eda1b9187290b77bcc8fae5db98e4c7f0d5a30c172c86'
-            'aa4a27f8f3b29dba4e9c7069015cb72a07b654346ec814a99ed8c5a23d5df3bdce8f2f40e4d3d5a1127fffbb3fc5189e73abfbd9c2aac331d7275e24e2ed131a'
-            '7334dbe49ea6c85e5c3b5e2cb25e1a8330ec9fb05861ffb3c65db7ab3c51c497fe30254e09ed6455e2e2612d8e12c13407c39d4b3c9ad9f8fcbf35d0874a9231'
-            '07c41a86ca0510dbc0499f0a5314a042940dc852cdaea27419561276e15a6b8b49c792da66fbf805b15271ea1ba8a6492ca1bff3a614c7d07c42c2f6064cab2e'
-            '1e222639df166610323364bf1a59150f8d19acf8c1397b9bd0ce514c8da393d4ec1712f4d4358c5bd2d8968d241920c7911801816062e0b23c4363bb9dd9cce7'
-            '09fc39cc6e03eaef00f0010051d57ccd97f30363e0ce1e0107bf59312004dea1b79330015f560136cb01808566a797432ed9ca2ecd4475a15c673f6d0d096040'
-            'c97165a51f0330a537c0cd1ccb67a60b39710b9885d8628901af62d5afe258b99f36217d4fef246e60cddc4dcc7a9170dcf1c76be9b1ebcfbf0ab0e96f63cd8c'
-            'da4af3c00dedb987ee6a4b6aad115afe5eeec790bfda322148b90b2418349ccd7a8c5350597a4d13806f8da55aa6cd9a2afaf5d79a0e56cad9479e9c973ba884'
-            '4b4864214d294c0472c9e3e2bcab65d4c67f7af4ab0c2dc06b7e62a0be9f655b837add94486edcc524257300a2a7301f0b166927a1e4709d6183b9df3d8d4eba'
+            '201e6d3b8a4dfdca2dfdc96c55f026b0e1789b4aa545440f448217628c0024d377e9ffb79a520e15a3716587cec40cac3e7f11e1d2475cfb2f8813b0ec6f7f71'
+            '09b91208dd918e175279f0336d06cc1f38b0c7805508d6c9b22a7e50c4a9d75e53e1c2bfe31895c55532b3fbcca44cf5655746d2273473c0b16c3c33b3c8865a'
+            '5b41ec0c85096f9fbb6f7555b2acf3e970159fad9f4aa2b7afb755b4852fc04c6af0f0e7a2ba3b1dd0349c6aa6e73f2932c2374118aee785fc562d67dc36cebb'
+            '34cc05ad986c16f8a83c84d5653a2a8d335fe8d70198cd9be6c0d79ebcf438350098e908351e63e81c2ea0a43a82f5bf7b1d099bd99d3b84300c0887e6bb62e5'
+            'e30f0f638ffae13b8a06b4e92f2bf323d2c19c7d013c75ecca5799eefb9cce67647e66ae682588d3e238219c9d5a0543d8366860cd8607f6420ded8f81d66cff'
+            '73aa1a40f13c766f6738d3ed93dd57bd3a9a2fe11f06d1d63fbee0d8981f490518bc073b633c0de0d914f018927d70750b1066961c13997916de420f6dac71c8'
+            '281b6eac32ac17f4e5b29798928f71070f13b7a7f8b7bb1664cb67eb92c16a32cc4a2b62ef0a0cc057edefcc12f4542c9a8d330c2c54f7639447ff3732ad89a8'
+            '5b2ca8339b47e5212c799132533f26c637abab6a6f55e9e44419aa790bef28de0594afd347bda2995bc1e579a5335910a2838ae07d2268d9f77fc38743d6bfe1'
+            '6407ab0e463b46007c88fc9cd42e33768e75ba87fbadb760155326dd478983f646c9d838799d3d7483529d37690b0393fc643d13142a5ccdf0640ec96a61c426'
+            'fd9acaf6958045e8b43842681a32b696557840a0853f9d95298bc2bb7674b462cee724f9eef4ea837cd469e739535f354219dc3d179a4a2173526dc8a6647d0d'
             'c0af374b9986895aedcfaee6c67cfad68f0f7289f87e4611358adaff59a2f349f55764fe28b2b1f61f8bfeb61126d4f90d433c626fdf9b826a2de6217f86574f'
             '8aa7f08702e99053c696fcc2aaba83beb9e9cd6f31973d82862db9350ac46df3a095377625d31fe909677525290d2de922d7a97930ed235774cb8f0da8944d40'
             '6751d9fa0b27172d1b419c4138f5ac15cbc7c9147653a7258cf1470216142c637210bb60608c7ed0974e0e4057e5ddeae32225df1bb36e7dd1f20fec71e33cc3'
-            'dc66f8c841c6b73ab031a5e4b891d6eb25a237647d179d792c73b645de99d7a2619788677e80d487b710eeef039242118b64abec9e32c7ce096f130732bcae43'
             '9718b94bd0ddb09095ffb8c1e60ca1e9649dabb1747e7fc95e58e404b2f9effdeb4cfd759f5b904443dc53a4e18c02003c38f85584713deb49f6a6d1007503de')
 
 prepare() {
@@ -88,6 +86,7 @@ package() {
   install -Dm644 "${srcdir}/gitlab-runner.sysusers" "${pkgdir}/usr/lib/sysusers.d/gitlab-runner.conf"
   install -Dm644 "${srcdir}/gitlab-runner.tmpfiles" "${pkgdir}/usr/lib/tmpfiles.d/gitlab-runner.conf"
   install -Dm755 gitlab-runner "${pkgdir}/usr/bin/gitlab-runner"
+  install -Dm755 packaging/root/usr/share/gitlab-runner/clear-docker-cache "${pkgdir}/usr/share/gitlab-runner/clear-docker-cache"
 
   # Move prebuilt Docker images to hard-coded canonical location
   for image in prebuilt-{alpine,ubuntu}-{arm,arm64,s390x,x86_64-pwsh,x86_64}-${pkgver}.tar.xz; do

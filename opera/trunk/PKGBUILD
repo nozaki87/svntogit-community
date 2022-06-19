@@ -9,7 +9,7 @@
 # Contributor: eworm
 
 pkgname=opera
-pkgver=84.0.4316.14
+pkgver=88.0.4412.40
 pkgrel=1
 pkgdesc="A fast and secure web browser"
 url="https://www.opera.com/"
@@ -23,14 +23,14 @@ optdepends=(
     'upower: opera battery save'
 )
 source=(
-    "https://get.geo.opera.com/pub/${pkgname}/desktop/${pkgver}/linux/${pkgname}-stable_${pkgver}_amd64.rpm"
+    "https://get.geo.opera.com/pub/${pkgname}/desktop/${pkgver}/linux/${pkgname}-stable_${pkgver}_amd64.deb"
     "opera"
     "default"
     'eula.html'
     'terms.html'
     'privacy.html'
 )
-sha512sums=('f02f20286708c02decdfcbb83c64f969b6aa5fd45e1d4f12ade559ce16296907bf45d95bc0b5f708dd4b25b7226d90e626ea456f4cd9dac3ba1294195456cb05'
+sha512sums=('1a83973413a0b6ea5003ab501d76a47fafac38fca3ce7052eac99d4cf5aa5f0ff19dfb085f7caf4abf89a647958ba3d73a1fad92e12d847fd15e64685e780b37'
             '7e854e4c972785b8941f60117fbe4b88baeb8d7ca845ef2e10e8064043411da73821ba1ab0068df61e902f242a3ce355b51ffa9eab5397ff3ae3b5defd1be496'
             'ddb1773877fcfd7d9674e63263a80f9dd5a3ba414cda4cc6c411c88d49c1d5175eede66d9362558ddd53c928c723101e4e110479ae88b8aec4d2366ec179297f'
             'aaaa4435a3b6a08bf8e6ad4802afcbf111c1e8f477054251f031b70ae57ac1234fa19048121d64c878dc3b1de03522ce7ef11a263a86dc7062f643d569ecff82'
@@ -45,9 +45,14 @@ prepare() {
 }
 
 package() {
-    install -dm755 "$pkgdir/usr"
-    cp -a usr/share "$pkgdir/usr/"
-    cp -a usr/lib64 "$pkgdir/usr/lib"
+    tar -xf data.tar.xz --exclude=usr/share/{lintian,menu} -C "$pkgdir/"
+
+    # get rid of the extra subfolder {i386,x86_64}-linux-gnu
+    (
+        cd "$pkgdir/usr/lib/"*-linux-gnu/
+        mv "$pkgname" ../
+    )
+    rm -rf "$pkgdir/usr/lib/"*-linux-gnu
 
     # suid opera_sandbox
     chmod 4755 "$pkgdir/usr/lib/$pkgname/opera_sandbox"
@@ -56,13 +61,13 @@ package() {
     install -Dm644 "$srcdir/default" "$pkgdir/etc/$pkgname/default"
 
     # install opera wrapper
-    #rm "$pkgdir/usr/bin/$pkgname"
+    rm "$pkgdir/usr/bin/$pkgname"
     install -Dm755 "$srcdir/opera" "$pkgdir/usr/bin/$pkgname"
 
     # license
-    #install -Dm644 \
-        #"$pkgdir/usr/share/doc/${pkgname}-stable/copyright" \
-        #"$pkgdir/usr/share/licenses/$pkgname/copyright"
+    install -Dm644 \
+        "$pkgdir/usr/share/doc/${pkgname}-stable/copyright" \
+        "$pkgdir/usr/share/licenses/$pkgname/copyright"
 
     # eula
     install -Dm644 \

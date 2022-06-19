@@ -1,33 +1,59 @@
-# Maintainer: Felix Yan <felixonmars@archlinux.org>
+# Maintainer: George Rawlinson <grawlinson@archlinux.org>
+# Contributor: Felix Yan <felixonmars@archlinux.org>
 
 pkgname=certbot-dns-luadns
-pkgver=1.19.0
-pkgrel=2
+pkgver=1.28.0
+pkgrel=1
 pkgdesc="LuaDNS DNS Authenticator plugin for Certbot"
 arch=('any')
 license=('Apache')
 url="https://pypi.python.org/pypi/$pkgname"
-depends=('certbot' 'dns-lexicon' 'python-acme' 'python-mock' 'python-setuptools'
-         'python-zope-interface')
+depends=(
+  'certbot'
+  'python-acme'
+  'dns-lexicon'
+)
+makedepends=(
+  'python-build'
+  'python-wheel'
+  'python-installer'
+)
 checkdepends=('python-pytest')
-source=("https://pypi.io/packages/source/c/$pkgname/$pkgname-$pkgver.tar.gz"{,.asc})
+source=("https://files.pythonhosted.org/packages/source/${pkgname::1}/$pkgname/$pkgname-$pkgver.tar.gz"{,.asc})
 validpgpkeys=('148C30F6F7E429337A72D992B00B9CC82D7ADF2C'
               '1B41B758F9A78C7F444C20FA3E5B4152E3ADB1FD'
-              'A2CFB51FA275A7286234E7B24D17C995CD9775F2')
-sha512sums=('f1ea462aa6ae6961ee862a71f79a66301591905eb6c111b9a6410925991d310882b88165558b7557be3a694f5c0bcdee9f3597191d99355f366c2a516135869c'
+              'A2CFB51FA275A7286234E7B24D17C995CD9775F2'
+              '86379B4F0AF371B50CD9E5FF3402831161D1D280'
+              '20F201346BF8F3F455A73F9A780CC99432A28621'
+              'F2871B4152AE13C49519111F447BF683AA3B26C3')
+sha512sums=('1335bc04438d60ad6003b80186bdfec87cd97a7ca95be8c63d3cb1671ef29446bcea3fd1c400ca7abc98d78d82dcee9c56e7766ca1a962767d6d460dc3ca7df2'
             'SKIP')
+b2sums=('fe2cb92962bef844e3003843aebb0e114e604c0f20175f55dc5e006e34217f86a1b1f88343ad96c3c0e6c09792683359782321b7c9f7643a1b403ad5cdb5a2cb'
+        'SKIP')
+
+prepare() {
+  cd "$pkgname-$pkgver"
+
+  # nuke setuptools from orbit ^W install_requires
+  sed \
+    -e '/setuptools>=/d' \
+    -i setup.py
+}
 
 build() {
-  cd "$srcdir"/$pkgname-$pkgver
-  python setup.py build
+  cd "$pkgname-$pkgver"
+
+  python -m build --wheel --no-isolation
 }
 
 check() {
-  cd "$srcdir"/$pkgname-$pkgver
+  cd "$pkgname-$pkgver"
+
   python -m pytest
 }
 
 package() {
-  cd "$srcdir"/$pkgname-$pkgver
-  python setup.py install --root="$pkgdir"
+  cd "$pkgname-$pkgver"
+
+  python -m installer --destdir="$pkgdir" dist/*.whl
 }

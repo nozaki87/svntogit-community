@@ -2,8 +2,8 @@
 # Maintainer: Caleb Maclennan <caleb@alerque.com>
 
 pkgname=git-cliff
-pkgver=0.6.0
-pkgrel=2
+pkgver=0.7.0
+pkgrel=1
 pkgdesc="A highly customizable changelog generator"
 arch=('x86_64')
 url="https://github.com/orhun/git-cliff"
@@ -11,18 +11,20 @@ license=('GPL3')
 depends=('gcc-libs' 'zlib' 'libgit2' 'libgit2.so')
 makedepends=('cargo')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
-sha512sums=('f50ab6ef0f18836de9efe98a349acd8dfa3f57e030347f7a375b59a39d5d02a1dc7f44bb24beba5c215461416c5d81ba11f38e2168514284e37342ccfa77a52d')
+sha512sums=('36c0aebc34d2bf9926b9e384159c663af966d4ecddbf0f6a921c482c4ffaae1c88009414a64f30dcdf48f5812ce9bc3231201e9059e0a72aaacda348473e77aa')
 
 prepare() {
   cd "$pkgname-$pkgver"
   mkdir completions/
+  mkdir man/
   cargo fetch --locked --target "$CARCH-unknown-linux-gnu"
 }
 
 build() {
   cd "$pkgname-$pkgver"
-  cargo build --release --frozen
-  OUT_DIR=completions/ cargo run --release --bin git-cliff-completions
+  cargo build --release --frozen --no-default-features
+  OUT_DIR=completions/ "./target/release/$pkgname-completions"
+  OUT_DIR=man/ "./target/release/$pkgname-mangen"
 }
 
 check() {
@@ -37,6 +39,7 @@ package() {
   install -Dm 644 "completions/$pkgname.bash" "$pkgdir/usr/share/bash-completion/completions/$pkgname"
   install -Dm 644 "completions/$pkgname.fish" -t "$pkgdir/usr/share/fish/vendor_completions.d"
   install -Dm 644 "completions/_$pkgname" -t "$pkgdir/usr/share/zsh/site-functions"
+  install -Dm 644 "man/$pkgname.1" -t "$pkgdir/usr/share/man/man1"
 }
 
 # vim: ts=2 sw=2 et:

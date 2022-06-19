@@ -3,8 +3,8 @@
 
 _hkgname=warp
 pkgname=haskell-warp
-pkgver=3.3.19
-pkgrel=4
+pkgver=3.3.21
+pkgrel=7
 pkgdesc="A fast, light-weight web server for WAI applications."
 url="https://github.com/yesodweb/wai"
 license=("MIT")
@@ -15,15 +15,15 @@ depends=('ghc-libs' 'haskell-auto-update' 'haskell-bsb-http-chunked'
          'haskell-streaming-commons' 'haskell-time-manager' 'haskell-unix-compat'
          'haskell-unliftio' 'haskell-vault' 'haskell-wai' 'haskell-word8' 'haskell-x509')
 makedepends=('ghc' 'haskell-async' 'haskell-doctest' 'haskell-http-client' 'haskell-hspec'
-             'haskell-hunit' 'haskell-quickcheck')
+             'haskell-hspec-discover' 'haskell-hunit' 'haskell-quickcheck')
 source=("https://hackage.haskell.org/packages/archive/${_hkgname}/${pkgver}/${_hkgname}-${pkgver}.tar.gz")
-sha512sums=('ed952c9aace0de7e0a11d2c34ad401d28dc342e3dc8c5c6d7c3ced725d12abfca2944c3bd2687d216ff1b661761019ee5ea37e446f28e574d1e3a0e0b1949682')
+sha512sums=('7f181669d9f10f88d14f8f1dc3acb6c08f41c8f4565f371f7fe4b89b3fde411a0190e50f003b07a239ba25ea71dbafaa16cb9e77effbe574bec929ea29646f37')
 
 build() {
     cd $_hkgname-$pkgver
     
     runhaskell Setup configure -O --enable-shared --enable-executable-dynamic --disable-library-vanilla \
-        --prefix=/usr --docdir=/usr/share/doc/$pkgname --enable-tests \
+        --prefix=/usr --docdir=/usr/share/doc/$pkgname --datasubdir=$pkgname --enable-tests \
         --dynlibdir=/usr/lib --libsubdir=\$compiler/site-local/\$pkgid --ghc-option=-fllvm \
             -f-warp-debug -fallow-sendfilefd -f-network-bytestring
     runhaskell Setup build $MAKEFLAGS

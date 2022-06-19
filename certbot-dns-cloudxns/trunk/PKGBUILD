@@ -1,33 +1,59 @@
-# Maintainer: Felix Yan <felixonmars@archlinux.org>
+# Maintainer: George Rawlinson <grawlinson@archlinux.org>
+# Contributor: Felix Yan <felixonmars@archlinux.org>
 
 pkgname=certbot-dns-cloudxns
-pkgver=1.19.0
-pkgrel=2
+pkgver=1.28.0
+pkgrel=1
 pkgdesc="CloudXNS DNS Authenticator plugin for Certbot"
 arch=('any')
 license=('Apache')
 url="https://pypi.python.org/pypi/$pkgname"
-depends=('certbot' 'dns-lexicon' 'python-acme' 'python-mock' 'python-setuptools'
-         'python-zope-interface')
+depends=(
+  'certbot'
+  'python-acme'
+  'dns-lexicon'
+)
+makedepends=(
+  'python-build'
+  'python-wheel'
+  'python-installer'
+)
 checkdepends=('python-pytest')
-source=("https://pypi.io/packages/source/c/$pkgname/$pkgname-$pkgver.tar.gz"{,.asc})
+source=("https://files.pythonhosted.org/packages/source/${pkgname::1}/$pkgname/$pkgname-$pkgver.tar.gz"{,.asc})
 validpgpkeys=('148C30F6F7E429337A72D992B00B9CC82D7ADF2C'
               '1B41B758F9A78C7F444C20FA3E5B4152E3ADB1FD'
-              'A2CFB51FA275A7286234E7B24D17C995CD9775F2')
-sha512sums=('dc157bba0ec916886870f547610ecb3e3911200044585b8c9c77fdddf0f042bc52b1eb33be97b2b59ad6cf22f6af5fff60d490ebfef59985218425e95054637e'
+              'A2CFB51FA275A7286234E7B24D17C995CD9775F2'
+              '86379B4F0AF371B50CD9E5FF3402831161D1D280'
+              '20F201346BF8F3F455A73F9A780CC99432A28621'
+              'F2871B4152AE13C49519111F447BF683AA3B26C3')
+sha512sums=('316aa7457ce500419025144e1eff9a96cad32492b99484056f448ef536b87e095255fceaf59611436a42337fa6c6ddbb64ba90182e59a6f7d36c8cce6045ca0a'
             'SKIP')
+b2sums=('fca9f4ccd23043cfdee6e95511163cfd9629c4bddb931682f8b06b5f8eb639e26eb26425e9bb0a945373f4d62bc8ed9840ac7b44dd89bd62a69fd7b4039fa765'
+        'SKIP')
+
+prepare() {
+  cd "$pkgname-$pkgver"
+
+  # nuke setuptools from orbit ^W install_requires
+  sed \
+    -e '/setuptools>=/d' \
+    -i setup.py
+}
 
 build() {
-  cd "$srcdir"/$pkgname-$pkgver
-  python setup.py build
+  cd "$pkgname-$pkgver"
+
+  python -m build --wheel --no-isolation
 }
 
 check() {
-  cd "$srcdir"/$pkgname-$pkgver
+  cd "$pkgname-$pkgver"
+
   python -m pytest
 }
 
 package() {
-  cd "$srcdir"/$pkgname-$pkgver
-  python setup.py install --root="$pkgdir"
+  cd "$pkgname-$pkgver"
+
+  python -m installer --destdir="$pkgdir" dist/*.whl
 }

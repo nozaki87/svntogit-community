@@ -2,34 +2,33 @@
 
 _name=sphinx-click
 pkgname=python-sphinx-click
-pkgver=3.1.0
+pkgver=4.1.0
 pkgrel=1
 pkgdesc="Sphinx plugin to automatically document click-based applications"
 arch=(any)
 url="https://github.com/click-contrib/sphinx-click"
 license=(MIT)
 depends=(python-pbr python-sphinx)
-makedepends=(python-setuptools)
+makedepends=(python-build python-installer python-setuptools python-wheel)
 checkdepends=(python-pytest python-click)
-source=("https://files.pythonhosted.org/packages/source/${_name::1}/${_name}/${_name}-${pkgver}.tar.gz")
-sha512sums=('fe44d9e104216a7edadc2cdd467fd704deeacf580908b2d6e597104dabbf5d1006ee08019aa1252895d2929c42f34fc8ae540530a7bf20023cedcce8267c9a8b')
-b2sums=('ca38720636c8c3009db4b4345534883b63e647bd1e2fe1a5d79a4e80c2221a0e9543518d4f1ae9663571259cd14aff8b89f302f05a335b2c824ec24622e04853')
+source=(https://files.pythonhosted.org/packages/source/${_name::1}/$_name/$_name-$pkgver.tar.gz)
+sha512sums=('a57efbcfe8ab4f82298917937b573480401a51ce81889eb37b56f6eac0b2d6123a94a877f5bc460c4998c55040072453a48400f9c94d902a7cab6cd622d13d62')
+b2sums=('0510bdcfa051e1272796ef049b4fe40e936526937b99bec5c20b714507d285a5524bd341f41042a74c1b6715fbda7a892e14aee08a397df61ff47f39b2ebc52a')
 
 build() {
-  cd "${_name}-${pkgver}"
-  python setup.py build
+  cd $_name-$pkgver
+  python -m build --wheel --no-isolation
 }
 
 check() {
-  cd "${_name}-${pkgver}"
-  export PYTHONPATH="build:${PYTHONPATH}"
-  pytest -v
+  cd $_name-$pkgver
+  pytest -vv
 }
 
 package() {
-  cd "${_name}-${pkgver}"
-  python setup.py install --optimize=1 --root="${pkgdir}"
-  install -vDm 644 {AUTHORS,ChangeLog,README.rst} -t "${pkgdir}/usr/share/doc/${pkgname}"
-  install -vDm 644 docs/*.rst -t "${pkgdir}/usr/share/doc/${pkgname}/docs/"
-  install -vDm 644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
+  cd $_name-$pkgver
+  python -m installer --destdir="$pkgdir" dist/*.whl
+  install -vDm 644 {AUTHORS,ChangeLog,README.rst} -t "$pkgdir/usr/share/doc/$pkgname/"
+  install -vDm 644 docs/*.rst -t "$pkgdir/usr/share/doc/$pkgname/docs/"
+  install -vDm 644 LICENSE -t "$pkgdir/usr/share/licenses/$pkgname/"
 }

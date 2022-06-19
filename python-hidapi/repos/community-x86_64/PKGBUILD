@@ -5,10 +5,10 @@
 
 pkgname=python-hidapi
 _pipname=hidapi
-pkgver=0.11.0.2
+pkgver=0.12.0.2
 _pkgver=${pkgver%.*}.post${pkgver##*.}
 # _pkgver="$pkgver"
-pkgrel=3
+pkgrel=1
 arch=('x86_64')
 pkgdesc="A Cython interface to the hidapi from signal11/hidapi"
 url="https://github.com/trezor/cython-hidapi"
@@ -16,7 +16,7 @@ depends=('python' 'hidapi')
 makedepends=('cython' 'python-setuptools' 'udev')
 license=('custom')
 source=("https://pypi.org/packages/source/${_pipname:0:1}/$_pipname/$_pipname-$_pkgver.tar.gz")
-sha512sums=('5365299ef8488561a82d2a2c911523c5d34e260f8068b4d4d26e912b6e348b328229498f0ee38d1eb9c81a969e9f91ffc7a0b9a60359f4e9d0511f8937e5ff21')
+sha512sums=('dee9f1f07e4f297b935c8e3fbe798471f449f6a101d68131db23d24ccfb5ce445cc3b0e7305606d3630443a817aa75a27093109078735168a59d21614606f0a0')
 
 build() {
   cd "$_pipname-$_pkgver"

@@ -6,24 +6,23 @@
 
 _hkgname=unordered-containers
 pkgname=haskell-unordered-containers
-pkgver=0.2.16.0
-pkgrel=2
+pkgver=0.2.19.1
+pkgrel=15
 pkgdesc="Efficient hashing-based container types"
 url="https://github.com/haskell-unordered-containers/unordered-containers"
 license=("BSD")
 arch=('x86_64')
 depends=('ghc-libs' 'haskell-hashable')
-makedepends=('ghc' 'haskell-chasingbottoms' 'haskell-hunit' 'haskell-quickcheck'
-             'haskell-random' 'haskell-test-framework' 'haskell-test-framework-hunit'
-             'haskell-test-framework-quickcheck2')
+makedepends=('ghc' 'haskell-chasingbottoms' 'haskell-hunit' 'haskell-nothunks' 'haskell-quickcheck'
+             'haskell-random' 'haskell-tasty' 'haskell-tasty-hunit' 'haskell-tasty-quickcheck')
 source=("https://hackage.haskell.org/packages/archive/${_hkgname}/${pkgver}/${_hkgname}-${pkgver}.tar.gz")
-sha512sums=('12b3c3d42498e9fba0545196f57dfa851fe141045aafff26701f6e116ba94d7dbc6e2bba1e5ffe47b2532e468c6f41651dfc058ebd3c76e2a16ebef2689d6652')
+sha512sums=('2ea49766210fcec1f8f8bd99c2bb296c4ffcb7ab00317b7663436b6ab0037f9b78cfa22631a1e2bc1f34b6c9b08614aa0ca98c5256ab18258645bfd72351b712')
 
 build() {
     cd $_hkgname-$pkgver
     
     runhaskell Setup configure -O --enable-shared --enable-executable-dynamic --disable-library-vanilla \
-        --prefix=/usr --docdir=/usr/share/doc/$pkgname --enable-tests \
+        --prefix=/usr --docdir=/usr/share/doc/$pkgname --datasubdir=$pkgname --enable-tests \
         --dynlibdir=/usr/lib --libsubdir=\$compiler/site-local/\$pkgid --ghc-option=-fllvm \
             -f-debug
     runhaskell Setup build $MAKEFLAGS

@@ -3,16 +3,16 @@
 # Contributor: Luca Weiss <luca (at) z3ntu (dot) xyz>
 # Contributor: Julian Schacher <jspp@posteo.net>
 
-_electron=electron15
+_electron=electron17
 pkgbase=element.io
 pkgname=(element-web element-desktop)
-pkgver=1.10.4
+pkgver=1.10.15
 pkgrel=1
 pkgdesc="Glossy Matrix collaboration client — "
 arch=(x86_64)
 url="https://element.io"
 license=(Apache)
-makedepends=(npm git yarn python rust sqlcipher ${_electron} nodejs-lts-gallium)
+makedepends=(npm git yarn python rust tcl ${_electron} nodejs-lts-gallium)
 _url="https://github.com/vector-im/element"
 source=(element-web-${pkgver}.tar.gz::${_url}-web/archive/v${pkgver}.tar.gz
         element-web-${pkgver}.tar.gz.asc::${_url}-web/releases/download/v${pkgver}/v${pkgver}-src.tar.gz.asc
@@ -21,13 +21,13 @@ source=(element-web-${pkgver}.tar.gz::${_url}-web/archive/v${pkgver}.tar.gz
         autolaunch.patch
         io.element.Element.desktop
         element-desktop.sh)
-sha256sums=('21036274ff3a2036d07415b193e57dde60b79abda9f2dc8d5594a879c0c5f488'
+sha256sums=('e0831ed43364dadad4167ac12299217aec5f8b4673b5b371d5e7c47aa985bf8d'
             'SKIP'
-            'b3e4e9cb39ef9fdcdb3b83b842853e2ed52944b3caf68dfc5cd5642ac985eeaa'
+            '3b5c37b858c9fe773e4fd6e9c79dabe55dadd51c04dc651bbd6b6e0bbdde9d33'
             'SKIP'
             'aaae4ffa41590361dac0c159aecc1166f69e459e89faa9d5cab1202f0277e06f'
             '0103f28a32fe31f698836516783c1c70a76a0117b5df7fd0af5c422c224220f9'
-            '4c931121009985e7d3f73928c9db88508eedd974a7741e635bb290e3a2cd75db')
+            'c1bd9ace215e3ec9af14d7f28b163fc8c8b42e23a2cf04ce6f4ce2fcc465feba')
 validpgpkeys=(712BFBEE92DCA45252DB17D7C7BE97EFA179B100) # Element Releases <releases@riot.im>
 
 prepare() {
@@ -49,6 +49,7 @@ build() {
   VERSION=${pkgver} yarn build --offline
 
   cd ../element-desktop-${pkgver}
+  export SQLCIPHER_STATIC=1
   yarn run build:native
   yarn run build
 }
@@ -70,7 +71,7 @@ package_element-web() {
 package_element-desktop() {
   pkgdesc+="desktop version."
   replaces=(riot-desktop)
-  depends=("element-web=${pkgver}" ${_electron} sqlcipher)
+  depends=("element-web=${pkgver}" ${_electron} libsecret)
   backup=('etc/element/config.json')
 
   cd element-desktop-${pkgver}

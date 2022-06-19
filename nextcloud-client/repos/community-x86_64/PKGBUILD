@@ -1,3 +1,4 @@
+# Maintainer: Caleb Maclennan <caleb@alerque.com>
 # Maintainer: Chih-Hsuan Yen <yan12125@archlinux.org>
 # Contributor: Tyler Dence <tyzoid@archlinux32.org>
 # Contributor: Konstantin Shalygin <k0ste@k0ste.ru>
@@ -10,15 +11,15 @@ pkgname=(nextcloud-client nextcloud-client-cloudproviders)
 epoch=2
 # Upstream does not provide signed tarballs (yet)
 # https://github.com/nextcloud/desktop/issues/1510
-pkgver=3.4.2
-# `git rev-parse v$pkgver`
-_tag=829b4146d413abc0172372e94935d5109089eee5
-pkgrel=1
+pkgver=3.5.1
+# curl https://api.github.com/repos/nextcloud/desktop/git/ref/tags/v$pkgver | jq -r .object.sha
+_tag=0c9c30b94b3e33f4e954a951214a4145dd690332
+pkgrel=2
 arch=(x86_64)
 url='https://nextcloud.com/'
 license=(GPL)
 makedepends=(libcloudproviders openssl sqlite
-             qt5-quickcontrols2 qt5-svg qt5-tools qt5-webengine qt5-websockets qtkeychain-qt5
+             qt5-websockets qt5-quickcontrols2 qt5-svg qt5-tools qtkeychain-qt5
              extra-cmake-modules kio
              cmocka doxygen git inkscape python-sphinx)
 source=("$pkgbase::git+https://github.com/nextcloud/desktop.git?signed#tag=$_tag")
@@ -39,7 +40,16 @@ pkgver() {
 
 prepare() {
   # tmpdir for check()
-  mkdir tmpdir
+  mkdir -p tmpdir
+  cd $pkgbase
+  # Monkey patch that disables bulk upload capability which causes infinite
+  # loops for many server/client combos. Feature is also disabled by default on
+  # server end in v23.0.3 because it was so problematic. This can abe re-enabled
+  # when underlying bug squashed:
+  # https://github.com/nextcloud/desktop/issues/4241
+  sed -i -e '/bulkupload/s/return _.*;$/return false;/' src/libsync/capabilities.cpp
+  # Disable tests that touch on disabled feature
+  sed -i -e '/SyncEngine/s/^/#/' -e '/Capabilities/s/^/#/' test/CMakeLists.txt
 }
 
 build() {
@@ -51,6 +61,7 @@ build() {
     -DCMAKE_BUILD_TYPE=None \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DWITH_CRASHREPORTER=OFF \
+    -DBUILD_UPDATER=OFF \
     -DUNIT_TESTING=ON \
     -DPLUGINDIR=lib/qt/plugins # Fix vfs plugin install dir https://github.com/nextcloud/desktop/issues/3781#issuecomment-918918320
 
@@ -71,8 +82,8 @@ check() {
 
 package_nextcloud-client() {
   pkgdesc='Nextcloud desktop client'
-  depends=(openssl sqlite qtkeychain-qt5 qt5-svg qt5-webengine qt5-websockets xdg-utils libcloudproviders
-           qt5-graphicaleffects qt5-quickcontrols2)
+  depends=(hicolor-icon-theme openssl sqlite qtkeychain-qt5 qt5-svg qt5-websockets
+           xdg-utils libcloudproviders qt5-graphicaleffects qt5-quickcontrols2)
   optdepends=(
     'kio: integration with Dolphin'
     'nemo-python: integration with Nemo'

@@ -2,7 +2,7 @@
 # Contributor: csslayer <wengxt AT gmail com>
 
 pkgname=fcitx5-unikey
-pkgver=5.0.8
+pkgver=5.0.10
 pkgrel=1
 pkgdesc="Unikey engine support for Fcitx5"
 arch=('x86_64')
@@ -11,7 +11,7 @@ license=('GPL')
 depends=('fcitx5-qt')
 makedepends=('extra-cmake-modules' 'ninja')
 source=("https://download.fcitx-im.org/fcitx5/$pkgname/$pkgname-$pkgver.tar.xz"{,.sig})
-sha512sums=('06f9b3e7a0ccbfd0fbc281d3939299439c6566fc986423c1f8863d739e601ef82b4fb520e995b386ff3d4713e2e5806c6a2e3af959183a395b97b232dce9e1a1'
+sha512sums=('633ddddf3cbca231f6c6d89c7d47159f7695c4fad2fe3fb156528b81ff2c4903cd4fb8ce0ea00dc451c561a03ba5f636dee11ed218ada23b49cbb1cdb5af5853'
             'SKIP')
 validpgpkeys=('2CC8A0609AD2A479C65B6D5C8E8B898CBF2412F9') # Weng Xuetian <wengxt@gmail.com>
 

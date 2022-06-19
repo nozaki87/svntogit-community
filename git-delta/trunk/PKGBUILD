@@ -5,19 +5,18 @@
 
 pkgname=git-delta
 _pkgname=delta
-pkgver=0.12.0
-pkgrel=2
+pkgver=0.13.0
+pkgrel=1
 pkgdesc='Syntax-highlighting pager for git and diff output'
 arch=('x86_64')
 url="https://github.com/dandavison/delta"
 license=('MIT')
-depends=('libgit2')
+depends=('libgit2' 'libgit2.so')
 makedepends=('rust' 'mdbook')
 checkdepends=('git')
-options=('!lto')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/$pkgver.tar.gz")
-sha512sums=('409a49974073f1a92cde2922df57e4a8539901a63c0896486c8b09f0e2b7edeea86b97baa3eb743cd175bdfc70cb67eb7db5eb164796820162ca623cc6bf085b')
-b2sums=('bb9deff579f98fa6a6ff27b69f4d374db4d0ff1e3c848379d6a9ed132b529ed5017f06230de8677f32019e3d4820c22bca9551bc761c8c55b03be1817e585dc2')
+sha512sums=('d7dbaaab345ef3a8db04fb7ce6337d4cb104d148a069d4b47ffbe46c73ebff197a083a7ac061b51196754a5046dcfc1f71b633e8bfead1ebd9324cc624ba4313')
+b2sums=('85fc3a9d1a661b8bc6ba6e9996a4d93d2a669df956f9ca4387b1bb3e2ec30bec7f48a485ff4cd9421239667147f28bd549abe0267fd28e0463b68647bbc7057b')
 
 prepare() {
   cd "$_pkgname-$pkgver"
@@ -28,6 +27,9 @@ prepare() {
 
 build() {
   cd "$_pkgname-$pkgver"
+
+  # https://archlinux.org/todo/lto-fat-objects/
+  CFLAGS+=' -ffat-lto-objects'
 
   # binary
   cargo build --frozen --release --all-features

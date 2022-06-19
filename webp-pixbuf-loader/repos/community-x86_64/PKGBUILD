@@ -1,7 +1,7 @@
 # Maintainer: Bruno Pagani <archange@archlinux.org>
 
 pkgname=webp-pixbuf-loader
-pkgver=0.0.4
+pkgver=0.0.5
 pkgrel=1
 pkgdesc="WebM GDK Pixbuf Loader library"
 arch=(x86_64)
@@ -10,7 +10,7 @@ license=(LGPL)
 depends=(gdk-pixbuf2 libwebp)
 makedepends=(meson)
 source=(${url}/archive/${pkgver}/${pkgname}-${pkgver}.tar.gz)
-sha256sums=('cd6e4ec44755e8df3e298688c0aeb72b9467bbdd03009989c0d94b219b30fb51')
+sha256sums=('8271af4dd3d49792dfd157031d44997187a31e039f7b7b264bc9dded17f24cb9')
 
 build() {
   arch-meson ${pkgname}-${pkgver} build

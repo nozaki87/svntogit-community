@@ -1,8 +1,8 @@
 # Maintainer: Jaroslav Lichtblau <svetlemodry@archlinux.org>
 
 pkgname=qmmp
-pkgver=2.0.3
-pkgrel=4
+pkgver=2.1.1
+pkgrel=1
 pkgdesc="Qt based audio-player"
 arch=('x86_64')
 url="http://qmmp.ylsoftware.com/"
@@ -31,8 +31,8 @@ optdepends=('mpg123: to play MP3 files'
             'wildmidi: MIDI support'
             'ffmpeg' 'libsamplerate' 'wavpack')
 changelog=$pkgname.changelog
-source=(http://qmmp.ylsoftware.com/files/$pkgname/2.0/$pkgname-$pkgver.tar.bz2)
-sha512sums=('c414fa2383f991a306514c43b0c746d650d19be8a57c1bcf251144d030848ec678541805e447fde90815420c0a9303947f8e7e6ee2cadfea88c3f8ec57e46c1e')
+source=(http://qmmp.ylsoftware.com/files/$pkgname/2.1/$pkgname-$pkgver.tar.bz2)
+sha512sums=('606a12cc663b38714b1a3d0489d8dce3d88e5331bf9b4873dbe8e03f3306c70ba2937351d4b144160a4f71a5c67cba0bdacc89356ecf0cab86d5b5595c1b9ff5')
 
 build() {
   cd "${srcdir}"/$pkgname-$pkgver

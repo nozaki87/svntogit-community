@@ -1,7 +1,7 @@
 # Maintainer: Felix Yan <felixonmars@archlinux.org>
 
 pkgname=python-phonenumbers
-pkgver=8.12.43
+pkgver=8.12.50
 pkgrel=1
 pkgdesc="Python version of Google's common library for parsing, formatting, storing and validating international phone numbers"
 arch=('any')
@@ -10,7 +10,7 @@ license=('Apache')
 depends=('python')
 makedepends=('python-setuptools')
 source=("https://github.com/daviddrysdale/python-phonenumbers/archive/v$pkgver/$pkgname-$pkgver.tar.gz")
-sha512sums=('06c74988b0eb1a4fcc8ddee959aabebf7825d6210bd03dcf7daea7d5f4e6c91c40d43dbbb5d3d0fc39ba7565761a09f947d34ab1dc11fbe14dc819a8c032b4a7')
+sha512sums=('7a4406626d04a85e010036ceca20430a2562939ad8e7e2651afd65f0d5eb26feb1fbbe0c11f081ab58a9ab8bd81da2ccc153ad22f12eb8135b4f604077b5b29d')
 
 build() {
   cd python-phonenumbers-$pkgver/python

@@ -3,7 +3,7 @@
 # Contributor: Dany Martineau <dany.luc.martineau@gmail.com>
 
 pkgname=drumstick
-pkgver=2.5.1
+pkgver=2.6.1
 pkgrel=1
 pkgdesc="MIDI libraries for Qt5/C++"
 arch=(x86_64)
@@ -15,9 +15,9 @@ libpulse qt5-tools)
 provides=(libdrumstick-alsa.so libdrumstick-file.so libdrumstick-rt.so
 libdrumstick-widgets.so)
 options=(debug)
-source=("https://downloads.sourceforge.net/${pkgname}/${pkgver}/${pkgname}-${pkgver}.tar.bz2")
-sha512sums=('bfa0f823c45cef85152f92b21a4e4998fd8e674c742bc2423c7b58559f83c68d327e3bc520217b348c19310dbf3ebbe39c89b160be9d3e8e6a95a99ca9d7c307')
-b2sums=('70cf08bc9d616f265ac42379edeccd17a31ede490ace066ec4ca1635d042fae9b6c6698fbfa1be4c73878a674b6cd81b5a58c094d021db4e1e29556bf235cf9c')
+source=(https://downloads.sourceforge.net/$pkgname/$pkgver/$pkgname-$pkgver.tar.bz2)
+sha512sums=('d6e7acad74044cea4dcfe08998599f85b2670d97012871e592d32adfe4727d5d9c698cb4b5246237ceea96304d9166c82cda106bf4ac92000d7da87e60e9bd27')
+b2sums=('6301b9b5eb058ebef7e21311e63b262bf0fe81c50b9767bb7543b4fc4b1bd501f021b96cce4a83fe5a7536c739354c8e81ee527077dbc150eecffc985791cf0e')
 
 build() {
   cmake -DCMAKE_INSTALL_PREFIX=/usr \
@@ -39,6 +39,6 @@ check() {
 package() {
   depends+=(libasound.so libfluidsynth.so libpulse.so libpulse-simple.so)
 
-  make DESTDIR="${pkgdir}/" install -C build
-  install -vDm 644 $pkgname-$pkgver/{AUTHORS,ChangeLog,NEWS,readme.md,TODO} -t "${pkgdir}/usr/share/doc/${pkgname}/"
+  make DESTDIR="$pkgdir" install -C build
+  install -vDm 644 $pkgname-$pkgver/{AUTHORS,ChangeLog,NEWS,readme.md,TODO} -t "$pkgdir/usr/share/doc/$pkgname/"
 }

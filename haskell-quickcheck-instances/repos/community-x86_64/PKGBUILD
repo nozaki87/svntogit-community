@@ -3,8 +3,8 @@
 
 _hkgname=quickcheck-instances
 pkgname=haskell-quickcheck-instances
-pkgver=0.3.26
-pkgrel=3
+pkgver=0.3.27
+pkgrel=22
 pkgdesc="Common quickcheck instances"
 url="https://github.com/haskellari/qc-instances"
 license=("BSD")
@@ -16,13 +16,13 @@ depends=('ghc-libs' 'haskell-onetuple' 'haskell-quickcheck' 'haskell-case-insens
          'haskell-unordered-containers' 'haskell-uuid-types' 'haskell-vector')
 makedepends=('ghc')
 source=("https://hackage.haskell.org/packages/archive/${_hkgname}/${pkgver}/${_hkgname}-${pkgver}.tar.gz")
-sha512sums=('3d961c017c18181907c7b85f7354f399a2bae7738c68a7a9b613b3a69cdd39922ec0e2d9a749d6ed9033a7a9535adb766e094b9bc35c4dec36fbd348fa291d90')
+sha512sums=('be2b7525a1433b3cd038b5bcc55c01cc1a9ab2fa02fb89b4cf0d3c4748b6ee4a384b0ff101727a30c6f788a2da72adf87a8c97a36a57ce626f9269e1464f3a90')
 
 build() {
     cd $_hkgname-$pkgver
 
     runhaskell Setup configure -O --enable-shared --enable-executable-dynamic --disable-library-vanilla \
-        --prefix=/usr --docdir=/usr/share/doc/$pkgname --enable-tests \
+        --prefix=/usr --docdir=/usr/share/doc/$pkgname --datasubdir=$pkgname --enable-tests \
         --dynlibdir=/usr/lib --libsubdir=\$compiler/site-local/\$pkgid --ghc-option=-fllvm \
             -f-bytestring-builder
     runhaskell Setup build $MAKEFLAGS

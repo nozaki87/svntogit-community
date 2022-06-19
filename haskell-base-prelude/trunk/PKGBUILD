@@ -3,16 +3,16 @@
 
 _hkgname=base-prelude
 pkgname=haskell-base-prelude
-pkgver=1.5
+pkgver=1.6.1
 pkgrel=1
-pkgdesc="The most complete prelude formed solely from the \"base\" package"
+pkgdesc='Featureful preludes formed solely from the "base" package'
 url="https://github.com/nikita-volkov/base-prelude"
 license=("MIT")
 arch=('x86_64')
 depends=('ghc-libs')
 makedepends=('ghc' 'uusi')
 source=("https://hackage.haskell.org/packages/archive/${_hkgname}/${pkgver}/${_hkgname}-${pkgver}.tar.gz")
-sha512sums=('f4a933663469cea909783735fbcbb86fac273cf8c6ed3e7bee6461f80fb8c65f2f0ff6cec6fb279c55b5a132e0f1713c0cf45e41ba907e7740ec3ab39335851c')
+sha512sums=('a647792bd3f5ba51ecd7d35992ba0db383b3e5a5c83de5c1bbe6dcea71210217cf97366d50dc1971e1d62202b442b7c4912b436ef2e3b8d6d8076c4394164109')
 
 prepare() {
     cd $_hkgname-$pkgver
@@ -23,7 +23,7 @@ build() {
     cd $_hkgname-$pkgver
 
     runhaskell Setup configure -O --enable-shared --enable-executable-dynamic --disable-library-vanilla \
-        --prefix=/usr --docdir=/usr/share/doc/$pkgname \
+        --prefix=/usr --docdir=/usr/share/doc/$pkgname --datasubdir=$pkgname \
         --dynlibdir=/usr/lib --libsubdir=\$compiler/site-local/\$pkgid --ghc-option=-fllvm
     runhaskell Setup build $MAKEFLAGS
     runhaskell Setup register --gen-script

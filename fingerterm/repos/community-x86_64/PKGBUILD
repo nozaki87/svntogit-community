@@ -1,21 +1,16 @@
 # Maintainer: Felix Yan <felixonmars@archlinux.org>
 
 pkgname=fingerterm
-pkgver=1.4.2
+pkgver=1.4.5
 pkgrel=1
 pkgdesc="A terminal emulator with a custom virtual keyboard"
 arch=('x86_64')
-url="https://git.merproject.org/mer-core/fingerterm"
+url="https://github.com/sailfishos/fingerterm"
 license=('LGPL')
 depends=('qt5-feedback')
 makedepends=('nemo-qml-plugin-notifications' 'qt5-tools')
-source=("$pkgname-$pkgver.tar.bz2::https://git.merproject.org/mer-core/fingerterm/repository/archive.tar.bz2?ref=$pkgver")
-sha512sums=('c28399eef9cbbde1b22a781a25f87facfe9918b5fc954de51c9be860113884a171b7edc51413e6b401646596f733c98eb2b803f019b527985699259389377415')
-
-prepare() {
-  rm fingerterm-$pkgver.tar.bz2
-  mv fingerterm-* fingerterm-$pkgver
-}
+source=("https://github.com/sailfishos/fingerterm/archive/$pkgver/$pkgname-$pkgver.tar.gz")
+sha512sums=('a0b1cdb992c0ac5599de60b831cf4cac2c6434600e43cf62e2b82f5a0b06451dc0565bc3655aee9fe643edfe90c1c2f2fdfce7aaa1c43cb414c74d1e777de63a')
 
 build() {
   cd fingerterm-$pkgver
@@ -27,5 +22,5 @@ build() {
 package() {
   cd fingerterm-$pkgver
 
-  make INSTALL_ROOT="${pkgdir}" install
+  make INSTALL_ROOT="$pkgdir" install
 }

@@ -3,8 +3,8 @@
 
 _hkgname=wai-extra
 pkgname=haskell-wai-extra
-pkgver=3.1.8
-pkgrel=38
+pkgver=3.1.12.1
+pkgrel=12
 pkgdesc="Provides some basic WAI handlers and middleware."
 url="https://github.com/yesodweb/wai"
 license=("MIT")
@@ -15,15 +15,22 @@ depends=('ghc-libs' 'haskell-aeson' 'haskell-ansi-terminal' 'haskell-base64-byte
          'haskell-network' 'haskell-resourcet' 'haskell-streaming-commons'
          'haskell-vault' 'haskell-wai' 'haskell-wai-logger' 'haskell-word8' 'haskell-hunit'
          'haskell-call-stack')
-makedepends=('ghc' 'haskell-hspec' 'haskell-zlib')
+makedepends=('ghc' 'haskell-hspec' 'haskell-temporary' 'haskell-zlib')
 source=("https://hackage.haskell.org/packages/archive/${_hkgname}/${pkgver}/${_hkgname}-${pkgver}.tar.gz")
-sha512sums=('9ec191ee18124fa871fa9a571eba31c9edde87fb65ef63387df2e13d81a7acb0387b73e95e94475870a2ef9c90407285182e1675c723a9a3373e64df2e4d88b2')
+sha512sums=('1f2f0d59138731b9ee00cbfb01096bbdbfb3214b56a6d163517e2c2c97fbedb17b1f7dfe1610300fcaea44a4a7ce3b8cbf9eeb44fb43dfcfcc1911df30178a16')
+
+prepare() {
+    cd $_hkgname-$pkgver
+    # https://github.com/yesodweb/wai/issues/886
+    echo "test" > test/json.gz
+    echo "noprecompress" > test/noprecompress
+}
 
 build() {
     cd $_hkgname-$pkgver
 
     runhaskell Setup configure -O --enable-shared --enable-executable-dynamic --disable-library-vanilla \
-        --prefix=/usr --docdir=/usr/share/doc/$pkgname --enable-tests \
+        --prefix=/usr --docdir=/usr/share/doc/$pkgname --datasubdir=$pkgname --enable-tests \
         --dynlibdir=/usr/lib --libsubdir=\$compiler/site-local/\$pkgid --ghc-option=-fllvm \
             -f-build-example
     runhaskell Setup build $MAKEFLAGS

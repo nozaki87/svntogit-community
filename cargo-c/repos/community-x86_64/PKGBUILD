@@ -1,19 +1,18 @@
 # Maintainer: Daniel Bermond <dbermond@archlinux.org>
 
 pkgname=cargo-c
-pkgver=0.9.7
-pkgrel=2
+pkgver=0.9.10
+pkgrel=1
 pkgdesc='A cargo subcommand to build and install C-ABI compatibile dynamic and static libraries'
 arch=('x86_64')
 url='https://github.com/lu-zero/cargo-c/'
 license=('MIT')
 depends=('curl' 'openssl' 'zlib')
 makedepends=('rust')
-options=('!lto')
 source=("https://github.com/lu-zero/cargo-c/archive/v${pkgver}/${pkgname}-${pkgver}.tar.gz"
         "${pkgname}-${pkgver}.Cargo.lock"::"https://github.com/lu-zero/cargo-c/releases/download/v${pkgver}/Cargo.lock")
-sha256sums=('eead78d26b4e5924e9d750f66f2fef4d706680927542d87c895178fc0be016f0'
-            '3898341b624517daa50d95bd99e2fa873b15ea803f9e3d6f7edab11427b95de8')
+sha256sums=('e4ad4f6459522b4b1f485c2637f328f267b81bc46fdd85ec9ddbf011aa7873eb'
+            '808294437c2765887c9ac955acfdce07d91377e58ce692e3a8d777e0a0d57554')
 
 prepare() {
     ln -sf "../${pkgname}-${pkgver}.Cargo.lock" "${pkgname}-${pkgver}/Cargo.lock"
@@ -21,6 +20,7 @@ prepare() {
 }
 
 build() {
+    export CFLAGS+=' -ffat-lto-objects'
     cargo build --release --frozen --manifest-path="${pkgname}-${pkgver}/Cargo.toml"
 }
 

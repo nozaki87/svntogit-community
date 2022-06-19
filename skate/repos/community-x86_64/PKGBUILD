@@ -2,16 +2,16 @@
 # Contributor: Christian Muehlhaeuser <muesli at gmail dot com>
 
 pkgname=skate
-pkgver=0.1.4
-pkgrel=1
-pkgdesc="A personal key value store"
+pkgver=0.2.0
+pkgrel=2
+pkgdesc='A personal key value store'
 arch=('x86_64')
-url="https://github.com/charmbracelet/skate"
+url='https://github.com/charmbracelet/skate'
 license=('MIT')
 depends=('glibc')
 makedepends=('git' 'go')
 options=('!lto')
-_commit='f3900f7d62bb943d80b0c6f719d415585ef3f0f1' # v0.1.4
+_commit='659a1305dd42f666ffcbea3ac7d6a633fb9e0058'
 source=("git+$url.git#commit=$_commit")
 b2sums=('SKIP')
 

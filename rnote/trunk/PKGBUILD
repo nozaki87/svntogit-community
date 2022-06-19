@@ -2,17 +2,30 @@
 # Contributor: Igor Dyatlov <dyatlov.igor@protonmail.com>
 
 pkgname=rnote
-pkgver=0.3.5
+pkgver=0.5.3
+_gitcommit=dcb9016079a96a02ac8267c54a5140e13b578197
 pkgrel=1
 pkgdesc="A simple drawing application to create handwritten notes"
 arch=('x86_64')
 url="https://github.com/flxzt/rnote"
 license=('GPL3')
-depends=('gtk4' 'glib2' 'libadwaita' 'poppler-glib' 'gstreamer')
-makedepends=('meson' 'rust')
+depends=('gtk4' 'glib2' 'libadwaita' 'poppler-glib' 'gstreamer' 'alsa-lib')
+makedepends=('meson' 'cargo' 'git')
 #checkdepends=('appstream-glib')
-source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
-b2sums=('b831f8ee16056650ba75e135513708fa377bbe3c45eea4505966b860deb3b3d52744e06d606d54b83cb3480dc8987c1f5a64bd1a86f3408a90144570cc4bcb4e')
+source=(
+  "${pkgname}-${pkgver}::git+$url#commit=$_gitcommit"
+  "${pkgname}-piet::git+https://github.com/flxzt/piet"
+)
+b2sums=('SKIP'
+        'SKIP')
+options=('!lto')
+
+prepare() {
+  cd "$pkgname-$pkgver"
+  git submodule init
+  git config submodule."piet".url "${srcdir}/${pkgname}"-piet
+  git submodule update --init --recursive
+}
 
 build() {
   arch-meson "$pkgname-$pkgver" build

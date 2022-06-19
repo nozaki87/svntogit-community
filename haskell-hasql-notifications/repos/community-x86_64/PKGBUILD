@@ -2,23 +2,22 @@
 
 _hkgname=hasql-notifications
 pkgname=haskell-hasql-notifications
-pkgver=0.2.0.0
-pkgrel=71
+pkgver=0.2.0.1
+pkgrel=4
 pkgdesc="LISTEN/NOTIFY support for Hasql"
 url="https://github.com/diogob/hasql-notifications"
 license=("BSD")
 arch=('x86_64')
-depends=('ghc-libs' 'haskell-contravariant' 'haskell-hasql' 'haskell-hasql-pool'
-         'haskell-postgresql-libpq')
+depends=('ghc-libs' 'haskell-hasql' 'haskell-hasql-pool' 'haskell-postgresql-libpq')
 makedepends=('ghc' 'haskell-quickcheck' 'haskell-hspec' 'pifpaf' 'postgresql')
 source=("https://hackage.haskell.org/packages/archive/$_hkgname/$pkgver/$_hkgname-$pkgver.tar.gz")
-sha256sums=('b133e38b7a27e66385332791bb03c4a3cf4f85994412318d08cd820577db3ffe')
+sha256sums=('7b5e2eab841d7f2d07869039b8674cd119408817794e884785b30417754825a4')
 
 build() {
   cd $_hkgname-$pkgver
 
   runhaskell Setup configure -O --enable-shared --enable-executable-dynamic --disable-library-vanilla \
-    --prefix=/usr --docdir=/usr/share/doc/$pkgname --enable-tests \
+    --prefix=/usr --docdir=/usr/share/doc/$pkgname --datasubdir=$pkgname --enable-tests \
     --dynlibdir=/usr/lib --libsubdir=\$compiler/site-local/\$pkgid --ghc-option=-fllvm \
     --ghc-option=-optl-Wl\,-z\,relro\,-z\,now \
     --ghc-option='-pie'

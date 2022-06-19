@@ -3,11 +3,11 @@
 # Contributor: Stéphane Gaudreault <stephane@archlinux.org>
 
 pkgname=cppcheck
-pkgver=2.7
+pkgver=2.8
 pkgrel=1
-pkgdesc="A tool for static C/C++ code analysis"
+pkgdesc='A tool for static C/C++ code analysis'
 arch=('x86_64')
-url="http://cppcheck.sourceforge.net/"
+url='http://cppcheck.sourceforge.net/'
 license=('GPL')
 depends=(
   'python-pygments'
@@ -29,7 +29,7 @@ optdepends=(
   'clang: for cppcheck-gui integration'
 )
 options=('debug')
-_commit='6ba6567ad897d56741159f8af90fc354ae050e61'
+_commit='61f846073d9c348b408b21230790007bc8a022c2'
 source=(
   "$pkgname::git+https://github.com/danmar/cppcheck.git#commit=$_commit"
   'translations-location.patch'
@@ -41,11 +41,14 @@ b2sums=('SKIP'
 
 pkgver() {
   cd "$pkgname"
+
   git describe --tags
 }
 
 prepare() {
   cd "$pkgname"
+
+  # fix location of translations
   patch -p1 -i ../translations-location.patch
 }
 
@@ -65,21 +68,21 @@ build() {
     -S "$pkgname" \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DUSE_MATCHCOMPILER=yes \
-    -DHAVE_RULES=yes \
-    -DBUILD_GUI=yes \
-    -DBUILD_SHARED_LIBS=no \
-    -DBUILD_TESTS=no \
+    -DUSE_MATCHCOMPILER=ON \
+    -DHAVE_RULES=ON \
+    -DBUILD_GUI=ON \
+    -DBUILD_SHARED_LIBS=OFF \
+    -DBUILD_TESTS=ON \
     -DFILESDIR=/usr/share/cppcheck \
-    -DUSE_BUNDLED_TINYXML2=no
+    -DUSE_BUNDLED_TINYXML2=OFF
 
   cmake --build build
 }
 
-#check() {
-#  cd build/bin
-#  ./testrunner -g -q
-#}
+check() {
+  cd build/bin
+  ./testrunner -g -q
+}
 
 package() {
   DESTDIR="$pkgdir" cmake --install build

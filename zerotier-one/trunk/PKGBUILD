@@ -3,15 +3,17 @@
 # Contributor: Alex Jordan <alexander3223098@gmail.com>
 
 pkgname=zerotier-one
-pkgver=1.8.4
+pkgver=1.10.0
 pkgrel=1
-pkgdesc="Creates virtual Ethernet networks of almost unlimited size."
+pkgdesc='Creates virtual Ethernet networks of almost unlimited size.'
 arch=('x86_64')
-url="https://www.zerotier.com/"
+url='https://www.zerotier.com/'
 license=('custom:BSL')
 depends=('gcc-libs' 'libnatpmp' 'miniupnpc')
+makedepends=('rust')
+options=('!lto')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/zerotier/ZeroTierOne/archive/$pkgver.tar.gz")
-sha512sums=('7cf7762622280f28375fe40fb3f1ee67d85bfc92d0d6a45ca39f410dc7f5ac6afb2930e94fe56cae16cddb3a0edd2541dd73cfee3dceef3f5f46c8323762c18d')
+sha512sums=('214878b002cc12dd0c0f920f1e7fd8881152b7232938c9a7994c808af066b739b04a6c1571a0ffca3ec4c703fbf126017b68b48cd9567bf4570055009ba70662')
 
 prepare() {
   cd ZeroTierOne-$pkgver

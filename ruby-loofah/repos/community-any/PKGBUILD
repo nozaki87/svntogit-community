@@ -2,7 +2,7 @@
 
 _gemname='loofah'
 pkgname="ruby-${_gemname}"
-pkgver=2.13.0
+pkgver=2.18.0
 pkgrel=1
 pkgdesc='HTML/XML manipulation and sanitization based on Nokogiri'
 arch=('any')
@@ -12,7 +12,7 @@ options=(!emptydirs)
 depends=('ruby' 'ruby-crass' 'ruby-nokogiri')
 checkdepends=('ruby-minitest' 'ruby-rake' 'ruby-rr')
 source=("${url}/archive/v${pkgver}/${pkgname}-${pkgver}.tar.gz")
-sha512sums=('da72bb8b98fd1ad91ef22165d71c035c927e0cf4cf8a2f7ca4857a9fccd1ecce902cad90c12b7d34f351f2bc438c2c421e957681a0d152e065dc54a04cd4f1f1')
+sha512sums=('beb637ad8f43c036e428a42bc0f3d693bc0b5685e41c12ebb88072974b2c7408c2a5f8a3cffb68b019f1c7e5140b388b53fd7c86f35e57e2efdc037088828017')
 
 prepare() {
   cd "${_gemname}-${pkgver}"

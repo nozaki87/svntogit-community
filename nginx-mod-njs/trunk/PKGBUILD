@@ -1,8 +1,8 @@
 # Maintainer: Massimiliano Torromeo <massimiliano.torromeo@gmail.com>
 
 pkgname=nginx-mod-njs
-pkgver=0.7.2 # https://hg.nginx.org/njs/tags
-pkgrel=1
+pkgver=0.7.4 # https://hg.nginx.org/njs/tags
+pkgrel=2
 
 _modname="${pkgname#nginx-mod-}"
 
@@ -17,7 +17,7 @@ source=(
   njs-$pkgver.tar.gz::https://hg.nginx.org/njs/archive/$pkgver.tar.gz
 )
 validpgpkeys=(B0F4253373F8F6F510D42178520A9993A1C052F8) # Maxim Dounin <mdounin@mdounin.ru>
-sha256sums=('79f9e1b41d425051dc3ddf65d3f4f990f9b73f1af727ac6282917031272343e8')
+sha256sums=('243045d638162b5b81a5f1081cf36ee7115e5caaad14c9104a464e5de0344bb0')
 
 prepare() {
   mkdir -p build

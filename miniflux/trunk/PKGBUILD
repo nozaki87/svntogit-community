@@ -4,11 +4,11 @@
 # Contributor: somini <dev at somini dot xyz>
 
 pkgname=miniflux
-pkgver=2.0.35
+pkgver=2.0.37
 pkgrel=1
-pkgdesc="Minimalist and opinionated feed reader"
+pkgdesc='Minimalist and opinionated feed reader'
 arch=('x86_64')
-url="https://miniflux.app"
+url='https://miniflux.app'
 license=('Apache')
 depends=('glibc')
 optdepends=(
@@ -17,7 +17,7 @@ optdepends=(
 makedepends=('git' 'go')
 backup=('etc/miniflux.conf')
 options=('!lto')
-_commit='93277f4307edaa8c7e855b602472660198cb0d92'
+_commit='6bf89f4b32e57038556194c4cf1ea692f075e0e0'
 source=(
   "$pkgname::git+https://github.com/miniflux/v2.git#commit=$_commit"
   'sysusers.conf'
@@ -91,5 +91,5 @@ package() {
   # systemd integration
   install -vDm644 -t "$pkgdir/usr/lib/systemd/system" "packaging/systemd/$pkgname.service"
   install -vDm644 "$srcdir/sysusers.conf" "$pkgdir/usr/lib/sysusers.d/$pkgname.conf"
-  install -vDm644 -t "$pkgdir/etc" "packaging/$pkgname.conf"
+  install -vDm600 -t "$pkgdir/etc" "packaging/$pkgname.conf"
 }

@@ -3,16 +3,16 @@
 # Contributor: Ben <contrasutra@myrealbox.com>
 
 pkgname=xpad
-pkgver=5.5.0
+pkgver=5.8.0
 pkgrel=1
 pkgdesc='Stickies-like notes application'
 arch=('x86_64')
 url='https://launchpad.net/xpad'
 license=('GPL3')
-depends=('gtksourceview4' 'libsm' 'libappindicator-gtk3')
+depends=('gtksourceview4' 'libsm' 'libayatana-appindicator')
 makedepends=('intltool')
 source=("https://launchpad.net/$pkgname/trunk/$pkgver/+download/$pkgname-$pkgver.tar.bz2"{,.asc})
-sha256sums=('344b8f408b10b04dd591bd449fb14c52bc53e1e647ad29d14fd7e865b2c99965'
+sha256sums=('d9a4efe47e0fb75bc47ef4ae4aa5ea8a3f44b51555eac9c72213fb5a6004be03'
             'SKIP')
 validpgpkeys=('3930646349B9DD3886D9087392BF2FCCA6F2322B'
 	      '8450BEE19B722715FFDB18C6683EAA45951FC552'

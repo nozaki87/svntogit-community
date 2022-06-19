@@ -2,7 +2,7 @@
 # Contributor: Christoph Gysin <christoph.gysin@gmail.com>
 
 pkgname=pulumi
-pkgver=3.24.1
+pkgver=3.34.1
 pkgrel=1
 pkgdesc='Modern Infrastructure as Code'
 arch=('x86_64')
@@ -11,8 +11,8 @@ license=('GPL')
 depends=('glibc')
 makedepends=('go')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
-sha256sums=('9afb0e7a9d0198521159f9163d63025c9ad1f87a2e2407d8221ee23e6750ee34')
-b2sums=('bbee757f12bef0199bb69b9498e5332989d0a72de6ba2dfca74c2b6fa95b8236b1abaa3f1764f906093ac97e684508bdab815522e2abcc6c94fca74853c3f7ea')
+sha256sums=('53bbd2c076aca8dfd90424e15d1bc4b849d0a684f52a9eb7db736d7f62b72248')
+b2sums=('339ed2c8e9e18ec75466aaa42ed435f511de7a0c2094c33bd0874c75a6f9739f8d55aedb32a50eb562b16ef3ad654925247d632d180e46eeac0c977c54eff5db')
 options=('!lto') # disable as soon as LTO problems are resolved
 
 _plugins=(

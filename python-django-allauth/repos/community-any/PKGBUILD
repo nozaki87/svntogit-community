@@ -2,7 +2,7 @@
 
 _name=django-allauth
 pkgname=python-django-allauth
-pkgver=0.49.0
+pkgver=0.51.0
 pkgrel=1
 pkgdesc="Authentication, registration, account management and 3rd party account authentication"
 arch=(any)
@@ -10,31 +10,28 @@ url="https://github.com/pennersr/django-allauth"
 license=(MIT)
 depends=(python-django python-openid python-requests python-requests-oauthlib
 python-pyjwt)
-makedepends=(python-setuptools)
+makedepends=(python-build python-installer python-setuptools python-wheel)
 checkdepends=(python-mock python-pytest)
 # tests are not available in pypi sdist:
 # https://github.com/pennersr/django-allauth/issues/2439
-# source=("https://files.pythonhosted.org/packages/source/${_name::1}/${_name}/${_name}-${pkgver}.tar.gz")
-source=(
-  $_name-$pkgver.tar.gz::https://github.com/pennersr/$_name/archive/$pkgver.tar.gz
-)
-sha512sums=('76c1af7758a82fb9176b93f8d4da030c0022b686a993c08a0cbf0ca975a224b076927c69bd7cc61294605d77f6bab8d50d0c8dbbe7f01329e3ee689fa7e68678')
-b2sums=('0bfa20c97fe75263343f29bd13fbca7c075f775f7e5fde64faaffd062e04ee7af8bbf442bbf50763ec0f3df355e6990c77d8ab4c3494cf9ebd442dc43e340225')
+# source=(https://files.pythonhosted.org/packages/source/${_name::1}/$_name/$_name-$pkgver.tar.gz)
+source=($_name-$pkgver.tar.gz::https://github.com/pennersr/$_name/archive/$pkgver.tar.gz)
+sha512sums=('df62c686cbbe2595136436fcaa354f1d9fd0128ec27572a853f90e8f1d47fb0e36b6821b535a7f5265e849a78fca74cc061dfe049da006ea7021222375f86c82')
+b2sums=('6f128f9126ac5d9e7f2e820a9807d8e1a707ae5b4ae9be238a04033f9ea97f2b55aa67da2eabc1dd839c605c6ad399ea94396c379d3b3b9a6989dc0b1e0d895b')
 
 build() {
   cd $_name-$pkgver
-  python setup.py build
+  python -m build --wheel --skip-dependency-check --no-isolation
 }
 
 check() {
   cd $_name-$pkgver
-  export PYTHONPATH="build:$PYTHONPATH"
   python manage.py test allauth
 }
 
 package() {
   cd $_name-$pkgver
-  python setup.py install --optimize=1 --root="$pkgdir"
+  python -m installer --destdir="$pkgdir" dist/*.whl
   install -vDm 644 README.rst -t "$pkgdir/usr/share/doc/$pkgname"
   install -vDm 644 LICENSE -t "$pkgdir/usr/share/licenses/$pkgname"
 }

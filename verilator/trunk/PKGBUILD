@@ -3,7 +3,7 @@
 # Contributor: Jeffrey Tolar <tolar.jeffrey at gmail dot com>
 
 pkgname=verilator
-pkgver=4.218
+pkgver=4.222
 pkgrel=1
 pkgdesc='The fastest free Verilog HDL simulator'
 url='https://www.veripool.org/projects/verilator/wiki/Intro'
@@ -13,7 +13,7 @@ depends=('perl')
 optdepends=('systemc')
 makedepends=('python' 'systemc')
 source=("https://github.com/verilator/verilator/archive/v$pkgver/$pkgname-$pkgver.tar.gz")
-sha512sums=('26b36f60a10a13adae34d8401f55afbb32fc48a4cade7b1e58226930fe7d5c982deffaae1cff2cc52a8f9a22638ae73957d3ae7f6ac77d35ac6a8e4228dcf9e4')
+sha512sums=('bd155c7b9c4949687aac88f4d965a2d3605aa0ebe93967ae8e2a9da18dc3823c2473972a10e3ab6fee4082b961842213586beb8f0d7b1cefd393349229c57b25')
 
 prepare() {
   cd verilator-$pkgver

@@ -1,31 +1,43 @@
-# Maintainer: Felix Yan <felixonmars@archlinux.org>
+# Maintainer: George Rawlinson <grawlinson@archlinux.org>
+# Contributor: Felix Yan <felixonmars@archlinux.org>
 # Contributor: eolianoe <eolianoe At GoogleMAIL DoT com>
 # Contributor: Andrey Mikhaylenko <neithere at gmail dot com>
 
 pkgname=python-pkginfo
-pkgver=1.7.1
-pkgrel=3
-pkgdesc='Query metadatdata from sdists / bdists / installed packages'
+_pkgname=pkginfo
+pkgver=1.8.3
+pkgrel=1
+pkgdesc='Query metadata from sdists / bdists / installed packages'
 arch=('any')
-url="https://pypi.python.org/pypi/pkginfo"
-license=('PSF')
+url='https://pypi.python.org/pypi/pkginfo'
+license=('MIT')
 depends=('python')
-makedepends=('python-setuptools')
+makedepends=(
+  'python-build'
+  'python-installer'
+  'python-wheel'
+)
 checkdepends=('python-nose')
-source=("https://pypi.io/packages/source/p/pkginfo/pkginfo-$pkgver.tar.gz")
-sha512sums=('5b6374e45e7ccd68f3a28145c2fc350e630e97fcc5e97d46d05c32f0958a51e4713487b809099ddf0a9ab07840f7fb4409438ab7b7a9b0b05e94d292088b2c26')
+source=("$pkgname-$pkgver.tar.gz::https://pypi.io/packages/source/p/pkginfo/pkginfo-$pkgver.tar.gz")
+sha512sums=('54a67bdf078b38600651cb94afa62e9d86fce512022b1e79eb4565289ae3fad2325647654704488968e18cd85cbba4bd0ce28392fd09ae9638ee449e802273eb')
+b2sums=('a3e9779bcb7cd326d8bd8137fa388055032fd4ee7732d47a341807201a97f1d44652d8e46adefd301cf7cd3c1d041e49a6ed2b8752e12347a8a2a2349cf397bd')
 
 build() {
-  cd pkginfo-$pkgver
-  python setup.py build
+  cd "$_pkgname-$pkgver"
+
+  python -m build --wheel --no-isolation
 }
 
 check() {
-  cd pkginfo-$pkgver
-  python setup.py nosetests
+  cd "$_pkgname-$pkgver"
+
+  python -m nose
 }
 
-package_python-pkginfo() {
-  cd pkginfo-$pkgver
-  python setup.py install --root="$pkgdir" --optimize=1
+package() {
+  cd "$_pkgname-$pkgver"
+
+  python -m installer --destdir="$pkgdir" dist/*.whl
+
+  install -vDm644 -t "$pkgdir/usr/share/licenses/$pkgname" LICENSE.txt
 }

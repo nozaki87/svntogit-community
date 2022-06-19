@@ -1,36 +1,45 @@
 # Maintainer: Orhun Parmaksız <orhun@archlinux.org>
+# Maintainer: Caleb Maclennan <caleb@alerque.com>
 
 pkgbase=himalaya
 pkgname=('himalaya' 'vim-himalaya')
-pkgver=0.5.6
+pkgver=0.5.10
 pkgrel=1
 pkgdesc="A CLI email client"
 arch=('x86_64')
 url="https://github.com/soywod/himalaya"
 license=('BSD')
-depends=('gcc-libs' 'openssl')
+depends=('gcc-libs' 'notmuch' 'openssl')
 makedepends=('cargo')
-source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
-sha512sums=('f3dac1a9a6d001f0e0bf25bb00d7f94275a5a38313b30971d23fc47650434611fc9aa5f3f76f8c6eef244747c9bd7051c0f37cb1ea414166143ac9d96e200647')
+source=("$pkgbase-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
+sha512sums=('0180ad71499109be65554a8176bffbad5c63f092b88b80bb8e82426dbc397c23f271ef4cc05fa42338a4671aca50b5ba9fd8eef7e78eef04533e7a35ee925550')
 
 prepare() {
-  cd "$pkgname-$pkgver"
+  cd "$pkgbase-$pkgver"
   cargo fetch --locked --target "$CARCH-unknown-linux-gnu"
+  mkdir -p completions
 }
 
 build() {
-  cd "$pkgname-$pkgver"
-  cargo build --frozen --release
+  cd "$pkgbase-$pkgver"
+  cargo build --frozen --release --features notmuch-backend
+  local _completion="target/release/$pkgbase completion"
+  $_completion bash > "completions/$pkgbase"
+  $_completion fish > "completions/$pkgbase.fish"
+  $_completion zsh  > "completions/_$pkgbase"
 }
 
 check() {
-  cd "$pkgname-$pkgver"
-  cargo test --frozen -- --skip "test_imap_backend"
+  cd "$pkgbase-$pkgver"
+  cargo test --frozen --features notmuch-backend -- --skip "test_imap_backend"
 }
 
 package_himalaya() {
-  cd "$pkgname-$pkgver"
+  cd "$pkgbase-$pkgver"
   install -Dm 755 "target/release/$pkgname" -t "$pkgdir/usr/bin"
+  install -Dm 664 "completions/$pkgname" -t "$pkgdir/usr/share/bash-completion/completions/"
+  install -Dm 664 "completions/$pkgname.fish" -t "$pkgdir/usr/share/fish/vendor_completions.d/"
+  install -Dm 664 "completions/_$pkgname" -t "$pkgdir/usr/share/zsh/site-functions/"
   install -Dm 644 README.md -t "$pkgdir/usr/share/doc/$pkgname"
   install -Dm 644 LICENSE -t "$pkgdir/usr/share/licenses/$pkgname"
   install -Dm 644 "assets/$pkgname.desktop" -t "$pkgdir/usr/share/applications"

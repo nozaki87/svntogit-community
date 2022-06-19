@@ -4,7 +4,7 @@
 pkgname=python-moto
 _pkgname=moto
 # https://github.com/spulec/moto/blob/master/CHANGELOG.md
-pkgver=3.0.3
+pkgver=3.1.12
 pkgrel=1
 pkgdesc='Moto is a library to mock out the boto library.'
 arch=(any)
@@ -25,24 +25,25 @@ checkdepends=(python-pytest python-sure python-freezegun)
 # not used by moto.
 optdepends=(
   'python-yaml: for apigatewayv2, cloudformation, s3 and ssm'
-  'python-jose: for apigateway and cognitoidp'
+  'python-jose: for apigateway, cloudformation and cognitoidp'
+  'python-openapi-spec-validator: for apigateway and cloudformation'
   # SNS and SQS still uses docker indirectly, while upstream explicitly removes them
   # https://github.com/spulec/moto/pull/4094
   'python-docker: for awslambda, batch, cloudformation, dynamodb2 and dynamodbstreams'
-  'python-graphql-core: For appsync'
-  'python-jsondiff: for iotdata'
-  'python-aws-xray-sdk: for xray'
+  'python-graphql-core: For appsync and cloudformation'
+  'python-jsondiff: for iotdata and cloudformation'
+  'python-aws-xray-sdk: for xray and cloudformation'
   'python-cfn-lint: for cloudformation'
-  'python-sshpubkeys: for ec2 and efs'
+  'python-sshpubkeys: for ec2, ebs, efs, directoryservice and cloudformation'
+  'python-pyparsing: for glue and cloudformation'
   'python-flask: for moto_server'
   'python-flask-cors: for moto_server'
 )
-checkdepends+=(python-yaml python-jose python-docker python-graphql-core python-jsondiff python-aws-xray-sdk
-               python-cfn-lint python-sshpubkeys python-flask python-flask-cors)
-source=("https://files.pythonhosted.org/packages/source/m/moto/moto-${pkgver}.tar.gz"
-        sdist-no-pyc.diff)
-sha256sums=('fa3fbdc22c55d7e70b407e2f2639c48ac82b074f472b167609405c0c1e3a2ccb'
-            '4193bd88380f6ab8dac49be37d940993dee4e31351ffd60c8167b7c8e5ec3208')
+checkdepends+=(python-yaml python-jose python-openapi-spec-validator python-docker
+               python-graphql-core python-jsondiff python-aws-xray-sdk
+               python-cfn-lint python-sshpubkeys python-pyparsing python-flask python-flask-cors)
+source=("https://files.pythonhosted.org/packages/source/m/moto/moto-${pkgver}.tar.gz")
+sha256sums=('c6f407715b7babd1ff7796576ba8d873870d9fe6aa4d32664554a6116cc55afb')
 
 prepare() {
   cd $_pkgname-$pkgver
@@ -59,8 +60,6 @@ prepare() {
     grep __future__ "%" || sed -i "1i import pytest" "%"
   '
 
-  patch -Np1 -i ../sdist-no-pyc.diff
-
   # Remove upper bounds of dependencies
   sed --in-place=.orig -r 's#,?<[0-9.]+,?##;s#==([0-9.]+)#>=\1#' setup.py
   diff -u setup.py{.orig,} || true
@@ -75,7 +74,7 @@ build() {
 check() {
   cd $_pkgname-$pkgver
 
-  TZ=UTC pytest tests -m 'not needs_docker'
+  PYTHONDONTWRITEBYTECODE=1 TZ=UTC pytest tests -m 'not needs_docker'
 }
 
 package() {

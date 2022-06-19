@@ -1,13 +1,13 @@
 # Maintainer: Jonas Witschel <diabonas@archlinux.org>
 pkgname=swtpm
-pkgver=0.7.1
-_tag=bbb29e6a0de983bde808006b3a6c2410d883b0a2 # git rev-parse "v$pkgver"
+pkgver=0.7.3
+_tag=f29a3435867dce2ddabace2a0ac8b435ed41d2eb # git rev-parse "v$pkgver"
 pkgrel=1
 pkgdesc='Libtpms-based TPM emulator with socket, character device, and Linux CUSE interface'
 arch=('x86_64')
 url='https://github.com/stefanberger/swtpm'
 license=('BSD')
-depends=('fuse2' 'glib2' 'gnutls' 'json-glib' 'libseccomp' 'libtpms' 'libseccomp.so')
+depends=('fuse2' 'glib2' 'gnutls' 'json-glib' 'libseccomp' 'libtpms' 'openssl' 'libseccomp.so')
 makedepends=('git' 'expect' 'iproute2' 'libtasn1' 'python' 'socat')
 checkdepends=('softhsm')
 options=('debug')

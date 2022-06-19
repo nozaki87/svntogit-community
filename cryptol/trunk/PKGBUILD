@@ -2,7 +2,7 @@
 
 pkgname=cryptol
 pkgver=2.12.0
-pkgrel=19
+pkgrel=92
 pkgdesc="The Language of Cryptography"
 url="https://www.cryptol.net"
 license=("BSD")
@@ -23,14 +23,14 @@ sha512sums=('3e7a58de47e5ae1fdc5067b2bcca66c04ee06c71e84f890104b64c59d1cd125667a
 prepare() {
     cd $pkgname-$pkgver
     patch -p1 -i ../ghc9.patch
-    uusi -u base-compat $pkgname.cabal
+    uusi -u base-compat -u sbv $pkgname.cabal
 }
 
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
     runhaskell Setup configure -O --enable-shared --enable-executable-dynamic --disable-library-vanilla \
-        --prefix=/usr --docdir="/usr/share/doc/${pkgname}" --datasubdir="$pkgname" \
+        --prefix=/usr --docdir=/usr/share/doc/$pkgname --datasubdir=$pkgname \
         --dynlibdir=/usr/lib --libsubdir=\$compiler/site-local/\$pkgid --ghc-option=-fllvm \
             -f-static -f-relocatable --ghc-option='-pie'
     runhaskell Setup build $MAKEFLAGS

@@ -1,8 +1,9 @@
 # Maintainer: Daniel M. Capella <polyzen@archlinux.org>
+# Maintainer: Caleb Maclennan <caleb@alerque.com>
 # Contributor: Mario Finelli <mario at finel dot li>
 
 pkgname=go-yq
-pkgver=4.20.2
+pkgver=4.25.2
 pkgrel=1
 pkgdesc='Portable command-line YAML processor'
 arch=('x86_64')
@@ -12,7 +13,7 @@ depends=('glibc')
 makedepends=('go')
 conflicts=('yq')
 source=("$url/archive/v$pkgver/yq-$pkgver.tar.gz")
-b2sums=('26a13040f5820eb6436edf7909d424da5c5c4a9066ca63e7fe8553e05c00d5841aaf8cea7a3c55ecd1f0cc54849c0e1e1504f82e90187831aef29728f56343c1')
+b2sums=('78e6ff09058d073205c17ba3dca7ba1504891a76a9fccde53178183c6b69903696e270205768ad6043d6f24686c61290e5a3f9ed3de1d0744f76e75f16eeb81a')
 
 prepare() {
   cd yq-$pkgver

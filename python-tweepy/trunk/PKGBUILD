@@ -2,7 +2,7 @@
 
 pkgname=python-tweepy
 _pypiname=tweepy
-pkgver=4.5.0
+pkgver=4.8.0
 pkgrel=1
 pkgdesc='Python library for accessing the entire Twitter API'
 url='https://www.tweepy.org/'
@@ -12,8 +12,8 @@ depends=('python' 'python-requests' 'python-requests-oauthlib' 'python-six' 'pyt
 makedepends=('python-setuptools' 'python-pip' 'python-requests' 'python-requests-oauthlib'
              'python-six' 'python-pysocks')
 source=(https://github.com/tweepy/${_pypiname}/archive/v${pkgver}/${_pypiname}-${pkgver}.tar.gz)
-sha256sums=('d17e2619017b704f13a3d8e3cd836533e61bdf7d943b67f135ac31cf621e1b4a')
-sha512sums=('a246c7129b3c23ea14eaf439ce1595000961587a57bdc9dcc4852617b8531efcb764059b0448843fc06bc792f44d8cf24bd7a8e3bfaf5674078155d1f2059515')
+sha256sums=('6ca49718d9cd0e73080f780062e050dd8ca777201365fb50b935d727f7c1fc18')
+sha512sums=('3342b377918957679d8d4a90f7f91c2a661cb9b313875fdfd90f5424cd44880f38c6e72955a54b4fd38ebe33273f9c2a2d2006bee861ba5869e8ee3fc05a6856')
 
 build() {
   cd ${_pypiname}-${pkgver}

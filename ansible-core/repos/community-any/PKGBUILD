@@ -6,15 +6,13 @@
 # Contributor: atweiden <archbaum@gmail.com>
 
 pkgname=ansible-core
-pkgver=2.12.2
+pkgver=2.13.0
 pkgrel=1
 pkgdesc='Radically simple IT automation platform'
 arch=('any')
 url='https://pypi.org/project/ansible-core'
 license=('GPL3')
 depends=('python' 'python-yaml' 'python-paramiko' 'python-jinja' 'python-resolvelib')
-provides=('python-ansible' 'ansible-base')
-replaces=('ansible-base')
 optdepends=('sshpass: for ssh connections with password'
             'python-passlib: crypt values for vars_prompt'
             'python-netaddr: for the ipaddr filter'
@@ -22,14 +20,18 @@ optdepends=('sshpass: for ssh connections with password'
             'python-pywinrm: connect to Windows machines'
             'python-dnspython: for dig lookup'
             'python-jmespath: json_query support')
-makedepends=('python-setuptools')
+makedepends=('python-setuptools' 'python-straight.plugin' 'python-docutils')
+provides=('python-ansible' 'ansible-base')
+replaces=('ansible-base')
 backup=('etc/ansible/ansible.cfg')
 source=("https://pypi.python.org/packages/source/a/ansible-core/ansible-core-${pkgver}.tar.gz")
-sha512sums=('a9afc3768d27a7049c275da8780e6dcd7da42263fc9065a1df1aabd0d8c54020313e9065349a6f52138e11eafb176348bf2ec33c0c1b08dc9837b7ac832542af')
+sha512sums=('37e17d73477ba88c62af94a6912f9b4b91ebf2ac967c2845875e293fe2ed09307e414644899714e604883973e241eed571d61b7a093a6c212446a1f5b702af6f')
 
 build() {
   cd ansible-core-${pkgver}
   python setup.py build
+
+  make docs
 }
 
 package() {

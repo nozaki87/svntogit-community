@@ -2,7 +2,7 @@
 # Maintainer: Christian Rebischke <chris.rebischke@archlinux.org>
 
 pkgname=cosign
-pkgver=1.5.1
+pkgver=1.9.0
 pkgrel=1
 pkgdesc="Container Signing with support for ephemeral keys and Sigstore signing"
 arch=('x86_64')
@@ -10,9 +10,10 @@ url="https://github.com/sigstore/cosign"
 license=('Apache')
 depends=('pcsclite')
 makedepends=('go' 'git')
+checkdepends=('go-tools')
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/sigstore/${pkgname}/archive/v${pkgver}.tar.gz")
-sha512sums=('6d46dd2ca59b0ad410d23c002727198bf94c35f6d15983b13a23216510efa555268cf31de84679ce6e9e9db7f82b51787cd923e7c263939d9eb7cabecaf9c428')
-b2sums=('ce8056c3fa49a75e52b001693cc1c76dc152f7ddb1947d6862526e918e9dbbb7d934601ea00c3f47a747b748124846b68dbd4abbce5c332860cbbef52aae1be1')
+sha512sums=('1a2a7b32aa0d4f2ad90113a3b5923390d29564d3ddc5e9c8539c8ad646541734164942e93d56321b9ff78910532911272a0e3ee007c2066e40656caac17d6c16')
+b2sums=('c6b9c617e288b6104d683a1b1ce8c22897e122a70429dd3db2a4643b91d4cf492c1fcd016ac4bcae32de51464aea538babbb04a8fe7d3b3275310adba528d945')
 
 build(){
   cd "${pkgname}-${pkgver}"
@@ -20,14 +21,16 @@ build(){
   export CGO_CFLAGS="${CFLAGS}"
   export CGO_CXXFLAGS="${CXXFLAGS}"
   export CGO_LDFLAGS="${LDFLAGS}"
-  export GOFLAGS="-buildmode=pie -ldflags=-linkmode=external -trimpath -mod=readonly -modcacherw"
+  export CGO_ENABLED=1
+  export GOFLAGS="-buildmode=pie -trimpath -mod=readonly -modcacherw -ldflags=-linkmode=external"
   mkdir build
-  go build -o build/ ./...
+  go build -o build/ ./cmd/cosign
+  go build -o build/ ./cmd/sget
 }
 
 check() {
   cd "${pkgname}-${pkgver}"
-  make test
+  GODEBUG=x509sha1=1 make test # we have to allow sha1 certificates for tests
 }
 
 package() {

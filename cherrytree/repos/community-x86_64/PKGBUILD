@@ -3,7 +3,7 @@
 # Contributor: Morgenstern <charles [at] charlesbwise [dot] com>
 
 pkgname=cherrytree
-pkgver=0.99.45
+pkgver=0.99.47
 pkgrel=1
 pkgdesc="Hierarchical note-taking application"
 arch=('x86_64')
@@ -14,7 +14,7 @@ makedepends=('cmake' 'python' 'spdlog')
 checkdepends=('xorg-server-xvfb')
 source=("${pkgname}-${pkgver}.tar.xz::https://www.giuspen.com/software/${pkgname}_${pkgver}.tar.xz"
         "${pkgname}-${pkgver}.tar.xz.asc::https://www.giuspen.com/software/${pkgname}_${pkgver}.tar.xz.asc")
-sha512sums=('7c1fe98a8b211c60290aa1f6307779351c7b70baa3ddc7fd6b44d65dfeab949b562a45ef8f9623be8e148c288e52b0ed2b959e85b175c214ec9d343243dc0ebe'
+sha512sums=('2611be4c24a188793aa6785d96b33ec91c0957b30616352e1cb2cd12f296e39c29666d37a03016be6c934898bf6deb98af74c2c345d9c70f138f62ac6b10f023'
             'SKIP')
 validpgpkeys=('C7BF38CE0BD442C2369AA984049128A20CE0648D') # Giuseppe Penone <giuspen [at] gmail [dot] com>
 

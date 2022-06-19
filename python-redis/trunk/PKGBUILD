@@ -3,17 +3,17 @@
 # Contributor: Pierre Gueth <pierre.gueth@gmail.com>
 
 pkgname=python-redis
-pkgver=4.0.0
+pkgver=4.0.2
 pkgrel=1
 pkgdesc='The Python interface to the Redis key-value store'
 arch=('any')
-url="https://github.com/andymccurdy/redis-py"
+url="https://github.com/redis/redis-py"
 license=('MIT')
 depends=('python-deprecated')
 makedepends=('python-setuptools')
 checkdepends=('python-pytest' 'pifpaf' 'redis')
 source=("https://pypi.io/packages/source/r/redis/redis-$pkgver.tar.gz")
-sha512sums=('5975407b427d9edc87903aeb015e3f62a88bcc417be9fc91de56f852eed7d1bad9cd865ba40540a7c950b1a4e9bdfde20d6d7c4616ed859b6520adcca8085ea9')
+sha512sums=('3f73ddd2ceb551fa447cfb4ecdc1d393957bbfd8c184ae3d357f9f47fff860f1c4684ec0fc3cb85fea530454456c17a98a2a56e592bef4cd9ad17bb405c1a0f7')
 
 build() {
   cd "$srcdir"/redis-$pkgver

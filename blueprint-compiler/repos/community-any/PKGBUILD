@@ -1,0 +1,22 @@
+# Maintainer:
+
+pkgname=blueprint-compiler
+pkgver=0.2.0
+pkgrel=1
+pkgdesc='A markup language for GTK user interfaces'
+url='https://jwestman.pages.gitlab.gnome.org/blueprint-compiler/'
+license=(LGPL)
+arch=(any)
+depends=(python)
+makedepends=(meson)
+source=(https://gitlab.gnome.org/jwestman/blueprint-compiler/-/archive/v$pkgver/blueprint-compiler-v$pkgver.tar.gz)
+sha256sums=('d4e5444c95e8d0060c819d0ab96f79a7ea2673296be95a2fb00359d1d54a0d83')
+
+build() {
+  arch-meson $pkgname-v$pkgver build
+  meson compile -C build
+}
+
+package() {
+  meson install -C build --destdir "$pkgdir"
+}

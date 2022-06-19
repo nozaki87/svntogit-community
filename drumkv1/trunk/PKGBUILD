@@ -2,23 +2,26 @@
 # Contributor: speps <speps at aur dot archlinux dot org>
 
 pkgname=drumkv1
-pkgver=0.9.24
-pkgrel=1
+pkgver=0.9.26
+pkgrel=2
 pkgdesc="An old-school drum-kit sampler"
 arch=(x86_64)
 url="https://drumkv1.sourceforge.io/"
 license=(GPL2)
 groups=(lv2-plugins pro-audio)
-depends=(gcc-libs glibc hicolor-icon-theme lv2-host qt6-base)
+depends=(gcc-libs glibc hicolor-icon-theme lv2-host qt6-base qt6-svg)
 makedepends=(alsa-lib cmake jack liblo libsndfile lv2 qt6-tools)
-optdepends=('alsa-lib: for standalone application'
-            'jack: for standalone application'
-            'liblo: for standalone application'
-            'new-session-manager: for session management using the standalone application'
-            'qt6-wayland: for native wayland support')
-source=("https://download.sourceforge.net/${pkgname}/${pkgname}-${pkgver}.tar.gz")
-sha512sums=('ec5f1c554c52b4c7eea5ced2a20c220e1289355b59264f20400ac294fb1a1b6235175fc2eac33678e21e81d318dd90e6cfa91b0a343ed7a6738bcfd2523aff22')
-b2sums=('2a7a551ceec254749436e6a0aa8753084f25842c28a25b035c367205c600a652ed2b47616c46f97ab19fd953ecb22055c06607ab120ed86e5e69a477a5d05f5e')
+optdepends=(
+  'alsa-lib: for standalone application'
+  'jack: for standalone application'
+  'liblo: for standalone application'
+  'new-session-manager: for session management using the standalone application'
+  'qt6-wayland: for native wayland support'
+)
+options=(debug)
+source=(https://download.sourceforge.net/$pkgname/$pkgname-$pkgver.tar.gz)
+sha512sums=('678770abd3dd16f70d440dce42a3f2afe3713ee9a90bfb05df95a9ac728ae818a00f28cf0d4789ae52707bda80096af70d4fc33353fb883b8c7d5624de45a2b1')
+b2sums=('7d1c4f033d66eb496a52502a9e9b20b0849ba44d4c5529b31d505b25e0a5309d272b90ca5e80a2806ff40a99b89f6a28335169a64a0a4f75452e270ef0ec1d4c')
 
 build() {
   cmake -DCMAKE_INSTALL_PREFIX=/usr \
@@ -26,14 +29,14 @@ build() {
         -DCONFIG_QT6=ON \
         -Wno-dev \
         -B build \
-        -S "${pkgname}-${pkgver}"
+        -S $pkgname-$pkgver
   make VERBOSE=1 -C build
 }
 
 package() {
   depends+=(libsndfile.so)
 
-  make VERBOSE=1 DESTDIR="$pkgdir/" install -C build
-  install -vDm 644 "${pkgname}-${pkgver}/"{ChangeLog,README} -t "${pkgdir}/usr/share/doc/${pkgname}"
+  make VERBOSE=1 DESTDIR="$pkgdir" install -C build
+  install -vDm 644 $pkgname-$pkgver/{ChangeLog,README} -t "$pkgdir/usr/share/doc/$pkgname"
 }
 # vim:set ts=2 sw=2 et:

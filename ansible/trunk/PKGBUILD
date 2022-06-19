@@ -1,6 +1,6 @@
 # Maintainer: Sven-Hendrik Haase <svenstaro@archlinux.org>
 pkgname=ansible
-pkgver=5.4.0
+pkgver=5.9.0
 pkgrel=1
 pkgdesc='Official assortment of Ansible collections'
 arch=('any')
@@ -22,7 +22,7 @@ optdepends=('python-argcomplete: shell completions'
             'acme-tiny: openssl_certificate module')
 makedepends=('python-setuptools')
 source=("https://pypi.python.org/packages/source/a/ansible/ansible-${pkgver}.tar.gz")
-sha512sums=('7065c7d16a3bb13db27a3ec99c33c48e9d4abb4bec8267751e3d8df89da7d0948a8415b50b8fabd05f6a97fba661714f08f8473ae145fcb323dd83f6c7349a6d')
+sha512sums=('88b26b1ba59a39370ee4a27eedda441d6e6ce8ba8eb857353572c692e49b189e95ed80e5063917c52799fb15bc3608d4c1ada013a7d650909714ca8ea5dd3bbb')
 
 build() {
   cd ansible-${pkgver}

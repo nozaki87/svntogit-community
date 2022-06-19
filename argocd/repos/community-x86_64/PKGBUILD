@@ -1,7 +1,10 @@
 # Maintainer: Daurnimator <daurnimator@archlinux.org>
 
 pkgname=argocd
-pkgver=2.2.2
+pkgver=2.4.0
+# find matching argo-ui commit via ui/yarn.lock
+# commit id also needs to be updated in argo-ui.patch
+_argoui_commit=5cc690ed53747374cb1b3c1c609aff1a23255a70
 pkgrel=1
 pkgdesc="Declarative continuous deployment for Kubernetes"
 arch=('x86_64')
@@ -12,16 +15,18 @@ depends=('glibc')
 provides=('argocd-cli')
 replaces=('argocd-cli')
 source=("argo-cd-${pkgver}.tar.gz::https://github.com/argoproj/argo-cd/archive/v${pkgver}.tar.gz"
-        "argo-ui-44a1a7f22a2d6707cc5d03e0b93c5c6015d864bd.tar.gz::https://github.com/argoproj/argo-ui/archive/44a1a7f22a2d6707cc5d03e0b93c5c6015d864bd.tar.gz"
+        "argo-ui-${_argoui_commit}.tar.gz::https://github.com/argoproj/argo-ui/archive/${_argoui_commit}.tar.gz"
         "argo-ui.patch")
-sha512sums=('e1df88cfb228315c63d050d34d5729cdd662a841ba070bba78544893b2973a792b324d3c384d52eae73c038d8c6442b9378ee6594262295aa2b6c9e7f352c602'
-            '58c214f3d7d84bc3869bc9568bc4353f552948479d75ac58878577b1fc6a2f776e2cba2715b9af41c15edb64d8ec04309ffb29eaaa81402fd0277b9dbf3638df'
-            '6f3e80ba70c1777d52d908abb3ca8f3d37b6a73fdcb669d9a0afd97eddf9362159b67f05b0721cdc2e74493e913a4399406d12733ab0dc177f5b2713b7b30b79')
+sha512sums=('172ae9a0b2a71f73d3da00fc2130d0476f6c6b1fc38924b0b5ea441fe4985914fe28d9805e2b00a3a26a2ba6e2f99205fc29f5773b8f20e79696df6ca5c50aac'
+            '738acfc0803f8fedf8213db2e4470f4f3641466ab9f98de7762d9429977369177cbf4f42b177b4a58d35e60b7cf15fac400bc373e5f2cfe94943de6a793e4e05'
+            'd5b16d63e4d63c26b69d0c0688744948232248b0e62d0849860654f7f8ecea18acc5a196daa3d0162fd54d625995af8c3bcd455d29095b7a3d1c9fef80812912')
 
 prepare() {
   cd "argo-cd-$pkgver"
 
   patch -p0 -i ../argo-ui.patch
+
+  go mod download
 }
 
 build() {
@@ -37,6 +42,7 @@ build() {
   export CGO_CFLAGS="${CFLAGS}"
   export CGO_CXXFLAGS="${CXXFLAGS}"
   export CGO_LDFLAGS="${LDFLAGS}"
+  export GOPROXY=off
   go build -o argocd \
     -trimpath \
     -buildmode=pie \
@@ -58,9 +64,12 @@ package() {
 
   install -D argocd "$pkgdir/usr/bin/argocd"
   ln -s argocd "$pkgdir/usr/bin/argocd-server"
-  ln -s argocd "$pkgdir/usr/bin/argocd-repo-server"
   ln -s argocd "$pkgdir/usr/bin/argocd-application-controller"
+  ln -s argocd "$pkgdir/usr/bin/argocd-repo-server"
+  ln -s argocd "$pkgdir/usr/bin/argocd-cmp-server"
   ln -s argocd "$pkgdir/usr/bin/argocd-dex"
+  ln -s argocd "$pkgdir/usr/bin/argocd-notifications"
+  ln -s argocd "$pkgdir/usr/bin/argocd-git-ask-pass"
 
   install -Dm644 argocd.bash "$pkgdir/usr/share/bash-completion/completions/argocd"
   install -Dm644 argocd.zsh "$pkgdir/usr/share/zsh/site-functions/_argocd"

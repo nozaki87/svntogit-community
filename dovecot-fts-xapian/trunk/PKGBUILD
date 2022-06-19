@@ -4,25 +4,26 @@
 # This must be built against the version of dovecot being used,
 # otherwise it will fail to load and thus work.
 # Specify the version of dovecot to be used here:
-_dcpkgver=2.3.18
+_dcpkgver=2.3.19.1
 # Make sure to bump pkgrel if changing this.
 
 pkgname=dovecot-fts-xapian
 _pkgname="${pkgname#dovecot-}"
-pkgver=1.5.3
-pkgrel=1
+_pkgver=1.5.5 # pacman's vercmp does not like alphabet characters without a dot prefix
+pkgver=1.5.5
+pkgrel=3
 pkgdesc="Dovecot FTS plugin based on Xapian"
 arch=('x86_64')
 url="https://github.com/grosjo/fts-xapian"
 license=('LGPL2.1')
 depends=("dovecot=${_dcpkgver}" 'icu' 'xapian-core')
 install="$pkgname.install"
-source=("$pkgname-$pkgver.tar.gz::$url/archive/$pkgver.tar.gz")
-sha512sums=('b1fe46a4440dd3736e17f3f65131f4e7dc9326e5bb555bde640809b4add04efd076abffaae37af9104037a9dade3ac23d14dc32d19c38442c46a2cb617514a77')
-b2sums=('c4ba14e85f616a8536a5c2fa94267df362e11974ff12d187cea63d7904b6e8ce3e0144133e602f49e607901ecf2321205d58e761dc374c0bf09ab6a2f2289e4e')
+source=("$pkgname-$pkgver.tar.gz::$url/archive/$_pkgver.tar.gz")
+sha512sums=('229362207bfa7bb13b1ded4d8b2a2aef7a4a72306e140dc4bd5778991220b27d296ca3659993856f83c80c437f7feadebad1e3ac06f8120a6e45b69f6dbb1ecb')
+b2sums=('b8e86b3655a6b7291961cfbd39d6ef93ab2e2fbb049e97ebd07b473eb5fc5ecf91950343adfa9c267791442d581ebea47416d8e674d7f3019091fbd69b6e60f1')
 
 build() {
-  cd "$_pkgname-$pkgver"
+  cd "$_pkgname-$_pkgver"
   autoreconf -vi
   ./configure \
     --prefix=/usr \
@@ -39,7 +40,7 @@ build() {
 }
 
 package() {
-  cd "$_pkgname-$pkgver"
+  cd "$_pkgname-$_pkgver"
 
   make DESTDIR="$pkgdir" install
 

@@ -1,8 +1,8 @@
 # Maintainer: Felix Yan <felixonmars@archlinux.org>
 
 pkgname=dhall-bash
-pkgver=1.0.39
-pkgrel=34
+pkgver=1.0.40
+pkgrel=52
 pkgdesc='Compile Dhall to Bash'
 url='https://dhall-lang.org'
 license=('BSD')
@@ -11,13 +11,13 @@ depends=('ghc-libs' 'dhall' 'haskell-neat-interpolation' 'haskell-shell-escape'
          'haskell-optparse-generic')
 makedepends=('ghc')
 source=("https://hackage.haskell.org/packages/archive/${pkgname}/${pkgver}/${pkgname}-${pkgver}.tar.gz")
-sha512sums=('00572bdeb5f18a222750dccf8fdc465dd94905fa2e1080ac82f75511d4777b7495bbbfcd1036416e776fdd9440874124a6cffde332d4c35557cacb84f2635ccf')
+sha512sums=('1936c795f843af2fd5556f0e2cb041218bdb3a205a0e35d215a24d235a615c2e6267f06cb4e58848c2dc6319bfbd306e3cae8321e41f25e9326f28737071b9a6')
 
 build() {
     cd $pkgname-$pkgver
 
     runhaskell Setup configure -O --enable-shared --enable-executable-dynamic --disable-library-vanilla \
-        --prefix=/usr --docdir="/usr/share/doc/${pkgbase}" --datasubdir="$pkgname" --enable-tests \
+        --prefix=/usr --docdir=/usr/share/doc/$pkgname --datasubdir=$pkgname --enable-tests \
         --dynlibdir=/usr/lib --libsubdir=\$compiler/site-local/\$pkgid --ghc-option=-fllvm
     runhaskell Setup build $MAKEFLAGS
     runhaskell Setup register --gen-script

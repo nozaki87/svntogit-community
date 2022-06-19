@@ -2,37 +2,38 @@
 
 _name=orjson
 pkgname=python-orjson
-pkgver=3.6.7
+pkgver=3.7.2
 pkgrel=1
 pkgdesc="Fast, correct Python JSON library supporting dataclasses and datetimes"
 arch=(x86_64)
 url="https://github.com/ijl/orjson"
 license=(Apache MIT)
 depends=(python)
-makedepends=(maturin python-pip rust)
+makedepends=(maturin python-installer rust)
 checkdepends=(python-arrow python-pendulum python-psutil python-pytest
 python-pytz python-xxhash)
-source=("${pkgname}-${pkgver}.tar.gz::https://github.com/ijl/${_name}/archive/${pkgver}.tar.gz")
-sha512sums=('5fd7d354f19a01a72218bca4bb7d767ebb73cc79398c5e32c482fed65a93d9f98d58835ebaa0c5e85a975e5eb29d2522a1051bad8f03de8bc227dc2838b8a72b')
-b2sums=('2d666885420745d1e783b1d2795bd9814530447818e14f7ea4203a225849869a30962da9a377a86af1f012e3119b9377a723ebf08cf61127b5e50bd3125bdc4a')
+options=(debug)
+source=($pkgname-$pkgver.tar.gz::https://github.com/ijl/$_name/archive/$pkgver.tar.gz)
+sha512sums=('a68b1602ddb1e8b91a93648137f7098bcc1217c30b1be5c6b2f48effe71dcc766009ad65afc448a719a302a2210c6a79021316d59bba9afe9d0026efa08a4f6b')
+b2sums=('c9ce2b4ab67eb9b779eb416a3a2446ad53a7f04fe0b02642bded40b48295de98309537de63e8293891760bc5896a804dfc86c37834689fa294c6283ca3e80519')
 
 build() {
-  cd "${_name}-${pkgver}"
+  cd $_name-$pkgver
   maturin build --no-sdist --release --strip
 }
 
 check() {
-  local python_version=$(python -c 'import sys; print(".".join(map(str, sys.version_info[:2])))')
-  cd "${_name}-${pkgver}"
-  mkdir -vp testdir
+  local _site_packages=$(python -c "import site; print(site.getsitepackages()[0])")
 
-  PIP_CONFIG_FILE=/dev/null pip install --isolated --root="testdir" --ignore-installed --no-deps target/wheels/*.whl
-  PYTHONPATH="testdir/usr/lib/python${python_version}/site-packages:${PYTHONPATH}" pytest -v
+  cd $_name-$pkgver
+  python -m installer --destdir=test_dir target/wheels/*.whl
+  export PYTHONPATH="test_dir/$_site_packages:$PYTHONPATH"
+  pytest -vv
 }
 
 package() {
-  cd "${_name}-${pkgver}"
-  PIP_CONFIG_FILE=/dev/null pip install --isolated --root="$pkgdir" --ignore-installed --no-deps target/wheels/*.whl
-  install -vDm 644 {CHANGELOG,README}.md -t "${pkgdir}/usr/share/doc/${pkgname}"
-  install -vDm 644 LICENSE-* -t "${pkgdir}/usr/share/licenses/${pkgname}"
+  cd $_name-$pkgver
+  python -m installer --destdir="$pkgdir" target/wheels/*.whl
+  install -vDm 644 {CHANGELOG,README}.md -t "$pkgdir/usr/share/doc/$pkgname/"
+  install -vDm 644 LICENSE-* -t "$pkgdir/usr/share/licenses/$pkgname/"
 }

@@ -2,8 +2,8 @@
 # Contributor: berberman <hatsue@typed.icu>
 
 pkgname=arch-hs
-pkgver=0.10.0.0
-pkgrel=2
+pkgver=0.10.2.0
+pkgrel=1
 pkgdesc="Distribute hackage packages to archlinux"
 arch=('x86_64')
 url="https://github.com/berberman/arch-hs"
@@ -16,7 +16,7 @@ depends=('ghc-libs' 'pacman' 'haskell-diff' 'haskell-aeson' 'haskell-algebraic-g
          'haskell-servant-client' 'haskell-split' 'haskell-tar-conduit')
 makedepends=('ghc')
 source=("https://hackage.haskell.org/packages/archive/$pkgname/$pkgver/$pkgname-$pkgver.tar.gz")
-sha512sums=('da2dee749a92cd0799f66c48ec01687e4bd042013f94fc30deca3b37e1f0316b00197c05bfc3830538a2348ed5662a33b9dabec9e49799e13cb4c4bf6765b808')
+sha512sums=('abfdbbeeba3c7d03e403f48047d9a8ac4342d95b8037b15eee1670be7f66b75caf91b346f6fe86228b5217b4ac470e969f3364c195ccd818784017495f6416d2')
 
 _gen_comp(){
   LD_LIBRARY_PATH="$PWD/dist/build" dist/build/arch-hs${1}/arch-hs${1} --bash-completion-script "/usr/bin/arch-hs${1}" > bash${1}
@@ -33,7 +33,7 @@ _install_comp(){
 build() {
   cd $pkgname-$pkgver
   runhaskell Setup configure -O --enable-shared --enable-executable-dynamic --disable-library-vanilla \
-    --prefix=/usr --docdir=/usr/share/doc/$pkgname \
+    --prefix=/usr --docdir=/usr/share/doc/$pkgname --datasubdir=$pkgname \
     --dynlibdir=/usr/lib --libsubdir=\$compiler/site-local/\$pkgid --ghc-option=-fllvm \
     --ghc-option=-optl-Wl\,-z\,relro\,-z\,now \
     --ghc-option='-pie' -falpm
